@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function results()
+    {
+        $this->hasMany(LabResult::class);
+    }
+
+    public function practice()
+    {
+        $this->belongsTo(Practice::class);
+    }
 }
