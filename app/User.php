@@ -29,11 +29,11 @@ class User extends Authenticatable
 
     public function results()
     {
-        $this->hasMany(LabResult::class);
+        return $this->hasMany(LabResult::class);
     }
 
     public function practice()
     {
-        $this->belongsTo(Practice::class);
+        return $this->belongsTo(Practice::class);
     }
 }

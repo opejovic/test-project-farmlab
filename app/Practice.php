@@ -8,11 +8,11 @@ class Practice extends Model
 {
     public function vets()
     {
-    	$this->hasMany(User::class);
+    	return $this->hasMany(User::class);
     }
 
     public function results()
     {
-    	$this->hasMany(LabResult::class);
+    	return $this->hasMany(LabResult::class);
     }
 }

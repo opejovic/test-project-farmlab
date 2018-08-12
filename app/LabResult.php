@@ -8,6 +8,6 @@ class LabResult extends Model
 {
     public function practice()
     {
-    	$this->belongsTo(Practice::class)
+    	return $this->belongsTo(Practice::class)
     }
 }

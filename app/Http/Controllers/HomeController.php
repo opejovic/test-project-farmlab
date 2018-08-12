@@ -37,7 +37,7 @@ class HomeController extends Controller
 
         if (! auth()->attempt(request(['email', 'password']))) {
             return back()->withErrors([
-                'message' => 'Username and/or password is wrong. Please try again.'
+                'message' => 'Wrong credentials. Please try again.'
             ]);
         }
         return redirect()->home();
