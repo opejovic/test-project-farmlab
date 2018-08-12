@@ -39,9 +39,15 @@ class HomeController extends Controller
             return back()->withErrors([
                 'message' => 'Wrong credentials. Please try again.'
             ]);
+        } elseif (auth()->user()->type == 'ADMIN') { // vidjeti kako da napravim konstante TYPE:ADMIN recimo
+            return view('/superAdmin/home');
+         } elseif (auth()->user()->type == 'FARM_LAB_TEAM_MEMBER') {
+            return view('/admin/home');
+        } elseif (auth()->user()->type == 'PRACTICE_ADMIN') {
+            return view('/cashier/home');
         }
-        return redirect()->home();
-    }        
+    }
+
     /**
      * Display the specified resource.
      *
