@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('home.create');
     }
 
     /**
@@ -32,11 +32,16 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
-    }
 
+        if (! auth()->attempt(request(['email', 'password']))) {
+            return back()->withErrors([
+                'message' => 'Username and/or password is wrong. Please try again.'
+            ]);
+        }
+        return redirect()->home();
+    }        
     /**
      * Display the specified resource.
      *
@@ -77,8 +82,10 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        auth()->logout();
+
+        return redirect()->home();
     }
 }
