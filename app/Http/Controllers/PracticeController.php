@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Practice;
+use App\User;
 use Illuminate\Http\Request;
 
 class PracticeController extends Controller
@@ -14,7 +15,16 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        //
+        if (\Auth::check()) {
+            if (auth()->user()->type == 'ADMIN') {
+                return view('farmlab.admin');
+            } 
+                return view('farmlab.member'); 
+        
+    } 
+
+        return redirect()->home();
+
     }
 
     /**
@@ -24,7 +34,16 @@ class PracticeController extends Controller
      */
     public function create()
     {
-        //
+        if (\Auth::check()) {
+            if (auth()->user()->type == 'ADMIN') {
+                return view('farmlab.admin');
+            } 
+                return view('farmlab.member'); 
+        
+    } 
+
+        return redirect()->home();
+
     }
 
     /**
@@ -35,7 +54,13 @@ class PracticeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (auth()->user()->type == 'ADMIN') {
+            User::addFarmLabMember();
+        } elseif (auth()->user()->type == 'FARM_LAB_TEAM_MEMBER') {
+            Practice::addNewPractice();
+        }
+
+        return redirect()->home();
     }
 
     /**

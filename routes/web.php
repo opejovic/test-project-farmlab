@@ -17,4 +17,7 @@ Route::get('/login', 'HomeController@create');
 Route::post('/login', 'HomeController@store');
 Route::get('/logout', 'HomeController@destroy');
 
+Route::get('/farmlab/dashboard', 'PracticeController@index');
+Route::post('/farmlab/dashboard/create', 'PracticeController@store');
+
 

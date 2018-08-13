@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'status', 'type'
     ];
 
     /**
@@ -35,5 +35,16 @@ class User extends Authenticatable
     public function practice()
     {
         return $this->belongsTo(Practice::class);
+    }
+
+    public static function addFarmLabMember()
+    {
+        static::create([
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => bcrypt(request('password')),
+            'type' => request('type'),
+            'status' => request('status')
+        ]);
     }
 }

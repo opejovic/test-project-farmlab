@@ -12,13 +12,14 @@
 
         </p>
       </main>
+
 @elseif (auth()->user()->type == 'ADMIN')
       <main role="main" class="inner cover">
         <h1 class="cover-heading">Admin dashboard</h1>
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         <p class="lead">
         	
-          		<a href="/farmlab/admin" class="btn btn-lg btn-secondary">Admin dashboard</a>
+          		<a href="/farmlab/dashboard" class="btn btn-lg btn-secondary">Admin dashboard</a>
 
         </p>
       </main>
@@ -29,8 +30,7 @@
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         <p class="lead">
         	
-          		<a href="/login" class="btn btn-lg btn-secondary">Create a practice</a>
-          		<a href="/login" class="btn btn-lg btn-secondary">Upload the result</a>
+          		<a href="/farmlab/dashboard" class="btn btn-lg btn-secondary">Create a practice</a>
 
         </p>
       </main>
@@ -56,5 +56,6 @@
 
         </p>
       </main>
+
 @endif
 @endsection
