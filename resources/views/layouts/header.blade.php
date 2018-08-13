@@ -6,7 +6,7 @@
             <a class="nav-link" href="#">Projects</a>
             <a class="nav-link" href="#">Contact</a>
             @if (Auth::check())
-            <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
+              <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
             @endif
           </nav> 
         </div>
