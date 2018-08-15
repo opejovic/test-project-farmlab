@@ -8,14 +8,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    const ADMIN = 'ADMIN';  
+    const FARMLABMEMBER = 'FARM_LAB_TEAM_MEMBER';  
+    const PRACTICEADMIN = 'PRACTICE_ADMIN';  
+    const VET = 'PRACTICE_VET';  
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'status', 'type'
+        'name', 'email', 'password', 'status', 'type', 'practice_id'
     ];
 
     /**
@@ -45,6 +48,18 @@ class User extends Authenticatable
             'password' => bcrypt(request('password')),
             'type' => request('type'),
             'status' => request('status')
+        ]);
+    }
+
+    public function addPracticeAdmin(Practice $practice)
+    {
+        $this->create([            
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => bcrypt(request('password')),
+            'type' => request('type'),
+            'status' => request('status'),
+            'practice_id' => $practice->id
         ]);
     }
 }

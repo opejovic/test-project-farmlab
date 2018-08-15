@@ -4,7 +4,7 @@
 @section ('content')
 
 <h1>Add new FarmLab member</h1>
-<form class="form-signin" method="POST" action="/farmlab/dashboard/create">
+<form class="form-signin" method="POST" action="/farmlab/create/user">
 	@csrf
 
 	<fieldset class="form-group">

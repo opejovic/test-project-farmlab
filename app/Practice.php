@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Practice extends Model
 {
+    protected $guarded = [];
+
     public function vets()
     {
     	return $this->hasMany(User::class);
@@ -16,14 +18,11 @@ class Practice extends Model
     	return $this->hasMany(LabResult::class);
     }
 
-    public static function addNewPractice()
-    {
-        static::create([
-            'name' => request('name'),
-            'email' => request('email'),
-            'password' => bcrypt(request('password')),
-            'type' => request('type'),
-            'status' => request('status')
-        ]);
-    }
+    // public function addNewPractice()
+    // {
+    //     $this->create([
+    //         'name' => request('pname')
+    //     ]);
+    // }
+
 }

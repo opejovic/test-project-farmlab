@@ -6,7 +6,7 @@ use App\Practice;
 use App\User;
 use Illuminate\Http\Request;
 
-class PracticeController extends Controller
+class PracticesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class PracticeController extends Controller
             } 
                 return view('farmlab.member'); 
         
-    } 
+        }    
 
         return redirect()->home();
 
@@ -52,12 +52,16 @@ class PracticeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         if (auth()->user()->type == 'ADMIN') {
             User::addFarmLabMember();
         } elseif (auth()->user()->type == 'FARM_LAB_TEAM_MEMBER') {
-            Practice::addNewPractice();
+            $practice = Practice::create([
+                'name' => request('pname')
+            ]);
+            $user = new User;
+            $user->addPracticeAdmin($practice);
         }
 
         return redirect()->home();

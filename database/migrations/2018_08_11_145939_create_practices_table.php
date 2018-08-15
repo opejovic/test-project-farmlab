@@ -16,9 +16,13 @@ class CreatePracticesTable extends Migration
         Schema::create('practices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->integer('vet_id'); // has many vets
-            $table->integer('result_id'); // has many results
             $table->timestamps();
+        });
+
+        Schema::create('practice_vet', function (Blueprint $table) {
+            $table->integer('practice_id');
+            $table->integer('vet_id');
+            $table->primary(['practice_id', 'vet_id']);
         });
     }
 
@@ -30,5 +34,6 @@ class CreatePracticesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('practices');
+        Schema::dropIfExists('practice_vet');
     }
-}
+} 
