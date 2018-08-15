@@ -35,7 +35,7 @@ class PracticesController extends Controller
     public function create()
     {
         if (\Auth::check()) {
-            if (auth()->user()->type == 'ADMIN') {
+            if (auth()->user()->type == User::ADMIN) {
                 return view('farmlab.admin');
             } 
                 return view('farmlab.member'); 
@@ -54,9 +54,9 @@ class PracticesController extends Controller
      */
     public function store()
     {
-        if (auth()->user()->type == 'ADMIN') {
+        if (auth()->user()->type === User::ADMIN) {
             User::addFarmLabMember();
-        } elseif (auth()->user()->type == 'FARM_LAB_TEAM_MEMBER') {
+        } elseif (auth()->user()->type === User::FARMLABMEMBER) {
             $practice = Practice::create([
                 'name' => request('pname')
             ]);
