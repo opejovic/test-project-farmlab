@@ -6,7 +6,7 @@ use App\Practice;
 use App\User;
 use Illuminate\Http\Request;
 
-class PracticesController extends Controller
+class PracticeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,15 +15,6 @@ class PracticesController extends Controller
      */
     public function index()
     {
-        if (\Auth::check()) {
-            if (auth()->user()->type == 'ADMIN') {
-                return view('farmlab.admin');
-            } 
-                return view('farmlab.member'); 
-        
-        }    
-
-        return redirect()->home();
 
     }
 
@@ -34,6 +25,7 @@ class PracticesController extends Controller
      */
     public function create()
     {
+
         if (\Auth::check()) {
             if (auth()->user()->type == User::ADMIN) {
                 return view('farmlab.admin');
@@ -52,13 +44,30 @@ class PracticesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
+
         if (auth()->user()->type === User::ADMIN) {
+
+            $this->validate(request(), [
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|confirmed',
+            ]);
+
             User::addFarmLabMember();
+
         } elseif (auth()->user()->type === User::FARMLABMEMBER) {
+            
+            $this->validate(request(), [
+                'practice_name' => 'required',
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|confirmed',
+            ]);
+
             $practice = Practice::create([
-                'name' => request('pname')
+                'name' => request('practice_name')
             ]);
             $user = new User;
             $user->addPracticeAdmin($practice);

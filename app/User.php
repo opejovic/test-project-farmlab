@@ -12,15 +12,17 @@ class User extends Authenticatable
     const FARMLABMEMBER = 'FARM_LAB_TEAM_MEMBER';  
     const PRACTICEADMIN = 'PRACTICE_ADMIN';  
     const VET = 'PRACTICE_VET';  
+    const PROCESSED = 'PROCESSED';  // user status
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password', 'status', 'type', 'practice_id'
-    ];
+    // protected $fillable = [
+    //     'name', 'email', 'password', 'status', 'type', 'practice_id',
+    // ];
 
+    protected $guarded = [];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -46,8 +48,8 @@ class User extends Authenticatable
             'name' => request('name'),
             'email' => request('email'),
             'password' => bcrypt(request('password')),
-            'type' => request('type'),
-            'status' => request('status')
+            'type' => User::FARMLABMEMBER,
+            'status' => User::PROCESSED
         ]);
     }
 
@@ -57,9 +59,21 @@ class User extends Authenticatable
             'name' => request('name'),
             'email' => request('email'),
             'password' => bcrypt(request('password')),
-            'type' => request('type'),
-            'status' => request('status'),
+            'type' => User::PRACTICEADMIN,
+            'status' => User::PROCESSED,
             'practice_id' => $practice->id
+        ]);
+    }
+
+    public static function addVet()
+    {
+        static::create([            
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => bcrypt(request('password')),
+            'type' => User::VET,
+            'status' => User::PROCESSED,
+            'practice_id' => auth()->user()->practice_id
         ]);
     }
 }

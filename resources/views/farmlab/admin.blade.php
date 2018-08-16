@@ -9,33 +9,29 @@
 
 	<fieldset class="form-group">
 		<label for="name">Username</label>
-		<input name="name" type="text" class="form-control" id="name">
+		<input name="name" type="text" class="form-control" id="name" required>
 	</fieldset>	
 
 	<fieldset class="form-group">
 		<label for="email">Email address</label>
-		<input name="email" type="email" class="form-control" id="email">
+		<input name="email" type="email" class="form-control" id="email" required>
 	</fieldset>
 
 	<fieldset class="form-group">
 		<label for="password">Password</label>
-		<input name="password" type="password" class="form-control" id="password">
+		<input name="password" type="password" class="form-control" id="password" required>
 	</fieldset>
 
 	<fieldset class="form-group">
-		<label for="type">User type</label>
-		<select name="type" class="form-control" id="type">
-			<option value="FARM_LAB_TEAM_MEMBER">FarmLab team member</option>
-		</select>
-	</fieldset>
-
-	<fieldset class="form-group">
-		<label for="status">Status</label>
-		<input name="status" type="text" class="form-control" id="status">
+		<label for="password_confirmation">Password confirmation</label>
+		<input name="password_confirmation" type="password" class="form-control" id="password_confirmation" required>
 	</fieldset>	
 
-	
-	<button type="submit" class="btn btn-primary">Add member</button>
+	<fieldset class="form-group">
+		<button type="submit" class="btn btn-primary">Add member</button>
+	</fieldset>
+
+	@include ('layouts.errors')
 </form>
 
 @endsection

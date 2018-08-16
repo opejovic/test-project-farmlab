@@ -21,8 +21,8 @@ class CreatePracticesTable extends Migration
 
         Schema::create('practice_vet', function (Blueprint $table) {
             $table->integer('practice_id');
-            $table->integer('vet_id');
-            $table->primary(['practice_id', 'vet_id']);
+            $table->integer('user_id');
+            $table->primary(['practice_id', 'user_id']);
         });
     }
 

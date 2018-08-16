@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\LabResult;
 use Illuminate\Http\Request;
 
-class VetsController extends Controller
+class LabResultController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +14,9 @@ class VetsController extends Controller
      */
     public function index()
     {
-        if (\Auth::check()) {
-            if (auth()->user()->type === User::PRACTICEADMIN) {
-                return view('practice.admin');
-            } elseif (auth()->user()->type === User::VET) {
-                return view('practice.vet');
-            }
-        }
+        //
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -46,10 +41,10 @@ class VetsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\LabResult  $labResult
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(LabResult $labResult)
     {
         //
     }
@@ -57,10 +52,10 @@ class VetsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\LabResult  $labResult
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(LabResult $labResult)
     {
         //
     }
@@ -69,10 +64,10 @@ class VetsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\LabResult  $labResult
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, LabResult $labResult)
     {
         //
     }
@@ -80,10 +75,10 @@ class VetsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\LabResult  $labResult
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(LabResult $labResult)
     {
         //
     }

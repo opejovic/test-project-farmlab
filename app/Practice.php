@@ -18,11 +18,5 @@ class Practice extends Model
     	return $this->hasMany(LabResult::class);
     }
 
-    // public function addNewPractice()
-    // {
-    //     $this->create([
-    //         'name' => request('pname')
-    //     ]);
-    // }
 
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\LabResult;
+use App\User;
 use Illuminate\Http\Request;
 
-class LabResultsController extends Controller
+class VetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,8 @@ class LabResultsController extends Controller
      */
     public function index()
     {
-        //
-    }
 
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +23,15 @@ class LabResultsController extends Controller
      */
     public function create()
     {
-        //
+        if (\Auth::check()) {
+            if (auth()->user()->type === User::PRACTICEADMIN) {
+                return view('practice.admin');
+            } elseif (auth()->user()->type === User::VET) {
+                return view('practice.vet');
+            }
+        }
+
+        return redirect()->home();
     }
 
     /**
@@ -35,16 +42,26 @@ class LabResultsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate(request(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed'
+        ]);
+
+        User::addVet();
+
+        return redirect()->home();
+        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\LabResult  $labResult
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(LabResult $labResult)
+    public function show($id)
     {
         //
     }
@@ -52,10 +69,10 @@ class LabResultsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\LabResult  $labResult
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(LabResult $labResult)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +81,10 @@ class LabResultsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\LabResult  $labResult
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LabResult $labResult)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +92,10 @@ class LabResultsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\LabResult  $labResult
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LabResult $labResult)
+    public function destroy($id)
     {
         //
     }
