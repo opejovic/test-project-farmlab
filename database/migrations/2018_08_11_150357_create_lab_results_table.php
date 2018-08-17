@@ -16,15 +16,16 @@ class CreateLabResultsTable extends Migration
         Schema::create('lab_results', function (Blueprint $table) {
             $table->increments('id');
             $table->text('herd_number');
-            $table->date('date_of_arrival');
-            $table->date('date_of_test');
+            $table->string('date_of_arrival');
+            $table->string('date_of_test');
             $table->string('animal_id');
             $table->string('lab_code');
+            $table->string('test_name');
             $table->string('type_of_samples');
             $table->string('reading');
             $table->string('interpretation');
             $table->string('farmer_name');
-            $table->enum('status', ['processed', 'unprocessed']);
+            $table->string('status')->default('UNPROCESSED');
             $table->text('vet_comment');
             $table->string('vet_indicator');
             $table->integer('practice_id');

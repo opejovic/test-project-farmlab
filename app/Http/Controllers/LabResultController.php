@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class LabResultController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +28,7 @@ class LabResultController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -33,10 +37,12 @@ class LabResultController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(LabResult $labresult)
+    {    
+        $labresult->parseToDb();
+        return redirect()->home();
     }
+    
 
     /**
      * Display the specified resource.
