@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Jobs\ParseAndInsert;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -19,6 +20,9 @@ class FileController extends Controller
     public function store(File $file)
     {
     	$file->upload();
+
+    	$job = new ParseAndInsert();
+    	$this->dispatch($job);
 
         return back();
     }

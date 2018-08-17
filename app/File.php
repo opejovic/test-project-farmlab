@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -10,11 +11,12 @@ class File extends Model
 
     public function upload()
     {
-        $file = request()->file('labresult')->store('labresults');
+        $file = Storage::putFile('labresults', request()->file('labresult'));
 
         $this->create([
             'name' => request('labresult')->getClientOriginalName(),
-            'file_path' => storage_path('app/labresults' . $file)
+            'file_path' => storage_path($file)
         ]);
+
     }
 }

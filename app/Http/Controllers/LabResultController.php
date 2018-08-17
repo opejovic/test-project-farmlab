@@ -39,8 +39,8 @@ class LabResultController extends Controller
      */
     public function store(LabResult $labresult)
     {    
-        $labresult->parseToDb();
-        return redirect()->home();
+        // $labresult->parseToDb();
+        // return redirect()->home();
     }
     
 

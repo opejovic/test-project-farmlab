@@ -17,10 +17,10 @@ Route::post('/practice/create/vet', 'VetController@store');
 Route::get('/file/upload', 'FileController@create');
 Route::post('/file/upload', 'FileController@store');
 
-// Route::get('/labresults/index', 'LabResultController@index');
-// Route::get('/labresults/upload', 'LabResultController@create');
-Route::get('/labresults/upload', 'LabResultController@store');
-Route::get('/labresults/show', 'LabResultController@show');
+// // Route::get('/labresults/index', 'LabResultController@index');
+// // Route::get('/labresults/upload', 'LabResultController@create');
+// Route::get('/labresults/upload', 'LabResultController@store');
+// Route::get('/labresults/show', 'LabResultController@show');
 
 
 

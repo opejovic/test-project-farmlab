@@ -1,26 +1,42 @@
 <?php
 
-namespace App;
+namespace App\Jobs;
 
 use App\File;
-use Illuminate\Database\Eloquent\Model;
+use App\LabResult;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
-class LabResult extends Model
+class ParseAndInsert implements ShouldQueue
 {
-	protected $guarded = [];
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function practice()
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-    	return $this->belongsTo(Practice::class);
+        //
     }
 
-    public function parseToDb($file)
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
     {
         $file = request()->file('labresult');
+
         $handle = fopen($file, 'r');
         
         while ($data = fgetcsv($handle, 1000, ",")) {
-                  $this->create([ 
+                  LabResult::create([ 
                         'herd_number' => $data[0],
                         'date_of_arrival' => $data[1],
                         'date_of_test' => $data[2],
@@ -35,7 +51,7 @@ class LabResult extends Model
                         'vet_indicator' => $data[11],
                         'practice_id' => $data[12]
                     ]);
-                }    
-                fclose($handle);            
+                }        
+                fclose($handle);
     }
 }
