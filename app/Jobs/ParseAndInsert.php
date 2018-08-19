@@ -52,7 +52,7 @@ class ParseAndInsert implements ShouldQueue
                         'practice_id' => $data[12]
                     ]);
                 }         
-                fclose($handle);
+            fclose($handle);
         } 
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\Http\Requests\ValidateCsv;
+use App\Jobs\ParseAndInsert;
 use App\LabResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -42,7 +43,7 @@ class LabResultController extends Controller
      */
     public function store()
     {      
-        
+
         return redirect()->home();
 
     }
