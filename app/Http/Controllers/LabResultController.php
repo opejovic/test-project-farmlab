@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
+use App\Http\Requests\ValidateCsv;
 use App\LabResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class LabResultController extends Controller
 {
@@ -37,10 +40,11 @@ class LabResultController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(LabResult $labresult)
-    {    
-        // $labresult->parseToDb();
-        // return redirect()->home();
+    public function store()
+    {      
+        
+        return redirect()->home();
+
     }
     
 

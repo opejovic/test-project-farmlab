@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\File;
+
 use App\LabResult;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,11 +31,11 @@ class ParseAndInsert implements ShouldQueue
      */
     public function handle()
     {
-        $file = request()->file('labresult');
+        $path = request()->file('csv_file');
+        $handle = fopen($path, 'r');
+        fgetcsv($handle); //Adding this line will skip the reading of the first line from the csv file and the reading process will begin from the second line onwards. ((fgetcsv parses the first line (header) and returns an array with those columns. Implicitly, the file pointer is now on the 2nd row.))
 
-        $handle = fopen($file, 'r');
-        
-        while ($data = fgetcsv($handle, 1000, ",")) {
+             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                   LabResult::create([ 
                         'herd_number' => $data[0],
                         'date_of_arrival' => $data[1],
@@ -51,7 +51,10 @@ class ParseAndInsert implements ShouldQueue
                         'vet_indicator' => $data[11],
                         'practice_id' => $data[12]
                     ]);
-                }        
+                }         
                 fclose($handle);
+        } 
     }
-}
+
+
+

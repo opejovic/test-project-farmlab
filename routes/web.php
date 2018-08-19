@@ -10,7 +10,7 @@ Route::get('/farmlab', 'PracticeController@index');
 Route::get('/farmlab/create', 'PracticeController@create');
 Route::post('/farmlab/create/user', 'PracticeController@store');
 
-// Route::get('/practice', 'VetController@index');
+Route::get('/practice', 'VetController@index');
 Route::get('/practice/create/vet', 'VetController@create');
 Route::post('/practice/create/vet', 'VetController@store');
 
@@ -19,7 +19,7 @@ Route::post('/file/upload', 'FileController@store');
 
 // // Route::get('/labresults/index', 'LabResultController@index');
 // // Route::get('/labresults/upload', 'LabResultController@create');
-// Route::get('/labresults/upload', 'LabResultController@store');
+Route::post('/labresults/process', 'LabResultController@store');
 // Route::get('/labresults/show', 'LabResultController@show');
 
 
