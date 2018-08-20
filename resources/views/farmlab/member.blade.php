@@ -8,13 +8,13 @@
 	@csrf
 
 	<fieldset class="form-group">
-		<label for="pname">Practice name</label>
-		<input name="practice_name" type="text" class="form-control" id="pname" required>
+		<label for="name">Practice name</label>
+		<input name="name" type="text" class="form-control" id="name" required>
 	</fieldset>	
 
 	<fieldset class="form-group">
-		<label for="name">Practice admin name</label>
-		<input name="name" type="text" class="form-control" id="name" required>
+		<label for="admin_name">Practice admin name</label>
+		<input name="admin_name" type="text" class="form-control" id="admin_name" required>
 	</fieldset>	
 
 	<fieldset class="form-group">

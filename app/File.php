@@ -11,7 +11,7 @@ class File extends Model
 {
 	protected $fillable = ['name', 'file_path'];
 
-	//check to see if the requested file matches some other uploaded file by name, if it does - throws an error, if it doesent - uploads the file.
+	//check to see if the requested file matches other uploaded files by name
 
     public function upload()
     {
@@ -25,7 +25,7 @@ class File extends Model
 	            'name' => request('csv_file')->getClientOriginalName(),
 	            'file_path' => storage_path($path)
 	        ]); 
-
+            
             ParseAndInsert::dispatch();
 
     	} else {
@@ -33,6 +33,8 @@ class File extends Model
     	return redirect()->back()
  				->withErrors(["The {$fileName} already exists in the storage."]);
     	}
-           
+        
+        session()->flash('message', 'File successfully uploaded.');
+    
     }
 }

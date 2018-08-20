@@ -44,6 +44,7 @@ class HomeController extends Controller
             ]);
         }
 
+        session()->flash('message', 'You are now logged in.');
         return redirect()->home();
     }
 
@@ -90,6 +91,8 @@ class HomeController extends Controller
     public function destroy()
     {
         auth()->logout();
+
+        session()->flash('message', 'You have logged out.');
 
         return redirect()->home();
     }

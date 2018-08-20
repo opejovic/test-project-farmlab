@@ -42,9 +42,9 @@ class User extends Authenticatable
         return $this->belongsTo(Practice::class);
     }
 
-    public static function addFarmLabMember()
+    public function addFarmLabMember()
     {
-        static::create([
+        $this->create([
             'name' => request('name'),
             'email' => request('email'),
             'password' => bcrypt(request('password')),
@@ -56,7 +56,7 @@ class User extends Authenticatable
     public function addPracticeAdmin(Practice $practice)
     {
         $this->create([            
-            'name' => request('name'),
+            'name' => request('admin_name'),
             'email' => request('email'),
             'password' => bcrypt(request('password')),
             'type' => User::PRACTICEADMIN,
@@ -65,9 +65,9 @@ class User extends Authenticatable
         ]);
     }
 
-    public static function addVet()
+    public function addVet()
     {
-        static::create([            
+        $this->create([            
             'name' => request('name'),
             'email' => request('email'),
             'password' => bcrypt(request('password')),

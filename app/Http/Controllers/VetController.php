@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Welcome;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -40,16 +41,18 @@ class VetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
 
         $this->validate(request(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confirmed'
         ]);
 
-        User::addVet();
+        $user->addVet();
+        session()->flash('message', 'New vet created.');
+        \Mail::to(request('email'))->send(new Welcome);
 
         return redirect()->home();
         

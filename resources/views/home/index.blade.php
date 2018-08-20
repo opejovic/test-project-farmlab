@@ -16,7 +16,7 @@
         @elseif (auth()->user()->type === App\User::FARMLABMEMBER)
               <a href="/farmlab/create" class="btn btn-lg btn-secondary">Create practice</a>
               <a href="/file/upload" class="btn btn-lg btn-secondary">Upload result</a>
-              <a href="/labresults/process" class="btn btn-lg btn-secondary">Process the result</a>
+              {{-- <a href="/labresults/process" class="btn btn-lg btn-secondary">Process the result</a> --}}
 
         @elseif (auth()->user()->type === App\User::PRACTICEADMIN)
               <a href="/practice/create/vet" class="btn btn-lg btn-secondary">Add new vet</a>

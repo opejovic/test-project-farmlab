@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Practice;
 use App\User;
+use App\Practice;
+use App\Mail\Welcome;
 use Illuminate\Http\Request;
 
 class PracticeController extends Controller
@@ -44,34 +45,40 @@ class PracticeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
 
         if (auth()->user()->type === User::ADMIN) {
 
             $this->validate(request(), [
                 'name' => 'required',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users',
                 'password' => 'required|confirmed',
             ]);
 
-            User::addFarmLabMember();
+            $user->addFarmLabMember();
+            session()->flash('message', 'New FarmLab team member added.');
+
+
 
         } elseif (auth()->user()->type === User::FARMLABMEMBER) {
             
             $this->validate(request(), [
-                'practice_name' => 'required',
-                'name' => 'required',
-                'email' => 'required|email',
+                'name' => 'required|unique:practices',
+                'admin_name' => 'required',
+                'email' => 'required|email|unique:users',
                 'password' => 'required|confirmed',
             ]);
 
             $practice = Practice::create([
-                'name' => request('practice_name')
+                'name' => request('name')
             ]);
-            $user = new User;
             $user->addPracticeAdmin($practice);
+            session()->flash('message', 'New practice created.');
+
         }
+
+        \Mail::to(request('email'))->send(new Welcome);
 
         return redirect()->home();
     }
