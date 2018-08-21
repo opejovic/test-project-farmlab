@@ -29,6 +29,7 @@ class CreateLabResultsTable extends Migration
             $table->text('vet_comment');
             $table->string('vet_indicator');
             $table->integer('practice_id');
+            $table->string('practice_name');
             $table->integer('vet_id')->nullable();
             $table->timestamps();
         });

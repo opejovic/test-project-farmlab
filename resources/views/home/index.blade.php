@@ -11,7 +11,7 @@
           		<a href="/login" class="btn btn-lg btn-secondary">Log in</a>
 
         @elseif (auth()->user()->type === App\User::ADMIN)
-              <a href="/farmlab/create" class="btn btn-lg btn-secondary">Admin dashboard</a>
+              <a href="/farmlab/create" class="btn btn-lg btn-secondary">Add new lab member</a>
 
         @elseif (auth()->user()->type === App\User::FARMLABMEMBER)
               <a href="/farmlab/create" class="btn btn-lg btn-secondary">Create practice</a>
@@ -23,8 +23,7 @@
               <a href="/labresults/index" class="btn btn-lg btn-secondary">See results</a>
 
         @elseif (auth()->user()->type === App\User::VET)
-              <a href="/labresults/index" class="btn btn-lg btn-secondary">See results</a>
-
+              <a href="/labresults/index" class="btn btn-lg btn-secondary">See results</a> 
         @endif      
         </p>
       </main>

@@ -6,6 +6,7 @@ use App\File;
 use App\Http\Requests\ValidateCsv;
 use App\Jobs\ParseAndInsert;
 use App\LabResult;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,8 +22,17 @@ class LabResultController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        if (auth()->user()->type === User::VET) {
+        $vet = auth()->user()->practice_id;
+        $results = LabResult::where('practice_id', '=', "$vet")->get();
+
+        return view('labresult.index', compact('results'));
+
+        }
+
+        return redirect()->home();
+
     }
 
     /**

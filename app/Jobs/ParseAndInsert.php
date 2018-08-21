@@ -4,6 +4,9 @@ namespace App\Jobs;
 
 
 use App\LabResult;
+use App\Mail\Welcome;
+use App\Practice;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -49,10 +52,16 @@ class ParseAndInsert implements ShouldQueue
                         'farmer_name' => $data[9],
                         'vet_comment' => $data[10],
                         'vet_indicator' => $data[11],
-                        'practice_id' => $data[12]
+                        'practice_id' => $data[12],
+                        'practice_name' => Practice::where('id', '=', "{$data[12]}")->first()->name
                     ]);
-                }         
+                    // \Mail::to(User::where('practice_id', '=', "{$data[12]}")->first()->email)->send(new Welcome);
+
+                }
             fclose($handle);
+
+            
+
         } 
     }
 

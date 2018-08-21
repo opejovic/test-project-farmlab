@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Practice;
+use App\Jobs\SendWelcomeMail;
 use App\Mail\Welcome;
+use App\Practice;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PracticeController extends Controller
@@ -78,9 +80,10 @@ class PracticeController extends Controller
 
         }
 
-        \Mail::to(request('email'))->send(new Welcome);
+        \Mail::to(request('email'))->queue(new Welcome);
 
         return redirect()->home();
+
     }
 
     /**

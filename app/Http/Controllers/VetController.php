@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendWelcomeMail;
 use App\Mail\Welcome;
 use App\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class VetController extends Controller
      */
     public function index()
     {
-
+        
     }
     /**
      * Show the form for creating a new resource.
@@ -52,9 +53,12 @@ class VetController extends Controller
 
         $user->addVet();
         session()->flash('message', 'New vet created.');
-        \Mail::to(request('email'))->send(new Welcome);
+
+        \Mail::to(request('email'))->queue(new Welcome);
 
         return redirect()->home();
+
+
         
     }
 

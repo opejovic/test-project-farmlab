@@ -26,7 +26,7 @@ class FileController extends Controller
 			return redirect()->back()->withErrors(['Whoops, theres something wrong with your CSV data.']);   
         }
     	
-    	$file->upload(); 
+    	$file->upload();
 
         return back();
     }
