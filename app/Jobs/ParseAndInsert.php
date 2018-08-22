@@ -51,7 +51,7 @@ class ParseAndInsert implements ShouldQueue
                         'interpretation' => $data[8],
                         'farmer_name' => $data[9],
                         'vet_comment' => $data[10],
-                        'vet_indicator' => $data[11],
+                        'vet_indicator' => $data[11], 
                         'practice_id' => $data[12],
                         'practice_name' => Practice::where('id', '=', "{$data[12]}")->first()->name
                     ]);

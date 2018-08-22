@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use App\Practice;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -53,16 +54,23 @@ class User extends Authenticatable
         ]);
     }
 
-    public function addPracticeAdmin(Practice $practice)
+    public function addPractice()
     {
-        $this->create([            
-            'name' => request('admin_name'),
-            'email' => request('email'),
-            'password' => bcrypt(request('password')),
-            'type' => User::PRACTICEADMIN,
-            'status' => User::PROCESSED,
-            'practice_id' => $practice->id
-        ]);
+        // in case we cant make an admin/pass in the existing email etc / exception / everything will be rolled back
+
+            $practice = Practice::create(['name' => request('name')]);
+
+            $this->create([            
+                'name' => request('admin_name'),
+                'email' => request('email'),
+                'password' => bcrypt(request('password')),
+                'type' => User::PRACTICEADMIN,
+                'status' => User::PROCESSED,
+                'practice_id' => $practice->id
+            ]);
+
+
+
     }
 
     public function addVet()

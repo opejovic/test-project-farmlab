@@ -72,10 +72,7 @@ class PracticeController extends Controller
                 'password' => 'required|confirmed',
             ]);
 
-            $practice = Practice::create([
-                'name' => request('name')
-            ]);
-            $user->addPracticeAdmin($practice);
+            $user->addPractice();
             session()->flash('message', 'New practice created.');
 
         }
