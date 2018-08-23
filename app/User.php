@@ -56,7 +56,6 @@ class User extends Authenticatable
 
     public function addPractice()
     {
-        // in case we cant make an admin/pass in the existing email etc / exception / everything will be rolled back
 
             $practice = Practice::create(['name' => request('name')]);
 
@@ -68,8 +67,6 @@ class User extends Authenticatable
                 'status' => User::PROCESSED,
                 'practice_id' => $practice->id
             ]);
-
-
 
     }
 

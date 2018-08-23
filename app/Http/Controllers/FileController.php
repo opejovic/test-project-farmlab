@@ -25,8 +25,6 @@ class FileController extends Controller
         if (! $request->checkHeader()) {
 			return redirect()->back()->withErrors(['Whoops, theres something wrong with your CSV data.']);   
         }
-
-        dd($request->checkHeader());
     	
     	$file->upload();
 
