@@ -20,7 +20,7 @@ Route::post('/file/upload', 'FileController@store');
 Route::get('/labresults/index', 'LabResultController@index');
 // // Route::get('/labresults/upload', 'LabResultController@create');
 // Route::get('/labresults/process', 'LabResultController@store');
-// Route::get('/labresults/show', 'LabResultController@show');
+// Route::get('/labresults/show', 'LabResultController@show');asdasf @asdqwe
 
 
 

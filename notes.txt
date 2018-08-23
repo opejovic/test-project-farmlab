@@ -1,0 +1,26 @@
+#Project FarmLab
+
+1. FarmLab
+2. Practice
+3. File
+4. Lab Result
+
+A. FarmLab has team members.
+B. Practice has vets, and practice has lab results.
+C. Lab result belongs to a practice, but it also belongs to a vet.
+===========================================================================================
+
+1) Validate the csv file before its uploaded and stored to db // done
+2) When the user uploads, check if the file is of csv type. // done
+3) Check for duplicates - dont allow upload of duplicate files // files with the same name //done
+
+20. Avgust
+
+5) Flash a message to the screen when user successfully creates a new user/uploads the result to db. // done
+6) Send a mail to new user // done --> this needs to be done in a queue // queue(New Welcome); php artisan queue:listen // done (changed the .env file QUEUE_DRIVER:database was sync);
+
+21. Avgust
+7) Send mail to vets when new results are uploaded --> this needs to be done in a queue
+8) Pass the data to the vet view - vets can view the results and process the one's they are associated with // They should see the same screens as mobile apps (index all results for current day,
+filtering and view single page) // partially done - need to think about proccessing the result - ask pavle
+9) Refactior authorization - Use policies / middleware
