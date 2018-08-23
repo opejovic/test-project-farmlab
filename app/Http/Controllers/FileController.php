@@ -25,8 +25,17 @@ class FileController extends Controller
         if (! $request->checkHeader()) {
 			return redirect()->back()->withErrors(['Whoops, theres something wrong with your CSV data.']);   
         }
-    	
-    	$file->upload();
+
+        // If we upload the file to DB, but we delete it from our storage, and we try to upload it again we will throw an exception -> you cant have two same files in the DB.
+
+    	try {
+
+    		$file->upload();
+    		
+    	} catch (\Exception $e) {
+
+    		return redirect()->back()->withErrors(['Sorry, that file is already uploaded.']);
+    	}
 
         return back();
     }
