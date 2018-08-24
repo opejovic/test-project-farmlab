@@ -1,42 +1,63 @@
-@extends ('layouts.master')
+@extends('layouts.master')
 
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Add new practice</div>
 
-@section ('content')
+                	<div class="card-body">
+						<form method="POST" action="/farmlab/create/user">
+							@csrf
+	                 
+							<div class="form-group row">
+								<label for="name" class="col-sm-4 col-form-label text-md-right">Practice name</label>
+								<div class="col-md-6">
+								<input name="name" type="text" class="form-control" id="name" required>
+								</div>
+							</div>
 
-<h1>Add new Practice</h1>
-<form class="form-signin" method="POST" action="/farmlab/create/user">
-	@csrf
+							<div class="form-group row">
+								<label for="admin_name" class="col-sm-4 col-form-label text-md-right">Practice admin name</label>
+								<div class="col-md-6">
+								<input name="admin_name" type="text" class="form-control" id="admin_name" required>
+								</div>
+							</div>
 
-	<fieldset class="form-group">
-		<label for="name">Practice name</label>
-		<input name="name" type="text" class="form-control" id="name" required>
-	</fieldset>	
+							<div class="form-group row">
+								<label for="name" class="col-sm-4 col-form-label text-md-right">Practice admin email</label>
+								<div class="col-md-6">
+								<input name="email" type="email" class="form-control" id="email" required>
+								</div>
+							</div>	
 
-	<fieldset class="form-group">
-		<label for="admin_name">Practice admin name</label>
-		<input name="admin_name" type="text" class="form-control" id="admin_name" required>
-	</fieldset>	
+							<div class="form-group row">
+								<label for="name" class="col-sm-4 col-form-label text-md-right">Password</label>
+								<div class="col-md-6">
+								<input name="password" type="password" class="form-control" id="password" required>
+								</div>
+							</div>	
 
-	<fieldset class="form-group">
-		<label for="email">Practice admin email</label>
-		<input name="email" type="email" class="form-control" id="email" required>
-	</fieldset>	
+							<div class="form-group row">
+								<label for="name" class="col-sm-4 col-form-label text-md-right">Password confirmation</label>
+								<div class="col-md-6">
+								<input name="password_confirmation" type="password" class="form-control" id="password_confirmation" required>
+								</div>
+							</div>	
 
-	<fieldset class="form-group">
-		<label for="password">Practice admin password</label>
-		<input name="password" type="password" class="form-control" id="password" required>
-	</fieldset>
+	                        <div class="form-group row mb-0">
+	                            <div class="col-md-8 offset-md-4">
+	                                <button type="submit" class="btn btn-primary">
+	                                    Add practice
+	                                </button>
+	                        	</div>
+							</div>
 
-	<fieldset class="form-group">
-		<label for="password_confirmation">Password confirmation</label>
-		<input name="password_confirmation" type="password" class="form-control" id="password_confirmation" required>
-	</fieldset>
-
-	<fieldset class="form-group">
-		<button type="submit" class="btn btn-primary">Add practice</button>
-	</fieldset>
-	
-	@include ('layouts.errors')
-</form>
-
+							@include ('layouts.errors')
+						</form>
+	   				</div>
+	            </div>
+	        </div>
+	    </div>
 @endsection

@@ -24,3 +24,9 @@ C. Lab result belongs to a practice, but it also belongs to a vet.
 8) Pass the data to the vet view - vets can view the results and process the one's they are associated with // They should see the same screens as mobile apps (index all results for current day,
 filtering and view single page) // partially done - need to think about proccessing the result - ask pavle
 9) Refactior authorization - Use policies / middleware
+
+24.08 
+
+Replace current design with Laravel auth scaffolding.
+Add flash messages.
+
