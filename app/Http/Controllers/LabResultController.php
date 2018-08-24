@@ -23,13 +23,13 @@ class LabResultController extends Controller
      */
     public function index()
     {   
-        if (auth()->user()->type === User::VET) {
+        if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
         $vet = auth()->user()->practice_id;
         $results = LabResult::where('practice_id', '=', "$vet")->get();
 
         return view('labresult.index', compact('results'));
 
-        }
+        } 
 
         return redirect()->home();
 

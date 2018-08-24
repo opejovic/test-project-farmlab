@@ -61,8 +61,6 @@ class PracticeController extends Controller
             $user->addFarmLabMember();
             session()->flash('message', 'New FarmLab team member added.');
 
-
-
         } elseif (auth()->user()->type === User::FARMLABMEMBER) {
             
             $this->validate(request(), [
