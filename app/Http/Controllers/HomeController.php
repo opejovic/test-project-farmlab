@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\LabResult;
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,8 +19,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $results = LabResult::all();
-        return view('home.index', compact('results'));
+        if (! \Auth::check()) {
+            return view('home.guest');
+        }
+
+        elseif (auth()->user()->type === User::ADMIN) {
+            return view('home.admin');
+        }
+
+        elseif (auth()->user()->type === User::FARMLABMEMBER) {
+            return view('home.member');
+        }
+
+        elseif (auth()->user()->type === User::PRACTICEADMIN) {
+            return view('home.practice');
+        }
+
+        elseif (auth()->user()->type === User::VET) {
+            return redirect('labresults/index'); // tmp
+        }
+        
     }
 
     /**
