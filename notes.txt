@@ -25,16 +25,27 @@ filtering and view single page) // partially done - need to think about proccess
 
 24.08 
 
-Replace current design with Laravel auth scaffolding.
-Add flash messages.
+Replace current design with Laravel auth scaffolding. // done
+Add flash messages. // done
 
 
 ============
 Vets initially see all of the unprocessed results they are associated with. Once they process the result, they see all of the processed results from their practice. // done
 
-Vet processes the result -> clicks on the result, edits some columns and process the result. 
+Vet processes the result -> clicks on the result, edits some columns and process the result. // done
 
 index all results for current day LabResults@index
-filtering -- archives
+filtering -- archives // napraviti da moze da se filteruje iz table headera.
 and 
 view single page LabResults@show
+
+===============================
+
+Q: 1) Da li se vet id kolona unutar file-a dobija od strane farmlab (kada eksportuju cv), ili smo mi zaduzeni da ga raspodijelimo, kada vet procesira rezultat.
+
+File should be securely stored
+o
+After each upload, push notification should be sent to the apps
+
+Practice Controller: CRUD on practices (Farm Lab section)
+Vet(User) Controller: CRUD on vets (Practice section)

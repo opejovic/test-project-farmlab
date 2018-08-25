@@ -21,26 +21,18 @@ class LabResultController extends Controller
      */
     public function index()
     {   
-
+        
+         // if there are any unprocessed results show them, else show the processed results       
         if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
         
-
-            $vet = auth()->user()->practice_id;
-            $results = LabResult::where('practice_id', '=', "$vet")
-                                ->where('status', '=', 'UNPROCESSED')
-                                ->get();
-            // if there are any unprocessed results show them, else show the processed results                       
+            $results = LabResult::getUnprocessed();
 
             if ($results->count() > 0) {
                 return view('labresults.unprocessed', compact('results'));
             } else {
-                $results = LabResult::where('practice_id', '=', "$vet")
-                                ->where('status', '=', 'PROCESSED')
-                                ->get();
+                $results = LabResult::getProcessed();
                 return view('labresults.index', compact('results'));
             }
-
-
         } 
 
         return redirect()->home();

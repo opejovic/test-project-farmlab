@@ -14,6 +14,22 @@ class LabResult extends Model
     	return $this->belongsTo(Practice::class);
     }
     
+    public static function getUnprocessed()
+    {   
+        $vet = auth()->user()->practice_id;
+        return static::wherePracticeId($vet)
+                    ->whereStatus('UNPROCESSED')
+                    ->get();
+    }
+
+    public static function getProcessed()
+    {   
+        $vet = auth()->user()->practice_id;
+        return static::wherePracticeId($vet)
+                            ->whereStatus('PROCESSED')
+                            ->get();  
+    }
+
     public function processResult($request)
     {
     	$this->where('id', '=', "{$this->id}")
