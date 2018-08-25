@@ -57,16 +57,16 @@ class User extends Authenticatable
     public function addPractice()
     {
 
-            $practice = Practice::create(['name' => request('name')]);
+        $practice = Practice::create(['name' => request('name')]);
 
-            $this->create([            
-                'name' => request('admin_name'),
-                'email' => request('email'),
-                'password' => bcrypt(request('password')),
-                'type' => User::PRACTICEADMIN,
-                'status' => User::PROCESSED,
-                'practice_id' => $practice->id
-            ]);
+        $this->create([            
+            'name' => request('admin_name'),
+            'email' => request('email'),
+            'password' => bcrypt(request('password')),
+            'type' => User::PRACTICEADMIN,
+            'status' => User::PROCESSED,
+            'practice_id' => $practice->id
+        ]);
 
     }
 

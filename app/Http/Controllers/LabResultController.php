@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\File;
-use App\Http\Requests\ValidateCsv;
-use App\Jobs\ParseAndInsert;
 use App\LabResult;
 use App\User;
 use Illuminate\Http\Request;
@@ -23,11 +21,25 @@ class LabResultController extends Controller
      */
     public function index()
     {   
-        if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
-        $vet = auth()->user()->practice_id;
-        $results = LabResult::where('practice_id', '=', "$vet")->get();
 
-        return view('labresult.index', compact('results'));
+        if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
+        
+
+            $vet = auth()->user()->practice_id;
+            $results = LabResult::where('practice_id', '=', "$vet")
+                                ->where('status', '=', 'UNPROCESSED')
+                                ->get();
+            // if there are any unprocessed results show them, else show the processed results                       
+
+            if ($results->count() > 0) {
+                return view('labresults.unprocessed', compact('results'));
+            } else {
+                $results = LabResult::where('practice_id', '=', "$vet")
+                                ->where('status', '=', 'PROCESSED')
+                                ->get();
+                return view('labresults.index', compact('results'));
+            }
+
 
         } 
 
@@ -62,21 +74,21 @@ class LabResultController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\LabResult  $labResult
+     * @param  \App\LabResult  $result
      * @return \Illuminate\Http\Response
      */
-    public function show(LabResult $labResult)
+    public function show(LabResult $result)
     {
-        //
+        return view('labresults.show', compact('result'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\LabResult  $labResult
+     * @param  \App\LabResult  $result
      * @return \Illuminate\Http\Response
      */
-    public function edit(LabResult $labResult)
+    public function edit(LabResult $result)
     {
         //
     }
@@ -85,21 +97,24 @@ class LabResultController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\LabResult  $labResult
+     * @param  \App\result  $result
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LabResult $labResult)
+    public function update(Request $request, LabResult $result)
     {
-        //
+        $result->processResult($request);
+
+        return redirect('/labresults/index');
+        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\LabResult  $labResult
+     * @param  \App\LabResult  $result
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LabResult $labResult)
+    public function destroy(LabResult $result)
     {
         //
     }

@@ -14,8 +14,6 @@ C. Lab result belongs to a practice, but it also belongs to a vet.
 2) When the user uploads, check if the file is of csv type. // done
 3) Check for duplicates - dont allow upload of duplicate files // files with the same name //done
 
-20. Avgust
-
 5) Flash a message to the screen when user successfully creates a new user/uploads the result to db. // done
 6) Send a mail to new user // done --> this needs to be done in a queue // queue(New Welcome); php artisan queue:listen // done (changed the .env file QUEUE_DRIVER:database was sync);
 
@@ -30,3 +28,13 @@ filtering and view single page) // partially done - need to think about proccess
 Replace current design with Laravel auth scaffolding.
 Add flash messages.
 
+
+============
+Vets initially see all of the unprocessed results they are associated with. Once they process the result, they see all of the processed results from their practice. // done
+
+Vet processes the result -> clicks on the result, edits some columns and process the result. 
+
+index all results for current day LabResults@index
+filtering -- archives
+and 
+view single page LabResults@show

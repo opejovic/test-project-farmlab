@@ -32,8 +32,8 @@
 
 #flash-message {
   position: absolute;
-  top: 80px;
-  left: 30px;
+  bottom: 80px;
+  right: 100px;
   z-index: 10;
   animation: flash-message 8s forwards;
 }
@@ -43,3 +43,8 @@
     100% {opacity: 0; display:none;}
 }
 
+.table .thead-labresult th {
+  color: #495057;
+  background-color: #DDDDDD;
+  border-color: #dee2e6;
+}
