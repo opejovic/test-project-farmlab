@@ -49,3 +49,5 @@ After each upload, push notification should be sent to the apps
 
 Practice Controller: CRUD on practices (Farm Lab section)
 Vet(User) Controller: CRUD on vets (Practice section)
+
+ATM we are parsing the labresult of off the requested file. Need to figure out how to parse the file from storage...

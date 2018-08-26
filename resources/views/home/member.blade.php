@@ -13,11 +13,9 @@
 
 
                       <div class="card-body">
-    
                             <a href="/farmlab/create" class="btn btn-md btn-secondary">Create practice</a>
                             <a href="/file/upload" class="btn btn-md btn-secondary">Upload result</a>
-                        
-                          {{-- <a href="/labresults/process" class="btn btn-md btn-secondary">Process the result</a> --}}
+                            <a href="/labresults/process" class="btn btn-md btn-secondary">Process the result</a>
                       </div>
 
             </div>

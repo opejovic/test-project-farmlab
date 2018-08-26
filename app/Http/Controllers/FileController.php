@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\Http\Requests\ValidateCsv;
-use App\Jobs\ParseAndInsert;
 use Illuminate\Http\Request;
 
 
@@ -33,8 +32,8 @@ class FileController extends Controller
     		$file->upload();
     		
     	} catch (\Exception $e) {
-
-    		return redirect()->back()->withErrors(['Sorry, that file is already uploaded.']);
+            return $e->getMessage();
+    		// return redirect()->back()->withErrors([$e]);
     	}
 
         return back();
