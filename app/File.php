@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Jobs\ParseAndInsert;
 use App\LabResult;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -21,8 +20,6 @@ class File extends Model
 
     	if (! Storage::exists("labresults/{$fileName}")) {
 	        $filePath = Storage::putFileAs('labresults', $file, $fileName);
-
-
 
 	        $this->create([
 	            'name' => request('csv_file')->getClientOriginalName(),

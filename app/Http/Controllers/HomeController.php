@@ -19,6 +19,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        // move business logic to service container?
         if (! \Auth::check()) {
             return view('home.guest');
         }

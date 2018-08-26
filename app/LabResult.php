@@ -11,28 +11,33 @@ use Illuminate\Support\Facades\Mail;
 
 class LabResult extends Model
 {
+    const PROCESSED = 'PROCESSED';
+    const UNPROCESSED = 'UNPROCESSED';
 	protected $guarded = [];
 
     public function practice()
     {
     	return $this->belongsTo(Practice::class);
     }
-    
+
+    public function scopeResults($query, $status)
+    {
+        $vet = auth()->user()->practice_id;
+        return $query->wherePracticeId($vet)->whereStatus($status);
+    }
+
     public static function getUnprocessed()
     {   
-        $vet = auth()->user()->practice_id;
-        return static::wherePracticeId($vet)
-                            ->whereStatus('UNPROCESSED')
-                            ->get();
+        return static::results(LabResult::PROCESSED)->get();
     }
 
     public static function getProcessed()
     {   
-        $vet = auth()->user()->practice_id;
-        return static::wherePracticeId($vet)
-                            ->whereStatus('PROCESSED')
-                            ->get();  
+        return static::results(LabResult::UNPROCESSED)->get();  
     }
+
+
+    // Parse the result from the request()->file -- need to figure out how to parse it from storage/s3.
 
     public static function parseAndSave()
     {  
@@ -55,10 +60,12 @@ class LabResult extends Model
                         'vet_comment' => $data[10],
                         'vet_indicator' => $data[11], 
                         'practice_id' => $data[12],
-                        'practice_name' => Practice::whereId($data[12])->first()->name
+                        'practice_name' => Practice::name($data[12])    
+                        // 'practice_name' => Practice::whereId($data[12])->first()->name
                     ]);
 
-                  Mail::to(User::wherePracticeId($data[12])->first()->email)->queue(new Welcome);
+                  // For this to work, it needs a queue:listen command in terminal and .env file QUEUE_DRIVER set to database. Need to refactor this -- use Eventing instead?
+                  // Mail::to(User::wherePracticeId($data[12])->first()->email)->queue(new Welcome);
                 }
             fclose($handle);       
     }
@@ -70,7 +77,7 @@ class LabResult extends Model
                 'vet_comment' => $request->vet_comment, 
                 'vet_indicator' => $request->vet_indicator,
                 'vet_id' => auth()->user()->id,
-                'status' => 'PROCESSED'
+                'status' => LabResult::PROCESSED
             ]);
         session()->flash('message', 'Lab result successfully processed');
     }

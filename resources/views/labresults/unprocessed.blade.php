@@ -7,7 +7,7 @@
                 <div class="card-header">Lab Results</div>
 
                    <table class="table table-hover table-sm">
-                    <thead class="thead-dark">
+                    <thead class="thead-labresult">
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Herd</th>

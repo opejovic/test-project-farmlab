@@ -18,5 +18,8 @@ class Practice extends Model
     	return $this->hasMany(LabResult::class);
     }
 
-
+    public function scopeName($query, $data)
+    {
+        return $query->whereId($data)->first()->name;
+    }
 }

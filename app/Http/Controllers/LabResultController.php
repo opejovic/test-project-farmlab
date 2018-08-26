@@ -21,10 +21,9 @@ class LabResultController extends Controller
      */
     public function index()
     {   
-        
          // if there are any unprocessed results show them, else show the processed results       
         if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
-        
+            
             $results = LabResult::getUnprocessed();
 
             if ($results->count() > 0) {
