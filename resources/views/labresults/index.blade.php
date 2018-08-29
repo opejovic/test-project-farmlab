@@ -5,7 +5,7 @@
     <div class="row">
             <div class="card-results">
                 <div class="card-header">Lab Results</div>
-
+  
                    <table class="table table-hover table-sm">
                     <thead class="thead-labresult">
                       <tr>
