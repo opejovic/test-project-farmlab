@@ -34,14 +34,14 @@ Vets initially see all of the unprocessed results they are associated with. Once
 
 Vet processes the result -> clicks on the result, edits some columns and process the result. // done
 
-index all results for current day LabResults@index
+index all results for current day LabResults@index 
 filtering -- archives // napraviti da moze da se filteruje iz table headera.
 and 
 view single result LabResults@show // done
 
 ===============================
 
-Q: 1) Da li se vet id kolona unutar file-a dobija od strane farmlab (kada eksportuju cv), ili smo mi zaduzeni da ga dodijelimo, kada vet procesuira rezultat.
+Q: 1) Da li se vet id kolona unutar file-a dobija od strane farmlab (kada eksportuju cv), ili smo mi zaduzeni da ga dodijelimo, kada vet obradi rezultat?
 
 File should be securely stored // Amazon s3..?
 
@@ -52,4 +52,5 @@ Vet(User) Controller: CRUD on vets (Practice section)
 
 ATM we are parsing the labresult of off the requested file. Need to figure out how to parse the file from storage...
 
-When we upload a result that has a practice id whic does not exist in our db (no such practice created), need to throw an exception/error.
+When we upload a result that has a practice id which does not exist in our db (no such practice created), need to throw an exception/error.
+
