@@ -54,10 +54,10 @@
 	                        	</div>
 							</div>
 
-							@include ('layouts.errors')
 						</form>
 	   				</div>
 	            </div>
 	        </div>
+			@include ('layouts.errors')
 	    </div>
 @endsection
