@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendWelcomeMail;
 use App\Mail\Welcome;
 use App\Practice;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PracticeController extends Controller
@@ -51,7 +49,7 @@ class PracticeController extends Controller
     {
 
         if (auth()->user()->type === User::ADMIN) {
-
+            // tmp - make validator instead
             $this->validate(request(), [
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
@@ -62,7 +60,7 @@ class PracticeController extends Controller
             session()->flash('message', 'New FarmLab team member added.');
 
         } elseif (auth()->user()->type === User::FARMLABMEMBER) {
-            
+            // tmp - make validator instead
             $this->validate(request(), [
                 'name' => 'required|unique:practices',
                 'admin_name' => 'required',
