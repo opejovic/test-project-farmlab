@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\File;
 use App\LabResult;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,22 +21,34 @@ class LabResultController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-         // if there are any unprocessed results show them, else show the processed results       
+    {       
         if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
-            
-            $results = LabResult::getUnprocessed();
+            // need to refactor this asap
+            $query = LabResult::getUnprocessed()->get();
 
-            if ($results->count() > 0) {
-                return view('labresults.unprocessed', compact('results'));
+            if ($query->count() > 0) {
+                // if there are any unprocessed results from today show them, else show all unprocessed 
+                $results = LabResult::getUnprocessed()->today()->get();
+                if (count($results)) {
+                    return view('labresults.index', compact('results'));
+                } else {
+                    $results = LabResult::getUnprocessed()->get();
+                    return view('labresults.index', compact('results'));
+                }
+
             } else {
-                $results = LabResult::getProcessed();
-                return view('labresults.index', compact('results'));
-            }
-        } 
+                // if there are any processed results from today show them, else show all processed 
+                $results = LabResult::getProcessed()->get();
+                if ($results->count() > 0) {
+                    return view('labresults.index', compact('results'));
+                } else {
+                    $results = LabResult::getProcessed()->today()->get();
+                    return view('labresults.index', compact('results'));
+                }    
 
+            } 
+        }
         return redirect()->home();
-
     }
 
     /**
@@ -43,6 +56,7 @@ class LabResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function create()
     {
         
