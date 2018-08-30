@@ -4,8 +4,9 @@
 <div class="container">
     <div class="row">
             <div class="card-results">
+                @if ($results->count() > 0)
                 <div class="card-header">Lab Results</div>
-  
+                   
                    <table class="table table-hover table-sm">
                     <thead class="thead-labresult">
                       <tr>
@@ -52,7 +53,10 @@
                    
                     </tbody>
                     @endforeach
-                  </table> 
+                  </table>
+                  @else 
+                    <div class="card-body">There are no new results.</div>
+                @endif
                 </div>
             </div>
         </div>
