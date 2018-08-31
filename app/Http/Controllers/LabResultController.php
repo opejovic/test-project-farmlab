@@ -16,21 +16,18 @@ class LabResultController extends Controller
         $this->middleware('auth');
     }
     /**
-     * Display a listing of the resource.
+     * Displays the results. If there are no unprocessed results,
+     * display processed results.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(LabResult $query)
     {       
         if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
 
-            $results = LabResult::status(LabResult::UNPROCESSED);
-            // if there are no unprocessed results show processed
-            if ($results->isEmpty()) {
-                $results = LabResult::status(LabResult::PROCESSED);
-                return view('labresults.index', compact('results'));
-            }
-                return view('labresults.index', compact('results'));  
+            $results = $query->getResults();
+            return view('labresults.index', compact('results'));
+
         } 
         return redirect()->home();
     }
@@ -54,12 +51,9 @@ class LabResultController extends Controller
      */
     public function store(LabResult $labResult)
     {      
-
         return redirect()->home();
-
     }
     
-
     /**
      * Display the specified resource.
      *
@@ -93,7 +87,6 @@ class LabResultController extends Controller
      */
     public function update(LabResult $result)
     {
-        
         
     }
 
