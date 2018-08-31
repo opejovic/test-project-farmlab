@@ -2,7 +2,7 @@
                 <div class="card-header">Process the result</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/labresults/update/{{ $result->id }}" aria-label="update">
+                    <form method="POST" action="/labresults/{{ $result->id }}" aria-label="process">
                         @csrf
 
                         <div class="form-group row">

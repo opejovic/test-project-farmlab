@@ -33,16 +33,15 @@ class LabResult extends Model
         return $query->where('date_of_test', $today);
     
     }
-    public static function getUnprocessed()
+    public static function status($status)
     {   
-        return static::results(LabResult::UNPROCESSED);
-    }
+        $query = static::results($status)->today()->get();
+        if ($query->isNotEmpty()) {
+            return $query;
+        }
+        return static::results($status)->get();
 
-    public static function getProcessed()
-    {   
-        return static::results(LabResult::PROCESSED);
     }
-
     // Parse the result from the request()->file -- need to figure out how to parse it from storage/s3.
 
     public static function parseAndSave($file)

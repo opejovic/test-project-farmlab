@@ -23,31 +23,15 @@ class LabResultController extends Controller
     public function index()
     {       
         if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
-            // need to refactor this asap
-            $query = LabResult::getUnprocessed()->get();
 
-            if ($query->count() > 0) {
-                // if there are any unprocessed results from today show them, else show all unprocessed 
-                $results = LabResult::getUnprocessed()->today()->get();
-                if (count($results)) {
-                    return view('labresults.index', compact('results'));
-                } else {
-                    $results = LabResult::getUnprocessed()->get();
-                    return view('labresults.index', compact('results'));
-                }
-
-            } else {
-                // if there are any processed results from today show them, else show all processed 
-                $results = LabResult::getProcessed()->get();
-                if ($results->count() > 0) {
-                    return view('labresults.index', compact('results'));
-                } else {
-                    $results = LabResult::getProcessed()->today()->get();
-                    return view('labresults.index', compact('results'));
-                }    
-
-            } 
-        }
+            $results = LabResult::status(LabResult::UNPROCESSED);
+            // if there are no unprocessed results show processed
+            if ($results->isEmpty()) {
+                $results = LabResult::status(LabResult::PROCESSED);
+                return view('labresults.index', compact('results'));
+            }
+                return view('labresults.index', compact('results'));  
+        } 
         return redirect()->home();
     }
 
@@ -93,9 +77,11 @@ class LabResultController extends Controller
      * @param  \App\LabResult  $result
      * @return \Illuminate\Http\Response
      */
-    public function edit(LabResult $result)
+    public function edit(Request $request, LabResult $result)
     {
-        //
+        $result->processResult($request);
+
+        return redirect()->back();
     }
 
     /**
@@ -105,11 +91,9 @@ class LabResultController extends Controller
      * @param  \App\result  $result
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LabResult $result)
+    public function update(LabResult $result)
     {
-        $result->processResult($request);
-
-        return redirect('/labresults/index');
+        
         
     }
 
