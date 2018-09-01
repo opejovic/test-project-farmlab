@@ -26,21 +26,21 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="name" class="col-sm-4 col-form-label text-md-right">Practice admin email</label>
+								<label for="email" class="col-sm-4 col-form-label text-md-right">Practice admin email</label>
 								<div class="col-md-6">
 								<input name="email" type="email" class="form-control" id="email" required>
 								</div>
 							</div>	
 
 							<div class="form-group row">
-								<label for="name" class="col-sm-4 col-form-label text-md-right">Password</label>
+								<label for="password" class="col-sm-4 col-form-label text-md-right">Password</label>
 								<div class="col-md-6">
 								<input name="password" type="password" class="form-control" id="password" required>
 								</div>
 							</div>	
 
 							<div class="form-group row">
-								<label for="name" class="col-sm-4 col-form-label text-md-right">Password confirmation</label>
+								<label for="password_confirmation" class="col-sm-4 col-form-label text-md-right">Password confirmation</label>
 								<div class="col-md-6">
 								<input name="password_confirmation" type="password" class="form-control" id="password_confirmation" required>
 								</div>
