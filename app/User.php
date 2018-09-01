@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function addPractice()
     {
-
+        
         $practice = Practice::create(['name' => request('name')]);
 
         $this->create([            

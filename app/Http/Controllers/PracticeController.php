@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddMemberOrPracticeForm;
 use App\Mail\Welcome;
 use App\Practice;
 use App\User;
@@ -26,17 +27,14 @@ class PracticeController extends Controller
      */
     public function create()
     {
-
         if (\Auth::check()) {
-            if (auth()->user()->type == User::ADMIN) {
+            if (auth()->user()->type === User::ADMIN) {
                 return view('farmlab.admin');
-            } 
+            } elseif (auth()->user()->type === User::FARMLABMEMBER) {
                 return view('farmlab.member'); 
-        
-    } 
-
+            }
+        }    
         return redirect()->home();
-
     }
 
     /**
@@ -45,33 +43,10 @@ class PracticeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(AddMemberOrPracticeForm $form)
     {
 
-        if (auth()->user()->type === User::ADMIN) {
-            // tmp - make validator instead
-            $this->validate(request(), [
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|confirmed',
-            ]);
-
-            $user->addFarmLabMember();
-            session()->flash('message', 'New FarmLab team member added.');
-
-        } elseif (auth()->user()->type === User::FARMLABMEMBER) {
-            // tmp - make validator instead
-            $this->validate(request(), [
-                'name' => 'required|unique:practices',
-                'admin_name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|confirmed',
-            ]);
-
-            $user->addPractice();
-            session()->flash('message', 'New practice created.');
-
-        }
+        $form->persist();
 
         \Mail::to(request('email'))->queue(new Welcome);
 
