@@ -18,10 +18,9 @@ Route::get('/file/upload', 'FileController@create');
 Route::post('/file/upload', 'FileController@store');
 
 Route::get('/labresults/index', 'LabResultController@index');
-// // Route::get('/labresults/upload', 'LabResultController@create');
-// Route::get('/labresults/process', 'LabResultController@store');
 Route::get('/labresults/{result}', 'LabResultController@show');
-Route::post('/labresults/update/{result}', 'LabResultController@update');
+Route::post('/labresults/{result}', 'LabResultController@edit'); // if the user visits /labresults/update/{result}, need to throw exception/error, 404/not allowed
+
 
 
 
