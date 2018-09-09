@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Practice;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -57,7 +56,7 @@ class User extends Authenticatable
     public function addPractice()
     {
         
-        $practice = Practice::create(['name' => request('name')]);
+        $practice = $this->practice()->create(['name' => request('name')]);
 
         $this->create([            
             'name' => request('admin_name'),
