@@ -10530,3 +10530,10 @@ a.text-dark:focus {
   border-color: #dee2e6;
 }
 
+#card-div {
+  padding-bottom: 0;
+  padding-top: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+

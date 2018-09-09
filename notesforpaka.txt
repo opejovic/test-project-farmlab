@@ -1,0 +1,124 @@
+1) pavlefuture 10 hours ago
+
+@opejovic Mislim da ti Auth::check nije potreban. U principu practice rute moraju da idu na auth middleware i onda nemas potrebe da ovo provjerevas u controller-u
+@opejovic
+opejovic 2 hours ago Owner
+
+Tako je. Makao sam Auth::check, i stavio middleware auth.
+
+2)  pavlefuture 10 hours ago
+
+   @opejovic Ako ti neka promjenljiva treba na dosta mjesta u bladu, vrati je iz controllera. Tipa u controlleru izvadi userType i vrati ga kao promjenjljvu.
+
+3) @opejovic Svaka funkcija koju dodas mora da ima komentar. Pogeldaj dzefrijeve funkcije u kontrollerima. Svaka ima komentar iznad definicije funkcije
+
+4) @opejovic Brisi zakomentarisani kod. Uvijek mozes na history da pogledas
+
+5)  pavlefuture 10 hours ago
+
+   @opejovic Zbog ljepseg koda i manje pozvia. $user = auth()->user(); if ($user->type) === ... else if ($user->type ===). Znas li razliku izmedju == i ===?
+   @opejovic
+   opejovic 2 hours ago Owner
+
+   === pored vrijednosti provjerava i tip podatka. recimo: "1" == 1 -> ovo ce proci kao true, dok ce "1" === 1 biti false. jer je "1" string a 1 integer
+
+   U ovom konretnom slucaju je to ok? imam $table->string('type'); za usera, i imam string PRACTICE_ADMIN
+
+   Sto bi ti stavio u ovom slucaju, $user->type() == ili ===? Sto je bolje
+
+6)  pavlefuture 10 hours ago
+
+   @opejovic Koji je mail ovog korisnika, koji je password? Kako ce on da se loguje
+   @opejovic
+   opejovic 2 hours ago Owner
+
+   Dodao sam u jednom kasnijem commit-u da se salje welcome mail nakon kreacije, pa se njemu mogu dodati i kredencijali. Moze tako?
+
+7) @ognjen znas li zasto se koristi i kako static? Razliku izmedju static i self?
+
+kad nam ne treba new instance
+
+8)  pavlefuture 10 hours ago
+
+   @opejovic Migracije koje su jednom commit-ovane se ne mijenjaju. Pises novu migraciju i njom mijenjas postojecu tabelu.
+   Zasto se ovo radi? Da sam ja uzeo da pregledam kod prije ovog commit-a i odradio php artisan migrate, kad bih povukao novi kod,
+   sa izmijenjenom migracijom, morao bih da radim migrate:refresh da bi se ove promjene vidjele
+   @opejovic
+   opejovic an hour ago Owner
+
+   Jasno. I imao sam na umu ovo oko migracija, jer si mi vec pomenuo kad smo se vidjeli. Vodio sam se time da je projekat u developmentu,
+   i da mogu mijenjati tokom developmenta(?) Baza mi nije seedovana, pa sam mislio da nema problema da mijenjam migraciju u toj situaciji.
+   Sad kad je, da kazem projekat pushovan, sad nema mijenjanja.
+
+
+9) @opejovic Takodje mi nije jasno zasto si kreirao ovu tabelu? Kako si zamislio da modelujes objekte? (practice_vet)
+@opejovic
+opejovic an hour ago Owner
+
+Ima jedna lekcija u Laravel from scratch, dje Dzefri kreira pivot post_tag tabelu, pa sam mislio mozda nesto slicno tome da napravim.
+Ali ne znam ima li potrebe za tim.
+
+10)  pavlefuture 10 hours ago
+
+    @opejovic POST bi trebao da ide na /vet. Ako ces da ga kreiras za odrjedjeni practice ides sa rutom POST /pracite/{practiceID}/vet.
+    Mada mislim da nije potrebno da ides sa ovom drugom opcijom, jer user moze pripadati samo jednom practiceu.
+    Dovoljeno je da ides sa /vet routom pa u kontroleru da izvuces trenutno logovanog korisnika i njegov practice
+    @opejovic
+    opejovic an hour ago Owner
+
+    Vazi
+    @opejovic
+    opejovic an hour ago Owner
+
+    pa u kontroleru da izvuces trenutno logovanog korisnika i njegov practice. Ovako sam nesto i uradio. 'practice_id' => auth()->user()->practice_id
+
+11)  pavlefuture 11 hours ago
+
+    @opejovic za akcije ti je mnogo bolje da ides sa imenom route, i route() helperom kome se prosljedjuje ime route.
+    Na taj nacin ako promijenis putanju do rute mijenjas je samo u web fajlu. Ovako, ako hoces da promijenis file/upload
+    u lab-results/upload moras da mijenjas i u web fajlu i ovdje i na bilo kom drugom mjestu.
+    @opejovic
+    opejovic an hour ago Owner
+
+    Tacno, pocecu da primjenjujem to.
+
+12)  pavlefuture 11 hours ago
+
+    @opejovic Svim rutama daj imena i pozivaj ih u kodu po tim imenima. Takodje, ja praktikujem da middleware definisem
+    u ovom fajlu da lakse mogu da mijenjam. Definisanje u controlleru nije pogresno, ali ako hoces da grupises rute,
+    pa cijeloj grupi da dodas neki middleware to moras u web fajlu, tako da ja obicno dodjeljujem middleware ovdje.
+    @opejovic
+    opejovic an hour ago Owner
+
+    Ovdje sam imao neki problem prilikom redirektovanja na login, ne mogu trenutno da se sjetim tacno. Nije htjelo da mi
+    redirektuje na login dok nisam stavio ->name('login'). Ista stvar i za '/'
+
+13)  pavlefuture 10 hours ago
+
+    @opejovic Vidim da si importovao excel paket a da ga nisi korisitio? Je li bilo problema nekih? U svakom slucaju ako ga ne koristis trebao si da ga maknes
+    @opejovic
+    opejovic an hour ago Owner
+
+    Tih par dana, kad sam pocinjao da ucim kako da parsujem csv, probao sam 1000 stvari, pa i ovaj paket ali nisam ga koristio. Maci cu ga. Obrisan.
+
+14)  pavlefuture 10 hours ago
+
+    @opejovic Funkcija nema komentar pa nema ni opis sto bi trebala da radi, tako da ja ne ze znam da li vrace rezultate za sve practice ili samo jedan.
+    Takodje ovo sa statusima mi se ne svidja kao rjesenje. Ja bih dodao defaultni argument status koji bi bio UNPROCESSED.
+    Ako argument nije specificiran, koristice taj defaultni i vracati UNPROCESSED. A ako se preda status kao input argument vraca rezultate sa tim statusom.
+    Tako definisanu funkciju mozes da koristis na vise mjesta
+    @opejovic
+    opejovic 31 minutes ago Owner
+
+    getResults vrace danasnje rezultate za praksu od auth usera. (prvo UNPROCESSED ako ih ima), a ako nema, onda vrace sve rezultate (opet, prvo unprocessed).
+    Jer vet ne moze da vidi processed rezultate ako ne obradi unprocessed prvo, ako sam dobro razumio specifikaciju. (vets initially see all results from their practice.
+    Once they process the result they are associated with it)
+    @opejovic
+    opejovic 30 minutes ago Owner
+
+    Sto se tice ovog tvog rjesenja, slazem se. Nije mi palo na pamet to.
+
+
+______________________________
+
+$user->status -> mozda da bude defaultni UNVERIFIED, pa onda kad se posalje mail (nakon kreacije usera), i on klikne na link da verifikuje??
