@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VetRequest;
 use App\Jobs\SendWelcomeMail;
 use App\Mail\Welcome;
 use App\User;
@@ -39,22 +40,17 @@ class VetController extends Controller
         return redirect()->home();
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param VetRequest $request
+     * @param User       $user
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, User $user)
+    public function store(VetRequest $request, User $user)
     {
-
-        $this->validate(request(), [
-            'name'     => 'required',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|confirmed'
-        ]);
-
         $user->addVet();
         session()->flash('message', 'New vet created.');
 
