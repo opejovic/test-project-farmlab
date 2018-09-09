@@ -12,7 +12,8 @@ class User extends Authenticatable
     const FARM_LAB_MEMBER = 'FARM_LAB_TEAM_MEMBER';
     const PRACTICE_ADMIN = 'PRACTICE_ADMIN';
     const VET = 'PRACTICE_VET';
-    const PROCESSED = 'PROCESSED';  // tmp user status
+    const VERIFIED = 'VERIFIED';
+    const NOT_VERIFIED = 'NOT_VERIFIED';  // tmp user status
 
     /**
      * The attributes that are mass assignable.
@@ -46,21 +47,22 @@ class User extends Authenticatable
             'email'    => request('email'),
             'password' => bcrypt(request('password')),
             'type'     => User::FARM_LAB_MEMBER,
-            'status'   => User::PROCESSED
+            'status'   => User::NOT_VERIFIED
         ]);
     }
 
     public function addPractice()
     {
 
-        $practice = $this->practice()->create(['name' => request('name')]);
+        $practice = $this->practice()
+            ->create(['name' => request('name')]);
 
         $this->create([
             'name'        => request('admin_name'),
             'email'       => request('email'),
             'password'    => bcrypt(request('password')),
             'type'        => User::PRACTICE_ADMIN,
-            'status'      => User::PROCESSED,
+            'status'      => User::NOT_VERIFIED,
             'practice_id' => $practice->id
         ]);
 
@@ -73,7 +75,7 @@ class User extends Authenticatable
             'email'       => request('email'),
             'password'    => bcrypt(request('password')),
             'type'        => User::VET,
-            'status'      => User::PROCESSED,
+            'status'      => User::NOT_VERIFIED,
             'practice_id' => auth()->user()->practice_id
         ]);
     }

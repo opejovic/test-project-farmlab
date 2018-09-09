@@ -21,16 +21,16 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        @include ('layouts.nav')
+<div id="app">
+    @include ('layouts.nav')
 
-        <main class="py-4">
-            @yield('content')
-            @include ('layouts.flash')
-        </main>
-    </div>
+    <main class="py-4">
+        @yield('content')
+        @include ('layouts.flash')
+    </main>
+</div>
 
-    {{-- Display the file name in the file input form. --}}
+{{-- Display the file name in the file input form. --}}
 
 </body>
 </html>

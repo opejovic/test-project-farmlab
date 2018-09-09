@@ -8,7 +8,7 @@
                 <div class="card-header">Login</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/login" aria-label="Login">
+                    <form method="POST" action="{{ route('login') }}" aria-label="Login">
                         @csrf
 
                         <div class="form-group row">

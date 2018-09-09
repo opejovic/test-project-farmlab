@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-header text-center">Dashboard</div>
                       <div class="card-body text-center">
-                            <a href="/farmlab/create" class="btn btn-md btn-secondary">Add new lab member</a>
+                            <a href="{{ route('create') }}" class="btn btn-md btn-secondary">Add new lab member</a>
                       </div>
                 </div>
 

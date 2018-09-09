@@ -17,9 +17,9 @@
           <div class="card">
                 <div class="card-header text-center">Dashboard</div>
                     <div class="card-body text-center">
-                        <a href="/farmlab/create" class="btn btn-md btn-secondary">Create practice</a>
+                        <a href="/farmlab/create" class="btn btn-md btn-secondary">Create new practice</a>
                            <hr>
-                        <a href="/file/upload" class="btn btn-md btn-secondary">Upload result</a>
+                        <a href="/file/upload" class="btn btn-md btn-secondary">Upload new result</a>
                     </div>
                 </div>
 <br>

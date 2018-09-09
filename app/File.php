@@ -12,7 +12,7 @@ class File extends Model
 
     /**
      * Upload the file from the request, put it in storage,
-     * and if everything is ok, trigger the LabResult parseAndSave method.
+     * and then trigger the LabResult parseAndSave method.
      *
      * @return \Illuminate\Http\RedirectResponse
      */

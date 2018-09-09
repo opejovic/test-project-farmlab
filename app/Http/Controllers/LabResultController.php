@@ -23,8 +23,9 @@ class LabResultController extends Controller
     {
         if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICE_ADMIN) {
 
-            $results = $labResult->getResults();
-            return view('labresults.index', compact('results'));
+            $resultsByStatus = $labResult->getResultsByStatus();
+            $allResults = $labResult->getAllResults();
+            return view('labresults.index', compact('resultsByStatus', 'allResults'));
 
         }
         return redirect()->home();

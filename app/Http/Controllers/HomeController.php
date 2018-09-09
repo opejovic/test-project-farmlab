@@ -31,10 +31,10 @@ class HomeController extends Controller
         } elseif ($user->type === User::PRACTICE_ADMIN) {
             return view('home.practice');
         } elseif ($user->type === User::VET) {
-            $results = $labResult->getResults();
+            $resultsByStatus = $labResult->getResultsByStatus();
 
 
-            return view('home.vet', compact('results')); // tmp
+            return view('home.vet', compact('resultsByStatus')); // tmp
         }
 
     }

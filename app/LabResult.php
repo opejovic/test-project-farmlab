@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Practice;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class LabResult extends Model
@@ -16,17 +16,28 @@ class LabResult extends Model
      * query scope
      *
      * @param        $query
-     * @param string $status   (LabResult::PROCESSED or LabResult::UNPROCESSED)
-     *                         Return results for the practice of the currently auth user.
+     *
+     * Return all results for the practice of the currently auth user.
      *
      * @return mixed
      */
-    public function scopeResults($query, $status)
+    public function scopeResults($query)
     {
         $vet = auth()->user()->practice_id;
-        return $query->latest()
-            ->where('status', $status)
+        return $query->orderBy('date_of_test', 'desc')
             ->where('practice_id', $vet);
+    }
+
+    /**
+     * @param string $status
+     *
+     * query scope - returns results by status (returns unprocessed if not specified differently)
+     *
+     * @return mixed
+     */
+    public function scopeStatus($query, $status = LabResult::UNPROCESSED)
+    {
+        return $query->where('status', $status);
     }
 
     /**
@@ -49,13 +60,13 @@ class LabResult extends Model
      *
      * @return mixed
      */
-    public function status($status = LabResult::UNPROCESSED)
+    public function withStatus($status = LabResult::UNPROCESSED)
     {
-        $unprocessedToday = $this->results($status)->today()->get();
+        $unprocessedToday = $this->results()->status($status)->today()->get();
         if ($unprocessedToday->isNotEmpty()) {
             return $unprocessedToday;
         }
-        return $this->results($status)->get();
+        return $this->results()->status($status)->get();
 
     }
 
@@ -63,13 +74,23 @@ class LabResult extends Model
      * Returns results based on their status (by default, returns Unprocessed (if there are any), upload date (if there
      * are any uploaded today), for the practice of the currently auth user.
      */
-    public function getResults()
+    public function getResultsByStatus()
     {
-        $results = $this->status();
+        $results = $this->withStatus();
         if ($results->isEmpty()) {
-            return $this->status(LabResult::PROCESSED);
+            return $this->withStatus(LabResult::PROCESSED);
         }
         return $results;
+    }
+
+    /**
+     * Get all results for the practice  of the currently authenticated vet
+     *
+     * @return Collection
+     */
+    public function getAllResults()
+    {
+        return $this->results()->get();
     }
 
 

@@ -99,7 +99,7 @@ Ali ne znam ima li potrebe za tim.
     @opejovic
     opejovic an hour ago Owner
 
-    Tih par dana, kad sam pocinjao da ucim kako da parsujem csv, probao sam 1000 stvari, pa i ovaj paket ali nisam ga koristio. Maci cu ga. Obrisan.
+    Tih par dana, kad sam pocinjao da ucim kako da parsujem csv, probao sam 1000 stvari, pa i ovaj paket ali nisam ga koristio. Maci cu ga.
 
 14)  pavlefuture 10 hours ago
 
