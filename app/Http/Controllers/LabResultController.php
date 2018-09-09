@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\File;
 use App\LabResult;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class LabResultController extends Controller
 {
@@ -15,20 +12,21 @@ class LabResultController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Displays the results. If there are no unprocessed results,
      * display processed results.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $query)
-    {       
-        if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICEADMIN) {
+    public function index(LabResult $labResult)
+    {
+        if (auth()->user()->type === User::VET || auth()->user()->type === User::PRACTICE_ADMIN) {
 
-            $results = $query->getResults();
+            $results = $labResult->getResults();
             return view('labresults.index', compact('results'));
 
-        } 
+        }
         return redirect()->home();
     }
 
@@ -82,7 +80,7 @@ class LabResultController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\result  $result
+     * @param  \App\LabResult  $result
      * @return \Illuminate\Http\Response
      */
     public function update(LabResult $result)

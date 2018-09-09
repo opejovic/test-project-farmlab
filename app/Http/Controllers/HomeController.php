@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\LabResult;
 use App\User;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -12,35 +11,32 @@ class HomeController extends Controller
     {
         $this->middleware('guest')->except('index', 'destroy');
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(LabResult $labResult)
     {
+        $user = auth()->user();
 
         // move business logic to service container?
-        if (! \Auth::check()) {
+        if (!\Auth::check()) {
             return view('home.guest');
-        }
-
-        elseif (auth()->user()->type === User::ADMIN) {
+        } elseif ($user->type === User::ADMIN) {
             return view('home.admin');
-        }
-
-        elseif (auth()->user()->type === User::FARMLABMEMBER) {
+        } elseif ($user->type === User::FARM_LAB_MEMBER) {
             return view('home.member');
-        }
-
-        elseif (auth()->user()->type === User::PRACTICEADMIN) {
+        } elseif ($user->type === User::PRACTICE_ADMIN) {
             return view('home.practice');
+        } elseif ($user->type === User::VET) {
+            $results = $labResult->getResults();
+
+
+            return view('home.vet', compact('results')); // tmp
         }
 
-        elseif (auth()->user()->type === User::VET) {
-            return redirect('labresults/index'); // tmp
-        }
-        
     }
 
     /**
@@ -56,12 +52,13 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store()
     {
-        if (! auth()->attempt(request(['email', 'password']))) {
+        if (!auth()->attempt(request(['email', 'password']))) {
             return back()->withErrors([
                 'message' => 'Wrong credentials. Please try again.'
             ]);
@@ -74,7 +71,8 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy()

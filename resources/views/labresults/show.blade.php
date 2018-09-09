@@ -1,67 +1,83 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="jumbotron-fluid">
-    <div class="row justify-content-center">
-            <div class="card-results">
-                <div class="card-header">Lab Results</div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
 
-                   <table class="table table-hover table-sm">
-                    <thead class="thead-labresult">
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Herd</th>
-                        <th scope="col">Date of arrival</th>
-                        <th scope="col">Date of test</th>
-                        <th scope="col">Animal ID</th>
-                        <th scope="col">Lab code</th>
-                        <th scope="col">Test name</th>
-                        <th scope="col">Type of samples</th>
-                        <th scope="col">Reading</th>
-                        <th scope="col">Interpretation</th>
-                        <th scope="col">Farmer name</th>
-                        <th scope="col">Vet comment</th>
-                        <th scope="col">Vet indicator</th>
-                        <th scope="col">Practice name</th>
-                        <th scope="col">Status</th>
-                        {{-- <th scope="col">Vet ID</th> --}}
-                      </tr>
-                    </thead>
+                    <div class="card-header text-center"><h4>Result # {{ $result->id }}</h4></div>
+                    <div class="card-body" id="card-div">
+                        <table class="table text-center">
+                            <tbody>
+                            <tr>
+                                <th class="text-capitalize border-top-0">Herd</th>
+                                <td class="border-top-0">{{ $result->herd_number }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Date of arrival</th>
+                                <td class=""> {{ $result->date_of_arrival}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Date of test</th>
+                                <td class="">{{ $result->date_of_test}} </td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Animal ID</th>
+                                <td class="">{{ $result->animal_id}}</td>
 
-                        
-                    <tbody>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Lab code</th>
+                                <td class="">{{ $result->lab_code}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Test name</th>
+                                <td class="">{{ $result->test_name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Farmer name</th>
+                                <td class="">{{ $result->farmer_name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Type of samples</th>
+                                <td class="">{{ $result->type_of_samples}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Reading</th>
+                                <td class=""> {{ $result->reading}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Interpretation</th>
+                                <td class="">{{ $result->interpretation}}</td>
+                            </tr>
 
-                      <tr>
-                        <th scope="row"><a href="/labresults/{{ $result->id }}">{{ $result->id }}</a></th>
-                        <td>{{ $result->herd_number}}</td>
-                        <td>{{ $result->date_of_arrival}}</td>
-                        <td>{{ $result->date_of_test}}</td>
-                        <td>{{ $result->animal_id}}</td>
-                        <td>{{ $result->lab_code}}</td>
-                        <td>{{ $result->test_name}}</td>
-                        <td>{{ $result->type_of_samples}}</td>
-                        <td>{{ $result->reading}}</td>
-                        <td>{{ $result->interpretation}}</td>
-                        <td>{{ $result->farmer_name}}</td>
-                        <td>{{ $result->vet_comment}}</td>
-                        <td>{{ $result->vet_indicator}}</td>
-                        <td>{{ $result->practice_name}}</td>
-                        <td>{{ $result->status}}</td>
-                        {{-- <td>{{ $result->vet_id}}</td> --}}
-                      </tr>
-                   
-                    </tbody>
-               
-                  </table> 
-                  
-                    @if ($result->status === 'UNPROCESSED')
-                        @include ('labresults.process')
-                    @endif
+                            <tr>
+                                <th class="text-capitalize">Vet comment</th>
+                                <td class="">{{ $result->vet_comment}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Vet indicator</th>
+                                <td class="">{{ $result->vet_indicator}}</td>
+                            </tr>
 
+                            <tr>
+                                <th class="text-capitalize">Practice name</th>
+                                <td class="">{{ $result->practice_name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Status</th>
+                                <td class="">{{ $result->status}}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-
+            @if ($result->status === 'UNPROCESSED')
+                @include ('labresults.process')
+            @endif
         </div>
-
+    </div>
 @endsection

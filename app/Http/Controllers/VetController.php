@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class VetController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +22,9 @@ class VetController extends Controller
      */
     public function index()
     {
-        
+
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -25,12 +32,8 @@ class VetController extends Controller
      */
     public function create()
     {
-        if (\Auth::check()) {
-            if (auth()->user()->type === User::PRACTICEADMIN) {
-                return view('practice.admin');
-            } elseif (auth()->user()->type === User::VET) {
-                return view('practice.vet');
-            }
+        if (auth()->user()->type === User::PRACTICE_ADMIN) {
+            return view('practice.admin');
         }
 
         return redirect()->home();
@@ -39,15 +42,16 @@ class VetController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, User $user)
     {
 
         $this->validate(request(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users',
             'password' => 'required|confirmed'
         ]);
 
@@ -57,15 +61,13 @@ class VetController extends Controller
         \Mail::to(request('email'))->queue(new Welcome);
 
         return redirect()->home();
-
-
-        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -76,7 +78,8 @@ class VetController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -87,8 +90,9 @@ class VetController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -99,7 +103,8 @@ class VetController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

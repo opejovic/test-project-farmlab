@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class PracticeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,25 +27,31 @@ class PracticeController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * If the authenticated user is of type admin, return admin view
+     * Else if authenticated user is a farmlab member, return member view.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        if (\Auth::check()) {
-            if (auth()->user()->type === User::ADMIN) {
-                return view('farmlab.admin');
-            } elseif (auth()->user()->type === User::FARMLABMEMBER) {
-                return view('farmlab.member'); 
-            }
-        }    
+
+        if (auth()->user()->type === User::ADMIN) {
+            return view('farmlab.admin');
+        } elseif (auth()->user()->type === User::FARM_LAB_MEMBER) {
+            return view('farmlab.member');
+        }
+
         return redirect()->home();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * Adds new FL member if the auth user is admin / or  practice (and practice admin, (if the auth user is
+     * FARMLAB_MEMBER)).
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(AddMemberOrPracticeForm $form)
@@ -57,7 +68,8 @@ class PracticeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Practice  $practice
+     * @param  \App\Practice $practice
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Practice $practice)
@@ -68,7 +80,8 @@ class PracticeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Practice  $practice
+     * @param  \App\Practice $practice
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Practice $practice)
@@ -79,8 +92,9 @@ class PracticeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Practice  $practice
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Practice            $practice
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Practice $practice)
@@ -91,7 +105,8 @@ class PracticeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Practice  $practice
+     * @param  \App\Practice $practice
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Practice $practice)
