@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest')->except('index', 'destroy');
+        $this->middleware('guest')->except('index');
     }
 
     /**
