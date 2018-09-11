@@ -47,19 +47,20 @@ class AddMemberOrPracticeForm extends FormRequest
         }
     }
 
-
     /**
      * Create new farmlab member (if the auth user is admin),
      * or create a new practice and practice admin (if the auth user is farmlab member);
      */
     public function persist()
     {
-        if (auth()->user()->type === User::ADMIN) {
+        $user = auth()->user();
+
+        if ($user->type === User::ADMIN) {
 
             $this->user->addFarmLabMember();
             session()->flash('message', 'New FarmLab team member added.');
 
-        } elseif (auth()->user()->type === User::FARM_LAB_MEMBER) {
+        } elseif ($user->type === User::FARM_LAB_MEMBER) {
 
             $this->user->addPractice();
             session()->flash('message', 'New practice created.');

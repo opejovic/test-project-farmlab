@@ -3,19 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VetRequest;
-use App\Jobs\SendWelcomeMail;
 use App\Mail\Welcome;
 use App\User;
 use Illuminate\Http\Request;
 
 class VetController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *

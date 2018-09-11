@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 
 class PracticeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -34,10 +29,11 @@ class PracticeController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
 
-        if (auth()->user()->type === User::ADMIN) {
+        if ($user->type === User::ADMIN) {
             return view('farmlab.admin');
-        } elseif (auth()->user()->type === User::FARM_LAB_MEMBER) {
+        } elseif ($user->type === User::FARM_LAB_MEMBER) {
             return view('farmlab.member');
         }
 
@@ -50,7 +46,7 @@ class PracticeController extends Controller
      * Adds new FL member if the auth user is admin / or  practice (and practice admin, (if the auth user is
      * FARMLAB_MEMBER)).
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Requests\AddMemberOrPracticeForm $form
      *
      * @return \Illuminate\Http\Response
      */

@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the form for the file upload, if the signed in user is of the ADMIN or FARM_LAB_MEMBER type.
      *

@@ -30,16 +30,40 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * If the authenticated user is of type VET or PRACTICE_ADMIN, return true.
+     * Using this for middleware CheckType class.
+     *
+     * @return bool
+     */
+    public function practiceType()
+    {
+        $user = auth()->user();
+        if ($user->type === User::VET || $user->type === User::PRACTICE_ADMIN) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function results()
     {
         return $this->hasMany(LabResult::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function practice()
     {
         return $this->belongsTo(Practice::class);
     }
 
+    /**
+     * User FARM_LAB_ADMIN can add a FARM_LAB_MEMBER
+     */
     public function addFarmLabMember()
     {
         $this->create([
@@ -51,6 +75,10 @@ class User extends Authenticatable
         ]);
     }
 
+    /**
+     * FARM_LAB_MEMBER can create new Practice, and practice admin is created in that process. You cant create one
+     * without the other.
+     */
     public function addPractice()
     {
 
@@ -68,6 +96,9 @@ class User extends Authenticatable
 
     }
 
+    /**
+     * PRACTICE_ADMIN can add new vet to their practice.
+     */
     public function addVet()
     {
         $this->create([

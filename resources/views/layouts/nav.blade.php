@@ -14,6 +14,16 @@
                 @if (\Auth::check() && \Auth::user()->type === 'PRACTICE_VET')
 
                     @include ('layouts.archives')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">Farmer</a>
+                        <div class="dropdown-menu">
+                            @foreach (\App\LabResult::where('practice_id', auth()->user()->practice_id)->select('farmer_name')->distinct()->get() as $farmer)
+                                <a class="dropdown-item" href="{{ route('labresults.farmer', $farmer->farmer_name) }}">{{ $farmer->farmer_name }}n</a>
+                            @endforeach
+
+                        </div>
+                    </li>
 
                 @endif
             </ul>

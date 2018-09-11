@@ -31,8 +31,8 @@ class ValidateCsv extends FormRequest
     }
 
     /**
-     * Check if the header columns in the requested file
-     * exist and are in following order
+     * Check if the header columns in the requested csv file
+     * exist and if they are in following order
      *
      * @return bool
      */

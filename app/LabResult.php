@@ -24,6 +24,7 @@ class LabResult extends Model
     public function scopeResults($query)
     {
         $vet = auth()->user()->practice_id;
+
         return $query->orderBy('date_of_test', 'desc')
             ->where('practice_id', $vet);
     }
@@ -35,7 +36,7 @@ class LabResult extends Model
      *
      * @return mixed
      */
-    public function scopeStatus($query, $status = LabResult::UNPROCESSED)
+    public function scopeUnprocessed($query, $status = LabResult::UNPROCESSED)
     {
         return $query->where('status', $status);
     }
@@ -62,11 +63,11 @@ class LabResult extends Model
      */
     public function withStatus($status = LabResult::UNPROCESSED)
     {
-        $unprocessedToday = $this->results()->status($status)->today()->get();
+        $unprocessedToday = $this->results()->unprocessed($status)->today()->get();
         if ($unprocessedToday->isNotEmpty()) {
             return $unprocessedToday;
         }
-        return $this->results()->status($status)->get();
+        return $this->results()->unprocessed($status)->get();
 
     }
 
@@ -74,7 +75,7 @@ class LabResult extends Model
      * Returns results based on their status (by default, returns Unprocessed (if there are any), upload date (if there
      * are any uploaded today), for the practice of the currently auth user.
      */
-    public function getResultsByStatus()
+    public function fetchByStatus()
     {
         $results = $this->withStatus();
         if ($results->isEmpty()) {
@@ -84,20 +85,30 @@ class LabResult extends Model
     }
 
     /**
-     * Get all results for the practice  of the currently authenticated vet
+     * Returns all results for the practice  of the currently authenticated vet
      *
      * @return Collection
      */
-    public function getAllResults()
+    public function fetchAll()
     {
         return $this->results()->get();
     }
 
-
+    /**
+     * Returns the results for a farmer of the current practice
+     *
+     * @param $farmer
+     *
+     * @return Collection
+     */
+    public function fetchByFarmer($farmer)
+    {
+        return $this->where('farmer_name', $farmer)->latest()->get();
+    }
     /**
      * @param File $file
      *  Parse the result from the request()->file, and save it to DB.
-     *  need to figure out how to parse it from storage/s3.
+     *  
      *
      */
     public function parseAndSave($file)
@@ -110,22 +121,22 @@ class LabResult extends Model
         //((fgetcsv parses the first line (header) and returns an array 
         //with those columns. Implicitly, the file pointer is now on the 2nd row.))
 
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
             $this->create([
-                'herd_number'     => $data[0],
-                'date_of_arrival' => $data[1],
-                'date_of_test'    => $data[2],
-                'animal_id'       => $data[3],
-                'lab_code'        => $data[4],
-                'test_name'       => $data[5],
-                'type_of_samples' => $data[6],
-                'reading'         => $data[7],
-                'interpretation'  => $data[8],
-                'farmer_name'     => $data[9],
-                'vet_comment'     => $data[10],
-                'vet_indicator'   => $data[11],
-                'practice_id'     => $data[12],
-                'practice_name'   => Practice::name($data[12])
+                'herd_number'     => $column[0],
+                'date_of_arrival' => $column[1],
+                'date_of_test'    => $column[2],
+                'animal_id'       => $column[3],
+                'lab_code'        => $column[4],
+                'test_name'       => $column[5],
+                'type_of_samples' => $column[6],
+                'reading'         => $column[7],
+                'interpretation'  => $column[8],
+                'farmer_name'     => $column[9],
+                'vet_comment'     => $column[10],
+                'vet_indicator'   => $column[11],
+                'practice_id'     => $column[12],
+                'practice_name'   => Practice::name($column[12])
             ]);
 
             // For this to work, it needs a queue:listen command in terminal and .env file QUEUE_DRIVER set to database.
@@ -138,9 +149,9 @@ class LabResult extends Model
     /**
      * @param form $request
      *
-     * Vets processes the result through form
+     * Vets processes the result through a form
      */
-    public function processResult($request)
+    public function process($request)
     {
         $this->whereId($this->id)
             ->update([

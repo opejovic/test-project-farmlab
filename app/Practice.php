@@ -8,11 +8,17 @@ class Practice extends Model
 {
     protected $guarded = [];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function vets()
     {
         return $this->hasMany(User::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function results()
     {
         return $this->hasMany(LabResult::class);
@@ -21,13 +27,13 @@ class Practice extends Model
     /**
      * query scope
      *
-     * @param $data from CSV file column practice_id.
+     * @param $column from CSV file column practice_id.
      *              returns the name of the practice.
      *
      * @return mixed
      */
-    public function scopeName($query, $data)
+    public function scopeName($query, $column)
     {
-        return $query->whereId($data)->first()->name;
+        return $query->whereId($column)->first()->name;
     }
 }

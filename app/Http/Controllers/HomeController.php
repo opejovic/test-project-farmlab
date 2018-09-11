@@ -7,11 +7,6 @@ use App\User;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest')->except('index');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -31,8 +26,7 @@ class HomeController extends Controller
         } elseif ($user->type === User::PRACTICE_ADMIN) {
             return view('home.practice');
         } elseif ($user->type === User::VET) {
-            $resultsByStatus = $labResult->getResultsByStatus();
-
+            $resultsByStatus = $labResult->fetchByStatus();
 
             return view('home.vet', compact('resultsByStatus')); // tmp
         }

@@ -5,7 +5,6 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-
                     <div class="card-header text-center"><h4>Result # {{ $result->id }}</h4></div>
                     <div class="card-body" id="card-div">
                         <table class="table text-center">
@@ -75,6 +74,7 @@
                     </div>
                 </div>
             </div>
+
             @if ($result->status === 'UNPROCESSED')
                 @include ('labresults.process')
             @endif
