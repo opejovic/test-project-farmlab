@@ -13,23 +13,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Date of test</th>
                             <th scope="col">Test name</th>
-                            <th scope="col">
-
-                                <div class="dropdown">
-                                    <div class="btn dropdown-toggle" type="button" id="dropdownMenu2"
-                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Farmer Name
-                                    </div>
-
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        @foreach ($resultsByStatus as $result)
-                                            <a class="dropdown-item"
-                                               href="{{ route('labresults.index') }}">{{ $result->farmer_name }}</a>
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                            </th>
+                            <th scope="col">Farmer Name</th>
                             <th scope="col">Status</th>
                         </tr>
                         </thead>

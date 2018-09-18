@@ -8,7 +8,7 @@
                     <div class="card-header">Add new team member</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('create') }}">
+                        <form method="POST" action="{{ route('farmlab.store') }}">
                             @csrf
 
                             <div class="form-group row">
