@@ -10498,8 +10498,8 @@ a.text-dark:focus {
   bottom: 80px;
   right: 100px;
   z-index: 10;
-  -webkit-animation: flash-message 8s forwards;
-          animation: flash-message 8s forwards;
+  -webkit-animation: flash-message 5s forwards;
+          animation: flash-message 5s forwards;
 }
 
 @-webkit-keyframes flash-message {
