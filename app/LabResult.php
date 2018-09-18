@@ -17,28 +17,15 @@ class LabResult extends Model
      *
      * @param        $query
      *
-     * Return all results for the practice of the currently auth user.
+     * Return all unprocessed results (if not specified differently) for the practice of the currently auth user.
      *
      * @return mixed
      */
-    public function scopeResults($query)
+    public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
-        $vet = auth()->user()->practice_id;
-
         return $query->orderBy('date_of_test', 'desc')
-            ->where('practice_id', $vet);
-    }
-
-    /**
-     * @param string $status
-     *
-     * query scope - returns results by status (returns unprocessed if not specified differently)
-     *
-     * @return mixed
-     */
-    public function scopeUnprocessed($query, $status = LabResult::UNPROCESSED)
-    {
-        return $query->where('status', $status);
+            ->where('practice_id', auth()->user()->practice_id)
+            ->where('status', $status);
     }
 
     /**
@@ -48,13 +35,11 @@ class LabResult extends Model
      */
     public function scopeToday($query)
     {
-        $today = Carbon::today()->toDateString();
-        return $query->where('date_of_test', $today);
-
+        return $query->where('date_of_test', Carbon::today()->toDateString());
     }
 
     /**
-     * @param string $status (by default LabResult::UNPROCESSED, unless specified differently).
+     * @param $status (by default LabResult::UNPROCESSED, unless specified differently).
      *
      * Returns (UNPROCESSED, if not specified differently) results from today if there are any, if not returns all
      * results for the practice of a currently auth user.
@@ -63,11 +48,11 @@ class LabResult extends Model
      */
     public function withStatus($status = LabResult::UNPROCESSED)
     {
-        $unprocessedToday = $this->results()->unprocessed($status)->today()->get();
+        $unprocessedToday = $this->results($status)->today()->get();
         if ($unprocessedToday->isNotEmpty()) {
             return $unprocessedToday;
         }
-        return $this->results()->unprocessed($status)->get();
+        return $this->results($status)->get();
 
     }
 
@@ -91,7 +76,9 @@ class LabResult extends Model
      */
     public function fetchAll()
     {
-        return $this->results()->get();
+        return $this->where('practice_id',  auth()->user()->practice_id)
+                ->orderBy('date_of_test', 'desc')
+                ->get();
     }
 
     /**
@@ -103,8 +90,12 @@ class LabResult extends Model
      */
     public function fetchByFarmer($farmer)
     {
-        return $this->where('farmer_name', $farmer)->latest()->get();
+        return $this->where('farmer_name', $farmer)
+            ->where('practice_id', auth()->user()->practice_id)
+            ->latest()
+            ->get();
     }
+
     /**
      * @param File $file
      *  Parse the result from the request()->file, and save it to DB.
@@ -115,11 +106,11 @@ class LabResult extends Model
     {
 
         $handle = fopen($file, 'r');
-        fgetcsv($handle);         //Adding this line will skip the reading of the 
-        //first line from the csv file and the reading process will begin 
-        //from the second line onwards. 
-        //((fgetcsv parses the first line (header) and returns an array 
-        //with those columns. Implicitly, the file pointer is now on the 2nd row.))
+        fgetcsv($handle);         // Adding this line will skip the reading of the 
+        // first line from the csv file and the reading process will begin 
+        // from the second line onwards. 
+        // ((fgetcsv parses the first line (header) and returns an array 
+        // with those columns. Implicitly, the file pointer is now on the 2nd row.))
 
         while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
             $this->create([
@@ -151,12 +142,12 @@ class LabResult extends Model
      *
      * Vets processes the result through a form
      */
-    public function process($request)
+    public function process()
     {
         $this->whereId($this->id)
             ->update([
-                'vet_comment'   => $request->vet_comment,
-                'vet_indicator' => $request->vet_indicator,
+                'vet_comment'   => request('vet_comment'),
+                'vet_indicator' => request('vet_indicator'),
                 'vet_id'        => auth()->user()->id,
                 'status'        => LabResult::PROCESSED
             ]);
