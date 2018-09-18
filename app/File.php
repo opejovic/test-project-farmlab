@@ -10,8 +10,18 @@ class File extends Model
 {
     protected $fillable = ['name', 'file_path'];
 
+    private function fileExists($fileName)
+    {
+        if (Storage::exists("labresults/{$fileName}")) {
+            return redirect()->back()
+                ->withErrors(["The {$fileName} already exists in the storage."]);
+        }
+
+        return false;
+    }
+
     /**
-     * Upload the file from the request, put it in storage,
+     * Upload the file from the request to storage (if its not a duplicate),
      * and then trigger the LabResult parseAndSave method.
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -21,24 +31,17 @@ class File extends Model
         $file = request('csv_file');
         $fileName = $file->getClientOriginalName();
 
-        if (!Storage::exists("labresults/{$fileName}")) {
-            $filePath = Storage::putFileAs('labresults', $file, $fileName);
+        if (! $this->fileExists($fileName)) {
+        $filePath = Storage::putFileAs('labresults', $file, $fileName);
 
-            $this->create([
-                'name'      => $fileName,
-                'file_path' => storage_path($filePath)
-            ]);
+        $this->create([
+            'name'      => $fileName,
+            'file_path' => storage_path($filePath)
+        ]);
 
-            $labResult = new LabResult;
-            $labResult->parseAndSave($file);
-
-        } else {
-
-            return redirect()->back()
-                ->withErrors(["The {$fileName} already exists in the storage."]);
-        }
+        (new LabResult)->parseAndSave($file);
 
         session()->flash('message', 'File successfully uploaded.');
-
+        }
     }
 }
