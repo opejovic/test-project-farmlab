@@ -17,17 +17,13 @@ class LabResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $labResult, $farmer = null)
+    public function index(LabResult $labResult, $farmerName = null)
     {
-            if ($farmer) {
-                $allResults = $labResult->fetchByFarmer($farmer); // tmp
-            } else {
-                $allResults = $labResult->fetchAll();
-            }
+        $farmerName ? $allResults = $labResult->fetchByFarmer($farmerName) : $allResults = $labResult->fetchAll();
 
-            $resultsByStatus = $labResult->fetchByStatus();
+        $resultsByStatus = $labResult->fetchByStatus();
 
-            return view('labresults.index', compact('resultsByStatus', 'allResults'));
+        return view('labresults.index', compact('resultsByStatus', 'allResults'));
     }
 
     /**
@@ -38,7 +34,7 @@ class LabResultController extends Controller
 
     public function create()
     {
-
+        //
     }
 
     /**
@@ -48,9 +44,9 @@ class LabResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(LabResult $labResult)
+    public function store()
     {
-        return redirect()->home();
+        //
     }
 
     /**
@@ -77,7 +73,7 @@ class LabResultController extends Controller
      */
     public function edit(LabResult $result)
     {
-
+        //
     }
 
     /**
@@ -88,9 +84,9 @@ class LabResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LabResult $result)
+    public function update(LabResult $result)
     {
-        $result->process($request);
+        $result->process();
 
         return redirect()->back();
     }
