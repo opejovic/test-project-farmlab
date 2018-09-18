@@ -10,6 +10,13 @@ class File extends Model
 {
     protected $fillable = ['name', 'file_path'];
 
+
+    /**
+     * @param   $fileName [requested files name]
+     * Check if the file exists in the storage.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     private function fileExists($fileName)
     {
         if (Storage::exists("labresults/{$fileName}")) {
@@ -23,8 +30,6 @@ class File extends Model
     /**
      * Upload the file from the request to storage (if its not a duplicate),
      * and then trigger the LabResult parseAndSave method.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function upload()
     {
