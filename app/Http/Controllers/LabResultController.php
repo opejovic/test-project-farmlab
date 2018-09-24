@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\LabResult;
+use App\Models\LabResult;
 use Illuminate\Http\Request;
 
 class LabResultController extends Controller
@@ -52,7 +52,7 @@ class LabResultController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\LabResult $result
+     * @param  \App\Models\LabResult $result
      *
      * @return \Illuminate\Http\Response
      */

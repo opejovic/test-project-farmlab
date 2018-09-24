@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddMemberOrPracticeForm;
 use App\Mail\Welcome;
-use App\Practice;
-use App\User;
+use App\Models\Practice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PracticeController extends Controller
@@ -17,7 +17,7 @@ class PracticeController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -64,7 +64,7 @@ class PracticeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Practice $practice
+     * @param  \App\Models\Practice $practice
      *
      * @return \Illuminate\Http\Response
      */
@@ -89,7 +89,7 @@ class PracticeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Practice            $practice
+     * @param  \App\Models\Practice            $practice
      *
      * @return \Illuminate\Http\Response
      */

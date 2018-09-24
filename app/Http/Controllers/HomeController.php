@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\LabResult;
-use App\User;
+use App\Models\LabResult;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -16,7 +16,6 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
-        // move business logic to service container?
         if (!\Auth::check()) {
             return view('home.guest');
         } elseif ($user->type === User::ADMIN) {
@@ -26,9 +25,9 @@ class HomeController extends Controller
         } elseif ($user->type === User::PRACTICE_ADMIN) {
             return view('home.practice');
         } elseif ($user->type === User::VET) {
-            $resultsByStatus = $labResult->fetchByStatus();
+            $resultsByStatus = $labResult->fetchByStatus(); // tmp
 
-            return view('home.vet', compact('resultsByStatus')); // tmp
+            return view('home.vet', compact('resultsByStatus'));
         }
 
     }
