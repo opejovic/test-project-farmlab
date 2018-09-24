@@ -10498,8 +10498,8 @@ a.text-dark:focus {
   bottom: 80px;
   right: 100px;
   z-index: 10;
-  -webkit-animation: flash-message 5s forwards;
-          animation: flash-message 5s forwards;
+  -webkit-animation: flash-message 8s forwards;
+          animation: flash-message 8s forwards;
 }
 
 @-webkit-keyframes flash-message {
@@ -10535,5 +10535,34 @@ a.text-dark:focus {
   padding-top: 0;
   padding-right: 0;
   padding-left: 0;
+}
+
+.dropdown-menu {
+  overflow-y: auto;
+}
+
+/* The search field */
+
+#myInput {
+  width: 100%;
+  background-position: 14px 12px;
+  font-size: 16px;
+  padding: 5px 20px 5px 15px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  float: left;
+}
+
+/* The search field when it gets focus/clicked on */
+
+#myInput:focus {
+  outline: 0px solid #ddd;
+}
+
+/* The container <div> - needed to position the dropdown content */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 
