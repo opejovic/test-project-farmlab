@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -55,6 +55,18 @@ class User extends Authenticatable
     }
 
     /**
+     * If the authenticated user is of type PRACTICE_ADMIN, return true.
+     * Using this for middleware MustBePracticeAdmin class.
+     *
+     * @return bool
+     */
+    public function isPracticeAdmin()
+    {
+        $user = auth()->user();
+        return $user->type === User::PRACTICE_ADMIN ? true : false;
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function results()
@@ -77,7 +89,10 @@ class User extends Authenticatable
      */   
     public function allVets()
     {
-        return $this->where('practice_id', auth()->user()->practice_id)->latest()->get();
+        return $this->where('practice_id', auth()->user()
+            ->practice_id)
+            ->latest()
+            ->get();
     }
 
     /**

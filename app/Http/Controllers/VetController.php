@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VetRequest;
 use App\Mail\Welcome;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class VetController extends Controller
@@ -14,9 +14,11 @@ class VetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
+        $vets = $user->allVets();
 
+        return view('practice.vets', compact('vets'));
     }
 
     /**
@@ -55,13 +57,16 @@ class VetController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int Vet $vet
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $vet)
     {
-        //
+        if (auth()->user()->practice_id !== $vet->practice_id) {
+            return back();
+        }
+        return view('practice.vet', compact('vet'));
     }
 
     /**
