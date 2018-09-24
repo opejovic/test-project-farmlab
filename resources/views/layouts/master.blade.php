@@ -30,7 +30,5 @@
     </main>
 </div>
 
-{{-- Display the file name in the file input form. --}}
-
 </body>
 </html>

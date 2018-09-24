@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\File;
+use App\Models\File;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ValidateCsv extends FormRequest
@@ -32,7 +32,7 @@ class ValidateCsv extends FormRequest
 
     /**
      * Check if the header columns in the requested csv file
-     * exist and if they are in following order
+     * exist and if they are in correct order
      *
      * @return bool
      */
@@ -43,9 +43,9 @@ class ValidateCsv extends FormRequest
         $csv_file = fopen($getPath, 'r');
         $header = fgetcsv($csv_file, 0, ',');
 
-        $countheader = count($header);
+        $countHeader = count($header);
 
-        if ($countheader < 14
+        if ($countHeader == 13
             && in_array('herd_number', $header)
             && in_array('date_of_arrival', $header)
             && in_array('date_of_test', $header)

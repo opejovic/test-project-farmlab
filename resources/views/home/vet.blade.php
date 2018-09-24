@@ -35,7 +35,9 @@
 
                             </tbody>
                         @endforeach
+
                     </table>
+                    <div class="card-footer">{{ $resultsByStatus->links() }}</div>
                 </div>
             </div>
 

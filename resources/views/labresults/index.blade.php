@@ -52,6 +52,7 @@
                             </tbody>
                         @endforeach
                     </table>
+                <div class="card-footer">{{ $allResults->links() }}</div>
                 @else
                     <div class="card-body">There are no new results.</div>
                 @endif

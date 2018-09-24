@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +22,7 @@ class LabResult extends Model
      */
     public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
-        return $query->latest('date_of_test')
+        return $query->latest('id')
             ->where('practice_id', auth()->user()->practice_id)
             ->where('status', $status);
     }
@@ -47,11 +47,11 @@ class LabResult extends Model
      */
     public function withStatus($status = LabResult::UNPROCESSED)
     {
-        $unprocessedToday = $this->results($status)->today()->get();
+        $unprocessedToday = $this->results($status)->today()->paginate(15);
         if ($unprocessedToday->isNotEmpty()) {
             return $unprocessedToday;
         }
-        return $this->results($status)->get();
+        return $this->results($status)->paginate(15);
 
     }
 
@@ -77,7 +77,7 @@ class LabResult extends Model
     {
         return $this->where('practice_id',  auth()->user()->practice_id)
                 ->latest('date_of_test')
-                ->get();
+                ->paginate(15);
     }
 
     /**
@@ -92,7 +92,7 @@ class LabResult extends Model
         return $this->where('farmer_name', $farmer)
             ->where('practice_id', auth()->user()->practice_id)
             ->latest()
-            ->get();
+            ->paginate(15);
     }
 
     /**

@@ -18,8 +18,9 @@ class AppServiceProvider extends ServiceProvider
         \View::composer('layouts.nav', function ($view) {
             if (auth()->check()) {
             $view->with('farmers', 
-                \App\LabResult::where('practice_id', auth()->user()->practice_id)
+                \App\Models\LabResult::where('practice_id', auth()->user()->practice_id)
                                 ->select('farmer_name')
+                                ->orderBy('farmer_name', 'asc')
                                 ->distinct()
                                 ->get());
             }

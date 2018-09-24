@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -51,6 +51,5 @@ class File extends Model
 
         session()->flash('message', 'File successfully uploaded.');
         }
-
     }
 }
