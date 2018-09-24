@@ -16,7 +16,7 @@ class User extends Authenticatable
     const NOT_VERIFIED = 'NOT_VERIFIED';  // tmp user status
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are not mass assignable.
      *
      * @var array
      */
@@ -31,39 +31,17 @@ class User extends Authenticatable
     ];
 
     /**
-     * If the authenticated user is of type admin or FL member, return true.
-     * Using this for middleware MustBeFarmlabMember class.
+     * @param const $type1 $type2
+     * 
+     * If the authenticated user is of type1 or type2 return true.
+     * Using this for middleware MustBeFarmlabMember and MustBePracticeMember class.
      *
      * @return bool
      */
-    public function farmLabMember()
+    public function isOfType($type1, $type2 = null)
     {
         $user = auth()->user();
-        return ($user->type === User::ADMIN || $user->type === User::FARM_LAB_MEMBER) ? true : false;
-    }
-
-    /**
-     * If the authenticated user is of type VET or PRACTICE_ADMIN, return true.
-     * Using this for middleware MustBePracticeMember class.
-     *
-     * @return bool
-     */
-    public function practiceMember()
-    {
-        $user = auth()->user();
-        return ($user->type === User::VET || $user->type === User::PRACTICE_ADMIN) ? true : false;
-    }
-
-    /**
-     * If the authenticated user is of type PRACTICE_ADMIN, return true.
-     * Using this for middleware MustBePracticeAdmin class.
-     *
-     * @return bool
-     */
-    public function isPracticeAdmin()
-    {
-        $user = auth()->user();
-        return $user->type === User::PRACTICE_ADMIN ? true : false;
+        return ($user->type === $type1 || $user->type === $type2) ? true : false;
     }
 
     /**
@@ -89,8 +67,7 @@ class User extends Authenticatable
      */   
     public function allVets()
     {
-        return $this->where('practice_id', auth()->user()
-            ->practice_id)
+        return $this->where('practice_id', auth()->user()->practice_id)
             ->latest()
             ->get();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 
 class MustBeFarmlabMember
@@ -15,7 +16,7 @@ class MustBeFarmlabMember
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->user()->farmLabMember()) {
+        if (! $request->user()->isOfType(User::FARM_LAB_MEMBER, User::ADMIN)) {
             return redirect('home');
         }
 

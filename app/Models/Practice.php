@@ -36,4 +36,6 @@ class Practice extends Model
     {
         return $query->whereId($column)->first()->name;
     }
+
+    
 }

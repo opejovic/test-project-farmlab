@@ -98,8 +98,6 @@ class LabResult extends Model
     /**
      * @param File $file
      *  Parse the result from the request()->file, and save it to DB.
-     *  
-     *
      */
     public function parseAndSave($file)
     {

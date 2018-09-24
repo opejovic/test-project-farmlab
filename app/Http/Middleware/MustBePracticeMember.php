@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 
 class MustBePracticeMember
@@ -15,7 +16,7 @@ class MustBePracticeMember
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->user()->practiceMember()) {
+        if (! $request->user()->isOfType(User::VET, User::PRACTICE_ADMIN)) {
             return redirect('home');
         }
 

@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                @if (auth()->check() && auth()->user()->practiceMember())
+                @if (auth()->check() && auth()->user()->isOfType(App\Models\User::VET, App\Models\User::PRACTICE_ADMIN))
                     @include ('layouts.archives')
                     @include ('practice.dropdown')
                 @endif

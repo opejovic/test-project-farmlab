@@ -53,11 +53,11 @@
 
                             <tr>
                                 <th class="text-capitalize">Vet comment</th>
-                                <td class="">{{ $result->vet_comment}}</td>
+                                <td class="" style="max-width: 150px;">{{ $result->vet_comment}}</td>
                             </tr>
                             <tr>
                                 <th class="text-capitalize">Vet indicator</th>
-                                <td class="">{{ $result->vet_indicator}}</td>
+                                <td class="" style="max-width: 150px;">{{ $result->vet_indicator}}</td>
                             </tr>
 
                             <tr>
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            @if ($result->status === 'UNPROCESSED')
+            @if ($result->status === \App\Models\LabResult::UNPROCESSED)
                 @include ('labresults.process')
             @endif
         </div>

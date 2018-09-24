@@ -26,6 +26,9 @@ class File extends Model
         return false;
     }
 
+    /**
+     * Save the file from the request to db 
+     */
     private function saveToDb($fileName, $filePath)
     {
         $this->create([

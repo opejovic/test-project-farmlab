@@ -28,11 +28,7 @@ class VetController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->type === User::PRACTICE_ADMIN) {
-            return view('practice.admin');
-        }
-
-        return redirect()->home();
+        return view('practice.admin');
     }
 
 
