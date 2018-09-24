@@ -20,11 +20,18 @@ class File extends Model
     private function fileExists($fileName)
     {
         if (Storage::exists("labresults/{$fileName}")) {
-            return redirect()->back()
-                ->withErrors(["The {$fileName} already exists in the storage."]);
+            return back()->withErrors(["The {$fileName} already exists in the storage."]);
         }
 
         return false;
+    }
+
+    private function saveToDb($fileName, $filePath)
+    {
+        $this->create([
+            'name'      => $fileName,
+            'file_path' => storage_path($filePath)
+            ]);       
     }
 
     /**
@@ -37,16 +44,13 @@ class File extends Model
         $fileName = $file->getClientOriginalName();
 
         if (! $this->fileExists($fileName)) {
-        $filePath = Storage::putFileAs('labresults', $file, $fileName);
 
-        $this->create([
-            'name'      => $fileName,
-            'file_path' => storage_path($filePath)
-        ]);
+        $this->saveToDb($fileName, Storage::putFileAs('labresults', $file, $fileName));
 
         (new LabResult)->parseAndSave($file);
 
         session()->flash('message', 'File successfully uploaded.');
         }
+
     }
 }

@@ -12,7 +12,7 @@ class User extends Authenticatable
     const FARM_LAB_MEMBER = 'FARM_LAB_TEAM_MEMBER';
     const PRACTICE_ADMIN = 'PRACTICE_ADMIN';
     const VET = 'PRACTICE_VET';
-    const VERIFIED = 'VERIFIED';
+    const VERIFIED = 'VERIFIED'; // tmp user status
     const NOT_VERIFIED = 'NOT_VERIFIED';  // tmp user status
 
     /**
@@ -31,18 +31,27 @@ class User extends Authenticatable
     ];
 
     /**
-     * If the authenticated user is of type VET or PRACTICE_ADMIN, return true.
-     * Using this for middleware CheckType class.
+     * If the authenticated user is of type admin or FL member, return true.
+     * Using this for middleware MustBeFarmlabMember class.
      *
      * @return bool
      */
-    public function practiceType()
+    public function farmLabMember()
     {
         $user = auth()->user();
-        if ($user->type === User::VET || $user->type === User::PRACTICE_ADMIN) {
-            return true;
-        }
-        return false;
+        return ($user->type === User::ADMIN || $user->type === User::FARM_LAB_MEMBER) ? true : false;
+    }
+
+    /**
+     * If the authenticated user is of type VET or PRACTICE_ADMIN, return true.
+     * Using this for middleware MustBePracticeMember class.
+     *
+     * @return bool
+     */
+    public function practiceMember()
+    {
+        $user = auth()->user();
+        return ($user->type === User::VET || $user->type === User::PRACTICE_ADMIN) ? true : false;
     }
 
     /**
@@ -59,6 +68,16 @@ class User extends Authenticatable
     public function practice()
     {
         return $this->belongsTo(Practice::class);
+    }
+
+     /**
+      * Returns all practice members for the practice of the authenticated user.
+      * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */   
+    public function allVets()
+    {
+        return $this->where('practice_id', auth()->user()->practice_id)->latest()->get();
     }
 
     /**

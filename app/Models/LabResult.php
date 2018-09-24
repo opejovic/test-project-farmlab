@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +22,7 @@ class LabResult extends Model
      */
     public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
-        return $query->orderBy('date_of_test', 'desc')
+        return $query->latest('date_of_test')
             ->where('practice_id', auth()->user()->practice_id)
             ->where('status', $status);
     }
@@ -35,7 +34,7 @@ class LabResult extends Model
      */
     public function scopeToday($query)
     {
-        return $query->where('date_of_test', Carbon::today()->toDateString());
+        return $query->where('date_of_test', today()->toDateString());
     }
 
     /**
@@ -77,7 +76,7 @@ class LabResult extends Model
     public function fetchAll()
     {
         return $this->where('practice_id',  auth()->user()->practice_id)
-                ->orderBy('date_of_test', 'desc')
+                ->latest('date_of_test')
                 ->get();
     }
 
@@ -104,7 +103,6 @@ class LabResult extends Model
      */
     public function parseAndSave($file)
     {
-
         $handle = fopen($file, 'r');
         fgetcsv($handle);         // Adding this line will skip the reading of the 
         // first line from the csv file and the reading process will begin 
