@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,26 +10,45 @@ class LabResult extends Model
 {
     const PROCESSED = 'PROCESSED';
     const UNPROCESSED = 'UNPROCESSED';
+
     protected $guarded = [];
+
+    /**
+     * The "booting" method of the model.
+     * Applies a anonymous global scope for the model. All queries will return 
+     * results for the practice of the authenticated user.
+     * 
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('practice_id', function (Builder $builder) {
+            $builder->where('practice_id', auth()->user()->practice_id);
+        });
+    }
 
     /**
      * query scope
      *
-     * @param        $query
+     * Return all results for the practice of the currently auth user.
      *
-     * Return all unprocessed results (if not specified differently) for the practice of the currently auth user.
+     * @param        $query
+     * @param string $status
      *
      * @return mixed
      */
-    public function scopeResults($query, $status = LabResult::UNPROCESSED)
+    public function scopeResults($query, $status)
     {
         return $query->latest('id')
-            ->where('practice_id', auth()->user()->practice_id)
             ->where('status', $status);
     }
 
     /**
      * queryScope for the results that were created today.
+     *
+     * @param $query
      *
      * @return mixed
      */
@@ -75,9 +95,7 @@ class LabResult extends Model
      */
     public function fetchAll()
     {
-        return $this->where('practice_id',  auth()->user()->practice_id)
-                ->latest('date_of_test')
-                ->paginate(15);
+        return $this->latest('date_of_test')->paginate(15);
     }
 
     /**
@@ -89,10 +107,7 @@ class LabResult extends Model
      */
     public function fetchByFarmer($farmer)
     {
-        return $this->where('farmer_name', $farmer)
-            ->where('practice_id', auth()->user()->practice_id)
-            ->latest()
-            ->paginate(15);
+        return $this->where('farmer_name', $farmer)->latest()->paginate(15);
     }
 
     /**
