@@ -53,7 +53,7 @@ class VetController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int Vet $vet
+     * @param User $vet
      *
      * @return \Illuminate\Http\Response
      */

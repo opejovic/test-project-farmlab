@@ -12,8 +12,6 @@ class LabResultController extends Controller
      * display processed results. If there is a farmer in the URI (If the user filters the results by farmer name),
      * then return the results belonging to that farmer.
      *
-     * @param $labResult
-     * @param $farmer
      *
      * @return \Illuminate\Http\Response
      */

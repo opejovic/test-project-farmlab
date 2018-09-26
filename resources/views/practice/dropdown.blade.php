@@ -3,14 +3,19 @@
                                aria-haspopup="true" aria-expanded="false">Farmer</a>
 
                             <div id="dropdown-menu" class="dropdown-menu" style="height: 200px;">
+                                
                                 <input class="dropdown-item" type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                                <div class="dropdown-divider"></div>
+
                                 @foreach ($farmers as $farmer)
-                                    <a class="dropdown-item" href="{{ route('labresults.farmer', $farmer->farmer_name) }}">{{ $farmer->farmer_name }}n</a>
+                                    <a class="dropdown-item" href="{{ route('labresults.farmer', $farmer->farmer_name) }}">{{ $farmer->farmer_name }}</a>
                                 @endforeach
                             </div>
                         </li>
 
-                   <script type="application/javascript">
+
+                    {{-- Filter farmers in the dropdown menu --}}
+                    <script type="application/javascript">
                         function filterFunction() {
                             var input, filter, ul, li, a, i;
                             input = document.getElementById("myInput");

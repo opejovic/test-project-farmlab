@@ -31,10 +31,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * @param const $type1 $type2
-     * 
+     *
      * If the authenticated user is of type1 or type2 return true.
      * Using this for middleware MustBeFarmlabMember and MustBePracticeMember class.
+     *
+     * @param      $type1
+     * @param null $type2
      *
      * @return bool
      */

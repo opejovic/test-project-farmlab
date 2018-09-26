@@ -27,8 +27,9 @@ class Practice extends Model
     /**
      * query scope
      *
+     * @param $query
      * @param $column from CSV file column practice_id.
-     *              returns the name of the practice.
+     *                returns the name of the practice.
      *
      * @return mixed
      */
@@ -37,5 +38,5 @@ class Practice extends Model
         return $query->whereId($column)->first()->name;
     }
 
-    
+
 }

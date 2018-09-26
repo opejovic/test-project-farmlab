@@ -10,10 +10,9 @@ class File extends Model
 {
     protected $fillable = ['name', 'file_path'];
 
-
     /**
      * @param   $fileName [requested files name]
-     * Check if the file exists in the storage.
+     *                    Check if the file exists in the storage.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -27,14 +26,17 @@ class File extends Model
     }
 
     /**
-     * Save the file from the request to db 
+     * Save the file from the request to db
+     *
+     * @param $fileName
+     * @param $filePath
      */
     private function saveToDb($fileName, $filePath)
     {
         $this->create([
             'name'      => $fileName,
             'file_path' => storage_path($filePath)
-            ]);       
+        ]);
     }
 
     /**
@@ -46,13 +48,13 @@ class File extends Model
         $file = request('csv_file');
         $fileName = $file->getClientOriginalName();
 
-        if (! $this->fileExists($fileName)) {
+        if (!$this->fileExists($fileName)) {
 
-        $this->saveToDb($fileName, Storage::putFileAs('labresults', $file, $fileName));
+            $this->saveToDb($fileName, Storage::putFileAs('labresults', $file, $fileName));
 
-        (new LabResult)->parseAndSave($file);
+            (new LabResult)->parseAndSave($file);
 
-        session()->flash('message', 'File successfully uploaded.');
+            session()->flash('message', 'File successfully uploaded.');
         }
     }
 }
