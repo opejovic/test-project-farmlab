@@ -26,9 +26,3 @@ Route::group(['middleware' => ['auth']], function ()
     Route::post('/labresults/{result}', 'LabResultController@update')->name('labresults.process')->middleware('practice');
 
 });
-
-
-
-
-
-
