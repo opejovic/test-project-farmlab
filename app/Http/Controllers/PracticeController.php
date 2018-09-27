@@ -52,13 +52,9 @@ class PracticeController extends Controller
      */
     public function store(AddMemberOrPracticeForm $form)
     {
-
         $form->persist();
 
-        \Mail::to(request('email'))->queue(new Welcome);
-
         return redirect()->home();
-
     }
 
     /**
