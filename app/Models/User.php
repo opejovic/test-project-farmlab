@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Mail\Welcome;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -79,13 +80,15 @@ class User extends Authenticatable
      */
     public function addFarmLabMember()
     {
-        $this->create([
+        $newUser = $this->create([
             'name'     => request('name'),
             'email'    => request('email'),
             'password' => bcrypt(request('password')),
             'type'     => User::FARM_LAB_MEMBER,
             'status'   => User::NOT_VERIFIED
         ]);
+
+        \Mail::to(request('email'))->queue(new Welcome($newUser));
     }
 
     /**
@@ -98,7 +101,7 @@ class User extends Authenticatable
         $practice = $this->practice()
             ->create(['name' => request('name')]);
 
-        $this->create([
+        $newUser = $this->create([
             'name'        => request('admin_name'),
             'email'       => request('email'),
             'password'    => bcrypt(request('password')),
@@ -106,6 +109,8 @@ class User extends Authenticatable
             'status'      => User::NOT_VERIFIED,
             'practice_id' => $practice->id
         ]);
+
+        \Mail::to(request('email'))->queue(new Welcome($newUser));
 
     }
 
