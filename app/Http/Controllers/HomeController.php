@@ -51,7 +51,7 @@ class HomeController extends Controller
      */
     public function store()
     {
-        if (!auth()->attempt(request(['email', 'password']))) {
+        if (! auth()->attempt(request(['email', 'password']))) {
             return back()->withErrors([
                 'message' => 'Wrong credentials. Please try again.'
             ]);

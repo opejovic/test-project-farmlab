@@ -22,6 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $guarded = [];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -34,7 +35,7 @@ class User extends Authenticatable
     /**
      *
      * If the authenticated user is of type1 or type2 return true.
-     * Using this for middleware MustBeFarmlabMember and MustBePracticeMember class.
+     * Using this for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin class.
      *
      * @param      $type1
      * @param null $type2
