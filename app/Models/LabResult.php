@@ -39,51 +39,21 @@ class LabResult extends Model
      *
      * @return mixed
      */
-    public function scopeResults($query, $status)
+    public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
         return $query->latest('id')
-            ->where('status', $status);
+            ->where('status', $status)->paginate(15);
     }
 
     /**
-     * queryScope for the results that were created today.
-     *
-     * @param $query
-     *
-     * @return mixed
-     */
-    public function scopeToday($query)
-    {
-        return $query->where('date_of_test', today()->toDateString());
-    }
-
-    /**
-     * @param $status (by default LabResult::UNPROCESSED, unless specified differently).
-     *
-     * Returns (UNPROCESSED, if not specified differently) results from today if there are any, if not returns all
-     * results for the practice of a currently auth user.
-     *
-     * @return mixed
-     */
-    public function withStatus($status = LabResult::UNPROCESSED)
-    {
-        $unprocessedToday = $this->results($status)->today()->paginate(15);
-        if ($unprocessedToday->isNotEmpty()) {
-            return $unprocessedToday;
-        }
-        return $this->results($status)->paginate(15);
-
-    }
-
-    /**
-     * Returns results based on their status (by default, returns Unprocessed (if there are any), upload date (if there
-     * are any uploaded today), for the practice of the currently auth user.
+     * Returns results based on their status (by default, returns Unprocessed (if there are any)
+     * for the practice of the currently auth user.
      */
     public function fetchByStatus()
     {
-        $results = $this->withStatus();
+        $results = $this->results();
         if ($results->isEmpty()) {
-            return $this->withStatus(LabResult::PROCESSED);
+            return $this->results(LabResult::PROCESSED);
         }
         return $results;
     }
