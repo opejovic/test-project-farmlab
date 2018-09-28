@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\VetRequest;
-use App\Models\User;
+use App\Http\Requests\LabMemberRequest;
 use Illuminate\Http\Request;
 
-class VetController extends Controller
+class LabMemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,58 +14,48 @@ class VetController extends Controller
      */
     public function index()
     {
-        $vets = auth()->user()->allVets();
-
-        return view('vets.index', compact('vets'));
+        //
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new farm lab team member.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('vets.create');
+        return view('labmember.create');
     }
-
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param VetRequest $request
-     * @param User       $user
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(VetRequest $request)
+    public function store(LabMemberRequest $request)
     {
-        auth()->user()->addVet();
-        session()->flash('message', 'New vet created.');
+        auth()->user()->addFarmLabMember();
+        session()->flash('message', 'New FarmLab team member added.');
 
-        return redirect()->home();
+        return redirect('home');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param User $vet
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $vet)
+    public function show($id)
     {
-        if (auth()->user()->practice_id !== $vet->practice_id) {
-            return back();
-        }
-        return view('vets.show', compact('vet'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -77,9 +66,8 @@ class VetController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -90,8 +78,7 @@ class VetController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

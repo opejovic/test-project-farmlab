@@ -5,30 +5,21 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Add new practice</div>
+                    <div class="card-header">Add new team member</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('farmlab.store') }}">
+                        <form method="POST" action="{{ route('members.store') }}">
                             @csrf
 
                             <div class="form-group row">
-                                <label for="name" class="col-sm-4 col-form-label text-md-right">Practice name</label>
+                                <label for="name" class="col-sm-4 col-form-label text-md-right">Username</label>
                                 <div class="col-md-6">
                                     <input name="name" type="text" class="form-control" id="name" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="admin_name" class="col-sm-4 col-form-label text-md-right">Practice admin
-                                    name</label>
-                                <div class="col-md-6">
-                                    <input name="admin_name" type="text" class="form-control" id="admin_name" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="email" class="col-sm-4 col-form-label text-md-right">Practice admin
-                                    email</label>
+                                <label for="email" class="col-sm-4 col-form-label text-md-right">Email</label>
                                 <div class="col-md-6">
                                     <input name="email" type="email" class="form-control" id="email" required>
                                 </div>
@@ -53,15 +44,16 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Add practice
+                                        Add member
                                     </button>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
             </div>
             @include ('layouts.errors')
         </div>
+    </div>
+
 @endsection

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddMemberOrPracticeForm;
-use App\Mail\Welcome;
+use App\Http\Requests\PracticeRequest;
 use App\Models\Practice;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class PracticeController extends Controller
@@ -29,15 +27,7 @@ class PracticeController extends Controller
      */
     public function create()
     {
-        $user = auth()->user();
-
-        if ($user->type === User::ADMIN) {
-            return view('farmlab.admin');
-        } elseif ($user->type === User::FARM_LAB_MEMBER) {
-            return view('farmlab.member');
-        }
-
-        return redirect()->home();
+        return view('practice.create');
     }
 
     /**
@@ -50,9 +40,10 @@ class PracticeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(AddMemberOrPracticeForm $form)
+    public function store(PracticeRequest $request)
     {
-        $form->persist();
+        auth()->user()->addPractice();
+        session()->flash('message', 'New practice created.');
 
         return redirect()->home();
     }

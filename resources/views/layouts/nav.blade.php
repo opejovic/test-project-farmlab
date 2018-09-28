@@ -13,7 +13,7 @@
             <ul class="navbar-nav mr-auto">
                 @if (auth()->check() && auth()->user()->isOfType(App\Models\User::VET, App\Models\User::PRACTICE_ADMIN))
                     @include ('layouts.archives')
-                    @include ('practice.dropdown')
+                    @include ('vets.dropdown')
                 @endif
             </ul>
 

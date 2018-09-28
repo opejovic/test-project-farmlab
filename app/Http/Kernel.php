@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'practice'      => \App\Http\Middleware\MustBePracticeMember::class,
         'practice.admin'    => \App\Http\Middleware\MustBePracticeAdmin::class,
         'farmlab'      => \App\Http\Middleware\MustBeFarmlabMember::class,
+        'farmlab.admin'      => \App\Http\Middleware\MustBeAdmin::class,
 
     ];
 }
