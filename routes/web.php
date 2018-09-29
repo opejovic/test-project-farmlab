@@ -1,13 +1,16 @@
 <?php
 
+Auth::routes();
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
-Route::get('/login', 'HomeController@create')->middleware('guest');
-Route::post('/login', 'HomeController@store')->name('login')->middleware('guest');
+
 
 Route::group(['middleware' => ['auth']], function ()
 {
-    Route::get('/logout', 'HomeController@destroy')->name('logout');
+    // Without this route, it throws a MethodNotAllowed exception when user types /logout in the browser
+    // if the user is already signed in.
+    Route::get('/logout', 'Auth\LoginController@logout');
 
     Route::get('/members/create', 'LabMemberController@create')->name('members.create')->middleware('farmlab.admin');
     Route::post('/members/create', 'LabMemberController@store')->name('members.store')->middleware('farmlab.admin');
@@ -28,3 +31,7 @@ Route::group(['middleware' => ['auth']], function ()
     Route::get('/labresults/{result}', 'LabResultController@show')->name('labresults.show')->middleware('practice');
     Route::post('/labresults/{result}', 'LabResultController@update')->name('labresults.process')->middleware('practice');
 });
+
+
+
+
