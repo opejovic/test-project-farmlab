@@ -34,6 +34,16 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout', 'getLogout']);
+    }
+    
+    /** 
+    * If the user tries the type logout in the url 
+    * then he will be redirected to 404. 
+    *   
+    */
+    public function getLogout()
+    {
+        return abort(404);
     }
 }

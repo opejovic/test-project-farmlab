@@ -2,16 +2,15 @@
 
 Auth::routes();
 
+// Without this route, it throws a MethodNotAllowed exception when user types logout in the url
+// if the user is already signed in.
+Route::get('/logout', 'Auth\LoginController@getLogout');
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
-
 Route::group(['middleware' => ['auth']], function ()
 {
-    // Without this route, it throws a MethodNotAllowed exception when user types /logout in the browser
-    // if the user is already signed in.
-    Route::get('/logout', 'Auth\LoginController@logout');
-
     Route::get('/members/create', 'LabMemberController@create')->name('members.create')->middleware('farmlab.admin');
     Route::post('/members/create', 'LabMemberController@store')->name('members.store')->middleware('farmlab.admin');
 
@@ -26,12 +25,8 @@ Route::group(['middleware' => ['auth']], function ()
     Route::post('/vets', 'VetController@store')->name('vet.store')->middleware('practice.admin');
     Route::get('/vets/{vet}', 'VetController@show')->name('vet.show')->middleware('practice.admin');
 
-    Route::get('/labresults/index', 'LabResultController@index')->name('labresults.index')->middleware('practice');
+    Route::get('/labresults', 'LabResultController@index')->name('labresults.index')->middleware('practice');
     Route::get('/labresults/farmer/{farmerName}', 'LabResultController@index')->name('labresults.farmer')->middleware('practice');
     Route::get('/labresults/{result}', 'LabResultController@show')->name('labresults.show')->middleware('practice');
     Route::post('/labresults/{result}', 'LabResultController@update')->name('labresults.process')->middleware('practice');
 });
-
-
-
-
