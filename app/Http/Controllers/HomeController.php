@@ -13,7 +13,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $labResult)
+    public function index(LabResult $labresult)
     {
         $user = auth()->user();
 
@@ -26,7 +26,7 @@ class HomeController extends Controller
         } elseif ($user->type === User::PRACTICE_ADMIN) {
             return view('home.practice');
         } elseif ($user->type === User::VET) {
-            $resultsByStatus = $labResult->fetchByStatus(); // tmp
+            $resultsByStatus = $labresult->fetchByStatus(); // tmp
 
             return view('home.vet', compact('resultsByStatus'));
         }

@@ -16,9 +16,9 @@
                                 </tr>
                                 <tr>
                                     <th class="text-capitalize border-bottom-1">{{ $vet->id }}</th>
-                                    <th class="text-capitalize border-bottom-1"><a href="#">{{ $vet->name }}</a></th>
-                                    <th class="text-capitalize border-bottom-1"><a href="#">{{ $vet->created_at }}</a></th>
-                                    <th class="text-capitalize border-bottom-1"><a href="#">{{ $vet->status }}</a></th>
+                                    <th class="text-capitalize border-bottom-1">{{ $vet->name }}</th>
+                                    <th class="text-capitalize border-bottom-1">{{ $vet->created_at }}</th>
+                                    <th class="text-capitalize border-bottom-1">{{ $vet->status }}</th>
                                 </tr>
 
                             </tbody>

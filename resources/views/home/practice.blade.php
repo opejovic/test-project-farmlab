@@ -20,9 +20,9 @@
 
 
                     <div class="card-body text-center">
-                        <a href="{{ route('vet.create') }}" class="btn btn-md btn-secondary">Add new vet</a>
+                        <a href="{{ route('vets.create') }}" class="btn btn-md btn-secondary">Add new vet</a>
                         <hr>
-                        <a href="{{ route('vet.index') }}" class="btn btn-md btn-secondary">See vets</a>
+                        <a href="{{ route('vets.index') }}" class="btn btn-md btn-secondary">See vets</a>
                     </div>
                     
             </div>

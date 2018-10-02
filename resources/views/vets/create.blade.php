@@ -8,7 +8,7 @@
                     <div class="card-header">Add new vet</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('vet.store') }}">
+                        <form method="POST" action="{{ route('vets.store') }}">
                             @csrf
 
                             <div class="form-group row">

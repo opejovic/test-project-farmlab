@@ -56,9 +56,8 @@ class VetController extends Controller
      */
     public function show(User $vet)
     {
-        if (auth()->user()->practice_id !== $vet->practice_id) {
-            return back();
-        }
+        abort_unless(auth()->user()->practice_id == $vet->practice_id, 404);
+
         return view('vets.show', compact('vet'));
     }
 
