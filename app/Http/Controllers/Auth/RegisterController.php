@@ -21,7 +21,17 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        // When the user tries to go to /register page, he will get 404 error.
+        abort(404);
+    }
 
     /**
      * Where to redirect users after registration.
