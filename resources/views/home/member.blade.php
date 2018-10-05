@@ -17,9 +17,9 @@
           <div class="card">
                 <div class="card-header text-center">Dashboard</div>
                     <div class="card-body text-center">
-                        <a href="{{ route('practice.create') }}" class="btn btn-md btn-secondary">Create new practice</a>
-                           <hr>
-                        <a href="{{ route('file.create') }}" class="btn btn-md btn-secondary">Upload new result</a>
+                        <a href="{{ route('practice.create') }}" class="btn btn-md btn-secondary">Create new practice</a><hr>
+                        <a href="{{ route('file.create') }}" class="btn btn-md btn-secondary">Upload new result</a><hr>
+                        <a href="{{ route('practice.index') }}" class="btn btn-md btn-secondary">See practices</a>
                     </div>
                 </div>
 <br>

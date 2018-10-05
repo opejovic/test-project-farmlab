@@ -15,13 +15,13 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        //
+        $practices = Practice::oldest()->get();
+
+        return view('practice.index', compact('practices'));
     }
 
     /**
      * Show the form for creating a new resource.
-     * If the authenticated user is of type admin, return admin view
-     * Else if authenticated user is a farmlab member, return member view.
      *
      * @return \Illuminate\Http\Response
      */
@@ -57,7 +57,7 @@ class PracticeController extends Controller
      */
     public function show(Practice $practice)
     {
-        //
+        return view('practice.show', compact('practice'));
     }
 
     /**

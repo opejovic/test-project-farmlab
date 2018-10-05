@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LabMemberRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LabMemberController extends Controller
@@ -14,7 +15,9 @@ class LabMemberController extends Controller
      */
     public function index()
     {
-        //
+        $members = User::whereType(User::FARM_LAB_MEMBER)->get();
+
+        return view('labmember.index', compact('members'));
     }
 
     /**
@@ -49,7 +52,9 @@ class LabMemberController extends Controller
      */
     public function show($id)
     {
-        //
+        $member = User::whereType(User::FARM_LAB_MEMBER)->findOrFail($id);
+
+        return view('labmember.show', compact('member'));
     }
 
     /**
@@ -83,6 +88,11 @@ class LabMemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::whereId($id)->firstOrFail();
+        $user->delete();
+
+        session()->flash('message', 'Lab member successfully deleted');
+
+        return redirect('members');
     }
 }
