@@ -77,6 +77,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Send a welcome email to newly created user.
+     *
+     * @return new App\Mail\Welcome
+     */
+    protected function sendWelcomeEmail($newUser)
+    {
+        return \Mail::to(request('email'))->queue(new Welcome($newUser));
+    }
+
+    /**
      * User FARM_LAB_ADMIN can add a FARM_LAB_MEMBER
      */
     public function addFarmLabMember()
@@ -89,7 +99,7 @@ class User extends Authenticatable
             'status'   => User::NOT_VERIFIED
         ]);
 
-        \Mail::to(request('email'))->queue(new Welcome($newUser));
+        $this->sendWelcomeEmail($newUser);
     }
 
     /**
@@ -111,8 +121,7 @@ class User extends Authenticatable
             'practice_id' => $practice->id
         ]);
 
-        \Mail::to(request('email'))->queue(new Welcome($newUser));
-
+        $this->sendWelcomeEmail($newUser);
     }
 
     /**
@@ -120,7 +129,7 @@ class User extends Authenticatable
      */
     public function addVet()
     {
-        $this->create([
+        $newUser = $this->create([
             'name'        => request('name'),
             'email'       => request('email'),
             'password'    => bcrypt(request('password')),
@@ -128,5 +137,7 @@ class User extends Authenticatable
             'status'      => User::NOT_VERIFIED,
             'practice_id' => auth()->user()->practice_id
         ]);
+
+        $this->sendWelcomeEmail($newUser);
     }
 }

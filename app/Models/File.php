@@ -11,18 +11,28 @@ class File extends Model
     protected $fillable = ['name', 'file_path'];
 
     /**
-     * @param   $fileName [requested files name]
-     *                    Check if the file exists in the storage.
+     * Check if the file exists in the storage.
      *
+     * @param   $fileName [requested files name]
+     * 
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function fileExists($fileName)
+    private function existsInStorage($fileName)
     {
-        if (Storage::exists("labresults/{$fileName}")) {
-            return back()->withErrors(["The {$fileName} already exists in the storage."]);
-        }
+        return (Storage::exists("labresults/{$fileName}")) ? true : false;
+    }
 
-        return false;
+    /**
+     * Check if the file exists in the database
+     * 
+     * @param   $fileName [requested files name]
+     * 
+     * @return void
+     */
+    private function existsInDb($fileName)
+    {
+        $dbFile = $this->where('name', $fileName)->first();
+        return ($dbFile !== null) ? true : false;
     }
 
     /**
@@ -48,13 +58,18 @@ class File extends Model
         $file = request('csv_file');
         $fileName = $file->getClientOriginalName();
 
-        if (!$this->fileExists($fileName)) {
-
-            $this->saveToDb($fileName, Storage::putFileAs('labresults', $file, $fileName));
-
-            (new LabResult)->parseAndSave($file);
-
-            session()->flash('message', 'File successfully uploaded.');
+        if ($this->existsInDb($fileName)) {
+            return back()->withErrors(["The {$fileName} already exists in our database records."]);
         }
+
+        if ($this->existsInStorage($fileName)) {
+            return back()->withErrors(["The {$fileName} already exists in the storage."]);
+        }
+
+        $this->saveToDb($fileName, Storage::putFileAs('labresults', $file, $fileName));
+
+        (new LabResult)->parseAndSave($file);
+
+        session()->flash('message', 'File successfully uploaded.');
     }
 }

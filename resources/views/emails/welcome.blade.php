@@ -5,8 +5,8 @@ Welcome to FarmLab
 
 Your username is: {{ $newUser->email }}
 
-@component('mail::button', ['url' => ''])
-    Create a password
+@component('mail::button', ['url' => 'http://127.0.0.1:8000/password/email'])
+    Password Reset
 @endcomponent
 
 @component('mail::panel', ['url' => ''])
