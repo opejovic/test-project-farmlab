@@ -95,6 +95,11 @@ class VetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vet = User::where('id', $id)->firstOrFail();
+        $vet->delete();
+
+        session()->flash('message', 'Vet successfully removed');
+
+        return redirect('vets');
     }
 }

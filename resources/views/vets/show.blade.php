@@ -24,6 +24,19 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="card-footer">
+                       <form action="{{ route('vets.destroy', $vet->id) }}" method="POST">
+                           @csrf
+                           @method('DELETE')
+
+                            <button type="submit" onclick="return confirm('Are you sure you want to remove this user?')" class="btn btn-link">
+                                Delete
+                            </button>
+                       </form>
+                    </div>
+
+
                 </div>
             </div>
         </div>
