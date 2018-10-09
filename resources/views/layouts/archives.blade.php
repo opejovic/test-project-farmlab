@@ -4,6 +4,6 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
       <a class="dropdown-item" href="{{ route('labresults.index') }}">All results</a>
-      <a class="dropdown-item" href="/labresults?by={{ Auth::user()->name }}">My results</a> 
+      <a class="dropdown-item" href="/labresults?my">My results</a> 
     </div>
 </li>
