@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LabResult;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LabResultController extends Controller
@@ -20,6 +21,12 @@ class LabResultController extends Controller
         $farmerName ? $allResults = $labresult->fetchByFarmer($farmerName) : $allResults = $labresult->fetchAll();
 
         $resultsByStatus = $labresult->fetchByStatus();
+        
+        if (request()->has('by')) {
+            $vet = User::whereId(auth()->id())->firstOrFail();
+            $allResults = $labresult->where('vet_id', $vet->id)->paginate(10);
+            $allResults->withPath("labresults?by={$vet->name}");
+        }
 
         return view('labresults.index', compact('resultsByStatus', 'allResults'));
     }

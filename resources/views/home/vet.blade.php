@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">Lab Results</div>
+                    <div class="card-header">Your Lab Results</div>
 
                     <table class="table table-hover table-sm">
                         <thead class="thead-labresult">
@@ -38,19 +38,6 @@
 
                     </table>
                     <div class="card-footer">{{ $resultsByStatus->links() }}</div>
-                </div>
-            </div>
-
-
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header text-center">Dashboard</div>
-
-
-                    <div class="card-body text-center">
-                        <a href="{{ route('labresults.index') }}" class="btn btn-md btn-secondary">See results</a>
-                    </div>
-
                 </div>
             </div>
         </div>
