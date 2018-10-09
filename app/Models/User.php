@@ -71,7 +71,7 @@ class User extends Authenticatable
      */   
     public function allVets()
     {
-        return $this->where('practice_id', auth()->user()->practice_id)
+        return $this->where('practice_id', auth()->user()->practice_id)->whereType(User::VET)
             ->latest()
             ->get();
     }

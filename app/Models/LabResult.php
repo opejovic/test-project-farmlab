@@ -32,7 +32,7 @@ class LabResult extends Model
     /**
      * query scope
      *
-     * Return all results for the practice of the currently auth user.
+     * Return all results for the currently auth user.
      *
      * @param        $query
      * @param string $status
@@ -41,13 +41,13 @@ class LabResult extends Model
      */
     public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
-        return $query->latest('id')
-            ->where('status', $status)->paginate(15);
+        return $query->oldest('id')
+            ->where('status', $status)->where('vet_id', auth()->id())->paginate(15);
     }
 
     /**
      * Returns results based on their status (by default, returns Unprocessed (if there are any)
-     * for the practice of the currently auth user.
+     * for the currently auth user.
      */
     public function fetchByStatus()
     {
@@ -65,7 +65,7 @@ class LabResult extends Model
      */
     public function fetchAll()
     {
-        return $this->latest('date_of_test')->paginate(15);
+        return $this->oldest('date_of_test')->paginate(15);
     }
 
     /**
@@ -94,6 +94,7 @@ class LabResult extends Model
         // with those columns. Implicitly, the file pointer is now on the 2nd row.))
 
         while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            
             $this->create([
                 'herd_number'     => $column[0],
                 'date_of_arrival' => $column[1],
