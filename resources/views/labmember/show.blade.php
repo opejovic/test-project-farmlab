@@ -30,7 +30,7 @@
                            @csrf
                            @method('DELETE')
 
-                           <button type="submit" class="btn btn-link">Delete</button>
+                           <button type="submit" onclick="return confirm('Are you sure you want to remove this user?')" class="btn btn-link">Delete</button>
                        </form>
                     </div>
                     
