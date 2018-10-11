@@ -35,7 +35,6 @@ class VetController extends Controller
      * Store a newly created resource in storage.
      *
      * @param VetRequest $request
-     * @param User       $user
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -58,7 +57,9 @@ class VetController extends Controller
     {
         abort_unless(auth()->user()->practice_id == $vet->practice_id, 404);
 
-        return view('vets.show', compact('vet'));
+        $results = $vet->results()->paginate();
+
+        return view('vets.show', compact('vet', 'results'));
     }
 
     /**
