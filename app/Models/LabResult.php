@@ -15,9 +15,9 @@ class LabResult extends Model
 
     /**
      * The "booting" method of the model.
-     * Applies a anonymous global scope for the model. All queries will return 
+     * Applies a anonymous global scope for the model. All queries will return
      * results for the practice of the authenticated user.
-     * 
+     *
      * @return void
      */
     protected static function boot()
@@ -27,6 +27,27 @@ class LabResult extends Model
         static::addGlobalScope('practice_id', function (Builder $builder) {
             $builder->where('practice_id', auth()->user()->practice_id);
         });
+    }
+
+    /**
+     * Lab result belongs to a vet.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function vet()
+    {
+        return $this->belongsTo(User::class, 'vet_id');
+    }
+
+
+    /**
+     * Lab result belongs to a practice.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function practice()
+    {
+        return $this->belongsTo(Practice::class);
     }
 
     /**
@@ -94,7 +115,7 @@ class LabResult extends Model
         // with those columns. Implicitly, the file pointer is now on the 2nd row.))
 
         while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            
+
             $this->create([
                 'herd_number'     => $column[0],
                 'date_of_arrival' => $column[1],
@@ -120,9 +141,8 @@ class LabResult extends Model
     }
 
     /**
-     * @param form $request
-     *
      * Vets processes the result through a form
+     *
      */
     public function process()
     {

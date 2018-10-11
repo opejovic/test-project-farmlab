@@ -36,7 +36,7 @@ class PracticeController extends Controller
      * Adds new FL member if the auth user is admin / or  practice (and practice admin, (if the auth user is
      * FARMLAB_MEMBER)).
      *
-     * @param  \Illuminate\Http\Requests\AddMemberOrPracticeForm $form
+     * @param PracticeRequest $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -63,9 +63,9 @@ class PracticeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Practice $practice
+     * @param Practice $practice
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function edit(Practice $practice)
     {
@@ -88,9 +88,9 @@ class PracticeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Practice $practice
+     * @param Practice $practice
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy(Practice $practice)
     {

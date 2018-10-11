@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use DB;
+use Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,8 +20,7 @@ class AppServiceProvider extends ServiceProvider
         \View::composer('vets.dropdown', function ($view) {
             if (auth()->check()) {
             $view->with('farmers', 
-                \App\Models\LabResult::where('practice_id', auth()->user()->practice_id)
-                                ->select('farmer_name')
+                \App\Models\LabResult::select('farmer_name')
                                 ->orderBy('farmer_name', 'asc')
                                 ->distinct()
                                 ->get());

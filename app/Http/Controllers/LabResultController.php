@@ -23,7 +23,7 @@ class LabResultController extends Controller
         $resultsByStatus = $labresult->fetchByStatus();
         
         if (request()->has('my')) {
-            $allResults = $labresult->where('vet_id', auth()->id())->paginate(10);
+            $allResults = auth()->user()->results()->paginate(10);
             $allResults->withPath("labresults?my");
         }
 
