@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            @if ($labresult->status === \App\Models\LabResult::UNPROCESSED)
+            @if ($labresult->status === \App\Models\LabResult::UNPROCESSED && $labresult->vet_id === auth()->id())
                 @include ('labresults.process')
             @endif
         </div>
