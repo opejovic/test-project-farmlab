@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Mail\NewResultNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class LabResult extends Model
 {
-    const PROCESSED = 'PROCESSED';
-    const UNPROCESSED = 'UNPROCESSED';
+    const PROCESSED     = 'PROCESSED';
+    const UNPROCESSED   = 'UNPROCESSED';
 
     protected $guarded = [];
 
@@ -62,8 +63,7 @@ class LabResult extends Model
      */
     public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
-        return $query->oldest('id')
-            ->where('status', $status)->where('vet_id', auth()->id())->paginate(15);
+        return $query->where('status', $status)->where('vet_id', auth()->id())->oldest('id')->get();
     }
 
     /**
@@ -86,7 +86,7 @@ class LabResult extends Model
      */
     public function fetchAll()
     {
-        return $this->oldest('date_of_test')->paginate(15);
+        return $this->with('vet')->oldest('id')->get();
     }
 
     /**
@@ -98,7 +98,7 @@ class LabResult extends Model
      */
     public function fetchByFarmer($farmer)
     {
-        return $this->where('farmer_name', $farmer)->latest()->paginate(15);
+        return $this->where('farmer_name', $farmer)->get();
     }
 
     /**
@@ -116,7 +116,7 @@ class LabResult extends Model
 
         while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-            $this->create([
+            $labresult =  $this->create([
                 'herd_number'     => $column[0],
                 'date_of_arrival' => $column[1],
                 'date_of_test'    => $column[2],
@@ -130,12 +130,14 @@ class LabResult extends Model
                 'vet_comment'     => $column[10],
                 'vet_indicator'   => $column[11],
                 'practice_id'     => $column[12],
-                'practice_name'   => Practice::name($column[12])
+                'practice_name'   => Practice::name($column[12]),
+                'vet_id'          => $column[13]
             ]);
-
+            $vet = User::whereId($column[13])->first();
             // For this to work, it needs a queue:listen command in terminal and .env file QUEUE_DRIVER set to database.
             // Need to refactor this -- use Eventing instead?
-            // \Mail::to(App\User::wherePracticeId($data[12])->first()->email)->queue(new Welcome);
+            \Mail::to($vet->email)->queue(new NewResultNotification($labresult, $vet));
+
         }
         fclose($handle);
     }

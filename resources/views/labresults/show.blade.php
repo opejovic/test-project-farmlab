@@ -52,6 +52,11 @@
                             </tr>
 
                             <tr>
+                                <th class="text-capitalize">Vet name</th>
+                                <td class="" style="max-width: 150px;">{{ $labresult->vet->name}}</td>
+                            </tr>
+
+                            <tr>
                                 <th class="text-capitalize">Vet comment</th>
                                 <td class="" style="max-width: 150px;">{{ $labresult->vet_comment}}</td>
                             </tr>

@@ -3,43 +3,46 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header">Your Lab Results</div>
 
-                    <table class="table table-hover table-sm">
-                        <thead class="thead-labresult">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Date of test</th>
-                            <th scope="col">Test name</th>
-                            <th scope="col">Farmer Name</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                        </thead>
+            @if ($resultsByStatus->where('status', 'UNPROCESSED')->count() > 0)
+                <h5>You have {{ $resultsByStatus->where('status', 'UNPROCESSED')->count() }} unprocessed results</h5>
+            @else
+                <h5>You have {{ $resultsByStatus->where('status', 'PROCESSED')->count() }} processed results</h5>
+            @endif
 
-                        @foreach ($resultsByStatus as $result)
-                            <tbody>
+        </div>
+        <hr>
+        <div class="row justify-content-center">
 
-                            <tr>
-                                <th scope="row">
-                                    <a href="{{ route('labresults.show', $result->id) }}">{{ $result->id }}</a>
-                                </th>
-                                <td>{{ $result->date_of_test}}</td>
-                                <td>{{ $result->test_name}}</td>
-                                <td>{{ $result->farmer_name}}</td>
-                                <td>
-                                    <a href="{{ route('labresults.show', $result->id) }}">{{ $result->status }}</a>
-                                </td>
-                            </tr>
+            <table id="myTable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date of test</th>
+                        <th>Test name</th>
+                        <th>Farmer Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
 
-                            </tbody>
-                        @endforeach
+                <tbody>
+                    @foreach ($resultsByStatus as $result)
+                    <tr>
+                        <td>
+                            <a href="{{ route('labresults.show', $result->id) }}">{{ $result->id }}</a>
+                        </td>
+                        <td>{{ $result->date_of_test}}</td>
+                        <td>{{ $result->test_name}}</td>
+                        <td>{{ $result->farmer_name}}</td>
+                        <td>
+                            <a href="{{ route('labresults.show', $result->id) }}">{{ $result->status }}</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
 
-                    </table>
-                    <div class="card-footer">{{ $resultsByStatus->links() }}</div>
-                </div>
-            </div>
+            </table>
+
         </div>
     </div>
 @endsection
