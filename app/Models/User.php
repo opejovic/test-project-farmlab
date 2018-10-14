@@ -9,12 +9,13 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-    const ADMIN = 'ADMIN';
-    const FARM_LAB_MEMBER = 'FARM_LAB_TEAM_MEMBER';
-    const PRACTICE_ADMIN = 'PRACTICE_ADMIN';
-    const VET = 'PRACTICE_VET';
-    const VERIFIED = 'VERIFIED'; // tmp user status
-    const NOT_VERIFIED = 'NOT_VERIFIED';  // tmp user status
+    
+    const ADMIN             = 'ADMIN';
+    const FARM_LAB_MEMBER   = 'FARM_LAB_TEAM_MEMBER';
+    const PRACTICE_ADMIN    = 'PRACTICE_ADMIN';
+    const VET               = 'PRACTICE_VET';
+    const VERIFIED          = 'VERIFIED'; // tmp user status
+    const NOT_VERIFIED      = 'NOT_VERIFIED';  // tmp user status
 
     /**
      * The attributes that are not mass assignable.
