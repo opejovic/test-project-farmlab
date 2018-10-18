@@ -90,16 +90,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Send a welcome email to newly created user.
-     *
-     * @return new App\Mail\Welcome
-     */
-    protected function sendWelcomeEmail($newUser)
-    {
-        return \Mail::to(request('email'))->queue(new Welcome($newUser));
-    }
-
-    /**
      * User FARM_LAB_ADMIN can add a FARM_LAB_MEMBER
      */
     public function addFarmLabMember()
