@@ -57,12 +57,8 @@ class PracticeController extends Controller
      */
     public function show(Practice $practice)
     {
-<<<<<<< HEAD
-        return view('practice.show', compact('practice'));
-=======
         $vets = $practice->vets();
         return view('practice.show', compact('practice', 'vets'));
->>>>>>> new-feature
     }
 
     /**

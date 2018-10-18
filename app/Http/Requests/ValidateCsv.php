@@ -62,7 +62,6 @@ class ValidateCsv extends FormRequest
             && in_array('vet_id', $header)) {
 
             return true;
-            return true;
             fclose($csv_file);
         }
 
