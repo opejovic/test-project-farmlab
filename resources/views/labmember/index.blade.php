@@ -9,24 +9,25 @@
                         <table class="table text-center">
                             <tbody>
                                 <tr>
-                                    <th class="card-header text-center border-top-0"><h4>Id</h4></th>
-                                    <th class="card-header text-center border-top-0"><h4>Member name</h4></th>
-                                    <th class="card-header text-center border-top-0"><h4>Created at</h4></th>
-                                    <th class="card-header text-center border-top-0"><h4>Status</h4></th>
+                                    <th class="card-header text-center border-top-0">Id</th>
+                                    <th class="card-header text-center border-top-0">Member name</th>
+                                    <th class="card-header text-center border-top-0">Created at</th>
+                                    <th class="card-header text-center border-top-0">Status</th>
                                 </tr>
                                 @foreach ($members as $member)
                                 <tr>
-                                    <th class="text-capitalize border-bottom-1">{{ $member->id }}</th>
-                                    <th class="text-capitalize border-bottom-1">
+                                    <td class="text-capitalize border-bottom-1">{{ $member->id }}</td>
+                                    <td class="text-capitalize border-bottom-1">
                                         <a href="{{ route('members.show', $member->id)  }}">{{ $member->name }}</a>
-                                    </th>
-                                    <th class="text-capitalize border-bottom-1">{{ $member->created_at }}</th>
-                                    <th class="text-capitalize border-bottom-1">{{ $member->status }}</th>
+                                    </td>
+                                    <td class="text-capitalize border-bottom-1">{{ $member->created_at }}</td>
+                                    <td class="text-capitalize border-bottom-1">{{ $member->status }}</td>
                                 </tr>
                                 @endforeach
 
                             </tbody>
                         </table>
+                        <div class="card-footer">{{ $members->links() }}</div>
                     </div>
                 </div>
             </div>

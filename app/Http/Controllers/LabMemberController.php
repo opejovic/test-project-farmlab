@@ -15,7 +15,7 @@ class LabMemberController extends Controller
      */
     public function index()
     {
-        $members = User::whereType(User::FARM_LAB_MEMBER)->get();
+        $members = User::whereType(User::FARM_LAB_MEMBER)->paginate(10);
 
         return view('labmember.index', compact('members'));
     }
