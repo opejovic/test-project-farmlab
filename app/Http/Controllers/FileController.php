@@ -11,18 +11,13 @@ use Illuminate\Http\Request;
 class FileController extends Controller
 {
     /**
-     * Show the form for the file upload, if the signed in user is of the ADMIN or FARM_LAB_MEMBER type.
+     * Show the form for the file upload.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function create()
     {
-        $user = auth()->user();
-        if ($user->type === User::ADMIN || $user->type === User::FARM_LAB_MEMBER) {
-            return view('file.create');
-        }
-
-        return redirect()->home();
+        return view('file.create');
     }
 
     /**
@@ -36,7 +31,7 @@ class FileController extends Controller
      */
     public function store(ValidateCsv $request, File $file)
     {
-        if (!$request->checkHeader()) {
+        if (! $request->checkHeader()) {
             return redirect()->back()->withErrors(['Whoops, theres something wrong with your CSV file.']);
         }
 

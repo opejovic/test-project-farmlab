@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VetRequest;
-use App\Mail\Welcome;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,11 +13,11 @@ class VetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index()
     {
-        $vets = $user->allVets();
+        $vets = auth()->user()->allVets();
 
-        return view('practice.vets', compact('vets'));
+        return view('vets.index', compact('vets'));
     }
 
     /**
@@ -28,7 +27,7 @@ class VetController extends Controller
      */
     public function create()
     {
-        return view('practice.admin');
+        return view('vets.create');
     }
 
 
@@ -36,16 +35,13 @@ class VetController extends Controller
      * Store a newly created resource in storage.
      *
      * @param VetRequest $request
-     * @param User       $user
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(VetRequest $request, User $user)
+    public function store(VetRequest $request)
     {
-        $user->addVet();
+        auth()->user()->addVet();
         session()->flash('message', 'New vet created.');
-
-        \Mail::to(request('email'))->queue(new Welcome);
 
         return redirect()->home();
     }
@@ -59,10 +55,11 @@ class VetController extends Controller
      */
     public function show(User $vet)
     {
-        if (auth()->user()->practice_id !== $vet->practice_id) {
-            return back();
-        }
-        return view('practice.vet', compact('vet'));
+        abort_unless(auth()->user()->practice_id == $vet->practice_id, 404);
+
+        $results = $vet->results()->paginate();
+
+        return view('vets.show', compact('vet', 'results'));
     }
 
     /**
@@ -99,6 +96,11 @@ class VetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vet = User::where('id', $id)->firstOrFail();
+        $vet->delete();
+
+        session()->flash('message', 'Vet successfully removed');
+
+        return redirect('vets');
     }
 }

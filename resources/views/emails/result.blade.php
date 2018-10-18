@@ -1,12 +1,12 @@
 @component('mail::message')
-# Hello, {{ $newUser->name }}
+# Hello, {{ $vet->name }}
 
-Welcome to FarmLab
+New result for the farmer {{ $labresult->farmer_name }} has just been uploaded.
 
-Your username is: {{ $newUser->email }}
+Check it out.
 
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/password/reset'])
-    Password Reset
+@component('mail::button', ['url' => "http://127.0.0.1:8000/labresults/{$labresult->id}"])
+    Labresult number {{ $labresult->id }}
 @endcomponent
 
 @component('mail::panel', ['url' => ''])

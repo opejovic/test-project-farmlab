@@ -45,7 +45,7 @@ class ValidateCsv extends FormRequest
 
         $countHeader = count($header);
 
-        if ($countHeader == 13
+        if ($countHeader == 14
             && in_array('herd_number', $header)
             && in_array('date_of_arrival', $header)
             && in_array('date_of_test', $header)
@@ -58,8 +58,10 @@ class ValidateCsv extends FormRequest
             && in_array('farmer_name', $header)
             && in_array('vet_comment', $header)
             && in_array('vet_indicator', $header)
-            && in_array('practice_id', $header)) {
+            && in_array('practice_id', $header)
+            && in_array('vet_id', $header)) {
 
+            return true;
             return true;
             fclose($csv_file);
         }

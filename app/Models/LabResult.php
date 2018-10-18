@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
+use App\Mail\NewResultNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class LabResult extends Model
 {
-    const PROCESSED = 'PROCESSED';
-    const UNPROCESSED = 'UNPROCESSED';
+    const PROCESSED     = 'PROCESSED';
+    const UNPROCESSED   = 'UNPROCESSED';
 
     protected $guarded = [];
 
     /**
      * The "booting" method of the model.
-     * Applies a anonymous global scope for the model. All queries will return 
+     * Applies a anonymous global scope for the model. All queries will return
      * results for the practice of the authenticated user.
-     * 
+     *
      * @return void
      */
     protected static function boot()
@@ -30,9 +31,30 @@ class LabResult extends Model
     }
 
     /**
+     * Lab result belongs to a vet.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function vet()
+    {
+        return $this->belongsTo(User::class, 'vet_id');
+    }
+
+
+    /**
+     * Lab result belongs to a practice.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function practice()
+    {
+        return $this->belongsTo(Practice::class);
+    }
+
+    /**
      * query scope
      *
-     * Return all results for the practice of the currently auth user.
+     * Return all results for the currently auth user.
      *
      * @param        $query
      * @param string $status
@@ -41,13 +63,12 @@ class LabResult extends Model
      */
     public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
-        return $query->latest('id')
-            ->where('status', $status)->paginate(15);
+        return $query->where('status', $status)->where('vet_id', auth()->id())->oldest('id')->get();
     }
 
     /**
      * Returns results based on their status (by default, returns Unprocessed (if there are any)
-     * for the practice of the currently auth user.
+     * for the currently auth user.
      */
     public function fetchByStatus()
     {
@@ -65,7 +86,7 @@ class LabResult extends Model
      */
     public function fetchAll()
     {
-        return $this->latest('date_of_test')->paginate(15);
+        return $this->with('vet')->oldest('id')->get();
     }
 
     /**
@@ -77,7 +98,7 @@ class LabResult extends Model
      */
     public function fetchByFarmer($farmer)
     {
-        return $this->where('farmer_name', $farmer)->latest()->paginate(15);
+        return $this->where('farmer_name', $farmer)->get();
     }
 
     /**
@@ -94,7 +115,8 @@ class LabResult extends Model
         // with those columns. Implicitly, the file pointer is now on the 2nd row.))
 
         while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $this->create([
+
+            $labresult =  $this->create([
                 'herd_number'     => $column[0],
                 'date_of_arrival' => $column[1],
                 'date_of_test'    => $column[2],
@@ -108,20 +130,21 @@ class LabResult extends Model
                 'vet_comment'     => $column[10],
                 'vet_indicator'   => $column[11],
                 'practice_id'     => $column[12],
-                'practice_name'   => Practice::name($column[12])
+                'practice_name'   => Practice::name($column[12]),
+                'vet_id'          => $column[13]
             ]);
-
+            $vet = User::whereId($column[13])->first();
             // For this to work, it needs a queue:listen command in terminal and .env file QUEUE_DRIVER set to database.
             // Need to refactor this -- use Eventing instead?
-            // \Mail::to(App\User::wherePracticeId($data[12])->first()->email)->queue(new Welcome);
+            \Mail::to($vet->email)->queue(new NewResultNotification($labresult, $vet));
+
         }
         fclose($handle);
     }
 
     /**
-     * @param form $request
-     *
      * Vets processes the result through a form
+     *
      */
     public function process()
     {

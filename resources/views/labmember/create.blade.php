@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -8,7 +8,7 @@
                     <div class="card-header">Add new team member</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('farmlab.store') }}">
+                        <form method="POST" action="{{ route('members.store') }}">
                             @csrf
 
                             <div class="form-group row">

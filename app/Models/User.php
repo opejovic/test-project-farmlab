@@ -9,12 +9,13 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-    const ADMIN = 'ADMIN';
-    const FARM_LAB_MEMBER = 'FARM_LAB_TEAM_MEMBER';
-    const PRACTICE_ADMIN = 'PRACTICE_ADMIN';
-    const VET = 'PRACTICE_VET';
-    const VERIFIED = 'VERIFIED'; // tmp user status
-    const NOT_VERIFIED = 'NOT_VERIFIED';  // tmp user status
+    
+    const ADMIN             = 'ADMIN';
+    const FARM_LAB_MEMBER   = 'FARM_LAB_TEAM_MEMBER';
+    const PRACTICE_ADMIN    = 'PRACTICE_ADMIN';
+    const VET               = 'PRACTICE_VET';
+    const VERIFIED          = 'VERIFIED'; // tmp user status
+    const NOT_VERIFIED      = 'NOT_VERIFIED';  // tmp user status
 
     /**
      * The attributes that are not mass assignable.
@@ -53,7 +54,7 @@ class User extends Authenticatable
      */
     public function results()
     {
-        return $this->hasMany(LabResult::class);
+        return $this->hasMany(LabResult::class, 'vet_id');
     }
 
     /**
@@ -71,9 +72,19 @@ class User extends Authenticatable
      */   
     public function allVets()
     {
-        return $this->where('practice_id', auth()->user()->practice_id)
+        return $this->where('practice_id', auth()->user()->practice_id)->whereType(User::VET)
             ->latest()
             ->get();
+    }
+
+    /**
+     * Send a welcome email to newly created user.
+     *
+     * @return new App\Mail\Welcome
+     */
+    protected function sendWelcomeEmail($newUser)
+    {
+        return \Mail::to(request('email'))->queue(new Welcome($newUser));
     }
 
     /**
@@ -89,7 +100,7 @@ class User extends Authenticatable
             'status'   => User::NOT_VERIFIED
         ]);
 
-        \Mail::to(request('email'))->queue(new Welcome($newUser));
+        $this->sendWelcomeEmail($newUser);
     }
 
     /**
@@ -111,8 +122,7 @@ class User extends Authenticatable
             'practice_id' => $practice->id
         ]);
 
-        \Mail::to(request('email'))->queue(new Welcome($newUser));
-
+        $this->sendWelcomeEmail($newUser);
     }
 
     /**
@@ -120,7 +130,7 @@ class User extends Authenticatable
      */
     public function addVet()
     {
-        $this->create([
+        $newUser = $this->create([
             'name'        => request('name'),
             'email'       => request('email'),
             'password'    => bcrypt(request('password')),
@@ -128,5 +138,7 @@ class User extends Authenticatable
             'status'      => User::NOT_VERIFIED,
             'practice_id' => auth()->user()->practice_id
         ]);
+
+        $this->sendWelcomeEmail($newUser);
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -18,10 +18,10 @@
                                 <tr>
                                     <th class="text-capitalize border-bottom-1">{{ $vet->id }}</th>
                                     <th class="text-capitalize border-bottom-1">
-                                        <a href="{{ route('vet.show', $vet->id)  }}">{{ $vet->name }}</a>
+                                        <a href="{{ route('vets.show', $vet->id)  }}">{{ $vet->name }}</a>
                                     </th>
-                                    <th class="text-capitalize border-bottom-1">{{ $vet->created_at }}</a></th>
-                                    <th class="text-capitalize border-bottom-1">{{ $vet->status }}</a></th>
+                                    <th class="text-capitalize border-bottom-1">{{ $vet->created_at }}</th>
+                                    <th class="text-capitalize border-bottom-1">{{ $vet->status }}</th>
                                 </tr>
                                 @endforeach
 

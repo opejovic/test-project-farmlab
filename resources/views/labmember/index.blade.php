@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -10,16 +10,20 @@
                             <tbody>
                                 <tr>
                                     <th class="card-header text-center border-top-0"><h4>Id</h4></th>
-                                    <th class="card-header text-center border-top-0"><h4>Vet name</h4></th>
+                                    <th class="card-header text-center border-top-0"><h4>Member name</h4></th>
                                     <th class="card-header text-center border-top-0"><h4>Created at</h4></th>
                                     <th class="card-header text-center border-top-0"><h4>Status</h4></th>
                                 </tr>
+                                @foreach ($members as $member)
                                 <tr>
-                                    <th class="text-capitalize border-bottom-1">{{ $vet->id }}</th>
-                                    <th class="text-capitalize border-bottom-1"><a href="#">{{ $vet->name }}</a></th>
-                                    <th class="text-capitalize border-bottom-1"><a href="#">{{ $vet->created_at }}</a></th>
-                                    <th class="text-capitalize border-bottom-1"><a href="#">{{ $vet->status }}</a></th>
+                                    <th class="text-capitalize border-bottom-1">{{ $member->id }}</th>
+                                    <th class="text-capitalize border-bottom-1">
+                                        <a href="{{ route('members.show', $member->id)  }}">{{ $member->name }}</a>
+                                    </th>
+                                    <th class="text-capitalize border-bottom-1">{{ $member->created_at }}</th>
+                                    <th class="text-capitalize border-bottom-1">{{ $member->status }}</th>
                                 </tr>
+                                @endforeach
 
                             </tbody>
                         </table>

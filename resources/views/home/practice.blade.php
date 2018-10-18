@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -20,9 +20,9 @@
 
 
                     <div class="card-body text-center">
-                        <a href="/practice/create/vet" class="btn btn-md btn-secondary">Add new vet</a>
-                        <hr>
-                        <a href="/vets" class="btn btn-md btn-secondary">See vets</a>
+                        <a href="{{ route('vets.create') }}" class="btn btn-md btn-secondary">Add new vet</a><hr>
+                        <a href="{{ route('vets.index') }}" class="btn btn-md btn-secondary">See vets</a><hr>
+                        <a href="{{ route('labresults.index') }}" class="btn btn-md btn-secondary">See results</a>
                     </div>
                     
             </div>

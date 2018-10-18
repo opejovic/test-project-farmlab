@@ -13,7 +13,7 @@ class Practice extends Model
      */
     public function vets()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'practice_id');
     }
 
     /**
@@ -21,7 +21,7 @@ class Practice extends Model
      */
     public function results()
     {
-        return $this->hasMany(LabResult::class);
+        return $this->hasMany(LabResult::class, 'practice_id');
     }
 
     /**

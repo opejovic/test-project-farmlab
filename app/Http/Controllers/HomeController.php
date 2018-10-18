@@ -8,11 +8,12 @@ use App\Models\User;
 class HomeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
+     * Return a home view, depending on the users type.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $labResult)
+    public function index(LabResult $labresult)
     {
         $user = auth()->user();
 
@@ -25,7 +26,7 @@ class HomeController extends Controller
         } elseif ($user->type === User::PRACTICE_ADMIN) {
             return view('home.practice');
         } elseif ($user->type === User::VET) {
-            $resultsByStatus = $labResult->fetchByStatus(); // tmp
+            $resultsByStatus = $labresult->fetchByStatus(); // tmp
 
             return view('home.vet', compact('resultsByStatus'));
         }
@@ -39,7 +40,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        return view('home.create');
+
     }
 
     /**
@@ -51,14 +52,7 @@ class HomeController extends Controller
      */
     public function store()
     {
-        if (! auth()->attempt(request(['email', 'password']))) {
-            return back()->withErrors([
-                'message' => 'Wrong credentials. Please try again.'
-            ]);
-        }
-
-        session()->flash('message', 'You are now logged in.');
-        return redirect()->home();
+        //
     }
 
     /**
@@ -70,10 +64,6 @@ class HomeController extends Controller
      */
     public function destroy()
     {
-        auth()->logout();
-
-        session()->flash('message', 'You have logged out.');
-
-        return redirect()->home();
+        //
     }
 }

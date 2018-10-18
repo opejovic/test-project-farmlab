@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LabResult;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LabResultController extends Controller
@@ -15,11 +16,15 @@ class LabResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $labResult, $farmerName = null)
+    public function index(LabResult $labresult, $farmerName = null)
     {
-        $farmerName ? $allResults = $labResult->fetchByFarmer($farmerName) : $allResults = $labResult->fetchAll();
+        $farmerName ? $allResults = $labresult->fetchByFarmer($farmerName) : $allResults = $labresult->fetchAll();
 
-        $resultsByStatus = $labResult->fetchByStatus();
+        $resultsByStatus = $labresult->fetchByStatus();
+        
+        if (request()->has('my')) {
+            $allResults = auth()->user()->results()->with('vet')->get();
+        }
 
         return view('labresults.index', compact('resultsByStatus', 'allResults'));
     }
@@ -53,22 +58,21 @@ class LabResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(LabResult $result)
+    public function show(LabResult $labresult)
     {
-        if (auth()->user()->practice_id !== $result->practice_id) {
-            return redirect('home');
-        }
-        return view('labresults.show', compact('result'));
+        abort_unless(auth()->user()->practice_id == $labresult->practice_id, 404);
+
+        return view('labresults.show', compact('labresult'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\LabResult $result
+     * @param  \App\LabResult $labresult
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(LabResult $result)
+    public function edit(LabResult $labresult)
     {
         //
     }
@@ -77,13 +81,13 @@ class LabResultController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\LabResult           $result
+     * @param  \App\LabResult           $labresult
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(LabResult $result)
+    public function update(LabResult $labresult)
     {
-        $result->process();
+        $labresult->process();
 
         return redirect()->back();
     }
@@ -91,11 +95,11 @@ class LabResultController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\LabResult $result
+     * @param  \App\LabResult $labresult
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LabResult $result)
+    public function destroy(LabResult $labresult)
     {
         //
     }

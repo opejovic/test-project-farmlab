@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -6,7 +6,7 @@
 
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Hello, {{ \Auth::user()->name }}</div>
+                <div class="card-header">Hello, {{ auth()->user()->name }}</div>
                       <div class="card-body">
                           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                       </div>
@@ -17,9 +17,9 @@
           <div class="card">
                 <div class="card-header text-center">Dashboard</div>
                     <div class="card-body text-center">
-                        <a href="/farmlab/create" class="btn btn-md btn-secondary">Create new practice</a>
-                           <hr>
-                        <a href="/file/upload" class="btn btn-md btn-secondary">Upload new result</a>
+                        <a href="{{ route('practice.create') }}" class="btn btn-md btn-secondary">Create new practice</a><hr>
+                        <a href="{{ route('file.create') }}" class="btn btn-md btn-secondary">Upload new result</a><hr>
+                        <a href="{{ route('practice.index') }}" class="btn btn-md btn-secondary">See practices</a>
                     </div>
                 </div>
 <br>

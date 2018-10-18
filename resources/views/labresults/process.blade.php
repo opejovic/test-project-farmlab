@@ -3,8 +3,9 @@
         <div class="card-header">Process the result</div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('labresults.process', $result->id) }}"
-                  aria-label="process">
+            <form method="POST" action="{{ route('labresults.update', $labresult->id) }}"
+                  aria-label="update">
+                @method('PATCH')
                 @csrf
 
                 <div class="form-group row">

@@ -10494,8 +10494,8 @@ a.text-dark:focus {
 }
 
 #flash-message {
-  position: absolute;
-  bottom: 80px;
+  position: fixed;
+  bottom: 20px;
   right: 100px;
   z-index: 10;
   -webkit-animation: flash-message 8s forwards;
