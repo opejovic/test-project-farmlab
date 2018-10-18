@@ -11,11 +11,10 @@ class File extends Model
     protected $fillable = ['name', 'file_path'];
 
     /**
-     * Check if the file exists in the storage.
      *
      * @param   $fileName [requested files name]
-     * 
-     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @return bool
      */
     private function existsInStorage($fileName)
     {
@@ -24,10 +23,10 @@ class File extends Model
 
     /**
      * Check if the file exists in the database
-     * 
+     *
      * @param   $fileName [requested files name]
-     * 
-     * @return void
+     *
+     * @return bool
      */
     private function existsInDb($fileName)
     {

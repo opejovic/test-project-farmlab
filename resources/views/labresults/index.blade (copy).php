@@ -6,7 +6,7 @@
 
             @if ($allResults->count() > 0)
 
-                <table id="myTable" class="table table-striped table-hover table-bordered" style="width:100%">
+                <table id="myTable" class="table table-striped table-bordered" style="width:100%">
 
                     <thead>
                         <tr>

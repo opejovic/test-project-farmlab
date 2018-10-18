@@ -9,8 +9,8 @@
                         <table class="table text-center">
                             <tbody>
                                 <tr>
-                                    <th class="card-header text-center border-top-0"><h4>Id</h4></th>
-                                    <th class="card-header text-center border-top-0"><h4>Practice name</h4></th>
+                                    <th class="card-header text-center border-top-0">Id</th>
+                                    <th class="card-header text-center border-top-0">Practice name</th>
                                 </tr>
                                 <tr>
                                     <th class="text-capitalize border-bottom-1">{{ $practice->id }}</th>
@@ -26,23 +26,24 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body" id="card-div">
-                        <table class="table text-center">
+                        <table class="table table-hover text-center">
                             <tbody>
                                     <tr>
-                                        <th class="card-header text-center border-top-0"><h4>Id</h4></th>
-                                        <th class="card-header text-center border-top-0"><h4>Name</h4></th>
-                                        <th class="card-header text-center border-top-0"><h4>Role</h4></th>
+                                        <th class="card-header text-center border-top-0">Id</th>
+                                        <th class="card-header text-center border-top-0">Name</th>
+                                        <th class="card-header text-center border-top-0">Role</th>
                                     </tr>
-                                @foreach ($practice->vets as $vet)
+                                @foreach ($vets as $vet)
                                     <tr>
-                                        <th class="text-capitalize border-bottom-1">{{ $vet->id }}</th>
-                                        <th class="text-capitalize border-bottom-1">{{ $vet->name }}</th>
-                                        <th class="text-capitalize border-bottom-1">{{ $vet->type }}</th>
+                                        <td class="text-capitalize border-bottom-1">{{ $vet->id }}</td>
+                                        <td class="text-capitalize border-bottom-1">{{ $vet->name }}</td>
+                                        <td class="text-capitalize border-bottom-1">{{ $vet->type }}</td>
                                     </tr>
                                 @endforeach
 
                             </tbody>
-                        </table>                              
+                        </table>
+                        <div class="card-footer">{{ $vets->links() }}</div>                  
                     </div>
                 </div>
             </div>

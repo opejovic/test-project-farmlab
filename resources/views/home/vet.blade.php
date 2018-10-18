@@ -14,7 +14,7 @@
         <hr>
         <div class="row justify-content-center">
 
-            <table id="myTable" class="table table-striped table-bordered">
+            <table id="myTable" class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>#</th>

@@ -73,8 +73,20 @@ class User extends Authenticatable
     public function allVets()
     {
         return $this->where('practice_id', auth()->user()->practice_id)->whereType(User::VET)
-            ->latest()
-            ->get();
+            ->oldest()
+            ->paginate(10);
+    }
+
+    /**
+     * Send a welcome email to newly created user.
+     *
+     * @param $newUser
+     *
+     * @return App\Mail\Welcome
+     */
+    protected function sendWelcomeEmail($newUser)
+    {
+        return \Mail::to(request('email'))->queue(new Welcome($newUser));
     }
 
     /**

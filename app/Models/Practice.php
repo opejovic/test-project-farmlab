@@ -13,7 +13,7 @@ class Practice extends Model
      */
     public function vets()
     {
-        return $this->hasMany(User::class, 'practice_id');
+        return $this->hasMany(User::class, 'practice_id')->paginate(10);
     }
 
     /**

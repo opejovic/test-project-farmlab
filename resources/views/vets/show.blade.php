@@ -9,16 +9,16 @@
                         <table class="table text-center">
                             <tbody>
                                 <tr>
-                                    <th class="card-header text-center border-top-0">Id</th>
-                                    <th class="card-header text-center border-top-0">Vet name</th>
-                                    <th class="card-header text-center border-top-0">Created at</th>
-                                    <th class="card-header text-center border-top-0">Status</th>
+                                    <td class="card-header text-center border-top-0">Id</td>
+                                    <td class="card-header text-center border-top-0">Vet name</td>
+                                    <td class="card-header text-center border-top-0">Created at</td>
+                                    <td class="card-header text-center border-top-0">Status</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-capitalize border-bottom-1">{{ $vet->id }}</th>
-                                    <th class="text-capitalize border-bottom-1">{{ $vet->name }}</th>
-                                    <th class="text-capitalize border-bottom-1">{{ $vet->created_at }}</th>
-                                    <th class="text-capitalize border-bottom-1">{{ $vet->status }}</th>
+                                    <td class="text-capitalize border-bottom-1">{{ $vet->id }}</td>
+                                    <td class="text-capitalize border-bottom-1">{{ $vet->name }}</td>
+                                    <td class="text-capitalize border-bottom-1">{{ $vet->created_at }}</td>
+                                    <td class="text-capitalize border-bottom-1">{{ $vet->status }}</td>
                                 </tr>
 
                             </tbody>

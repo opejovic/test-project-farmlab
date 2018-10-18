@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Mail\NewResultNotification;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class LabResult extends Model
@@ -59,7 +58,7 @@ class LabResult extends Model
      * @param        $query
      * @param string $status
      *
-     * @return mixed
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
@@ -69,6 +68,8 @@ class LabResult extends Model
     /**
      * Returns results based on their status (by default, returns Unprocessed (if there are any)
      * for the currently auth user.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function fetchByStatus()
     {
@@ -82,7 +83,7 @@ class LabResult extends Model
     /**
      * Returns all results for the practice  of the currently authenticated vet
      *
-     * @return Collection
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function fetchAll()
     {
@@ -94,7 +95,7 @@ class LabResult extends Model
      *
      * @param $farmer
      *
-     * @return Collection
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function fetchByFarmer($farmer)
     {
