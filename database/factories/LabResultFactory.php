@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\LabResult::class, function (Faker $faker) {
     $practice = factory('App\Models\Practice')->create();
     return [
-        'herd_number'       => $faker->numberBetween(10000, 50000)
+        'herd_number'       => $faker->numberBetween(10000, 50000),
         'date_of_arrival'   => $faker->date($format = 'Y-m-d', $max = 'now'),
         'date_of_test'      => $faker->date($format = 'Y-m-d', $max = 'now'),
         'animal_id'         => $faker->numberBetween(1, 1000),
