@@ -1,65 +1,59 @@
+/*
+ *
+ *   INSPINIA - Responsive Admin Theme
+ *   version 2.7.1
+ *
+*/
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");
 
-// Variables
-@import 'variables';
+// Variables, Mixins
+@import "import/variables";
+@import "import/mixins";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// INSPINIA Theme Elements
+@import "import/typography";
+@import "import/navigation";
+@import "import/top_navigation";
+@import "import/buttons";
+@import "import/badges_labels";
+@import "import/elements";
+@import "import/sidebar";
+@import "import/base";
+@import "import/pages";
+@import "import/chat";
+@import "import/metismenu";
+@import "import/spinners";
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+// Landing page styles
+@import "import/landing";
+
+// RTL Support
+@import "import/rtl";
+
+// For demo only - config box style
+@import "import/theme-config";
+
+// INSPINIA Skins
+@import "import/skins";
+@import "import/md-skin";
+
+// Media query style
+@import "import/media";
+
+// Custom style
+// Your custom style to override base style
+@import "import/custom";
+
+// Clear layout on print mode
+@media print {
+  nav.navbar-static-side {
+    display: none;
+  }
+  body { overflow: visible !important; }
+
+  #page-wrapper {
+    margin: 0;
+  }
 }
-
-.card-results {
-  
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
-}
-
-#flash-message {
-  position: fixed;
-  bottom: 20px;
-  right: 100px;
-  z-index: 10;
-  animation: flash-message 8s forwards;
-}
-
-@keyframes flash-message {
-    0%   {opacity: 1;}
-    100% {opacity: 0; display:none;}
-}
-
-.table .thead-labresult th {
-  color: #495057;
-  background-color: #DDDDDD;
-  border-color: #dee2e6;
-}
-
-#card-div {
-  padding-bottom: 0;
-  padding-top: 0;
-  padding-right: 0;
-  padding-left: 0;
-}
-
-.dropdown-menu {
-  overflow-y: auto;
-}
-
-/* The search field when it gets focus/clicked on */
-#myInput:focus {outline: 0px solid #ddd;}
-
