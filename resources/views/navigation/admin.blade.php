@@ -34,22 +34,22 @@
                     FL+
                 </div>
             </li>
-            <li>
+            <li class="{{ isActiveRoute('members.index') }} {{ isActiveRoute('members.create') }}">
                 <a href=""><i class="fa fa-flask"></i> <span class="nav-label">Team</span>
                     <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="{{ route('members.index') }}">Members</a></li>
-                    <li><a href="{{ route('members.create')}}">Add new</a></li>
+                    <li class="{{ isActiveRoute('members.index') }}"><a href="{{ route('members.index') }}">Members</a></li>
+                    <li class="{{ isActiveRoute('members.create') }}"><a href="{{ route('members.create')}}">Add new</a></li>
                     <li><a href="dashboard_3.html">Dashboard v.3</a></li>
                     <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
                 </ul>
             </li>             
             
-            <li>
+            <li class="{{ isActiveRoute('practice.index') }} {{ isActiveRoute('practice.create') }}">
                 <a href="index.html"><i class="fa fa-user-md"></i> <span class="nav-label">Vets</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="{{ route('practice.index') }}">Practices</a></li>
-                    <li><a href="dashboard_2.html">Add new</a></li>
+                    <li class="{{ isActiveRoute('practice.index') }}"><a href="{{ route('practice.index') }}">Practices</a></li>
+                    <li class="{{ isActiveRoute('practice.create') }}"><a href="{{ route('practice.create') }}">Add new</a></li>
                     <li><a href="dashboard_3.html">Dashboard v.3</a></li>
                     <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
                 </ul>

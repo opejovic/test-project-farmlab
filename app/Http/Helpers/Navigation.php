@@ -1,11 +1,8 @@
 <?php
 
-class Navigation
+function isActiveRoute($route, $output = 'active')
 {
-    public static function isActiveRoute($route, $output = 'active')
-    {
-        if (Route::currentRouteName() == $route) {
-            return $output;
-        }
+    if (Route::currentRouteName() == $route) {
+        return $output;
     }
 }
