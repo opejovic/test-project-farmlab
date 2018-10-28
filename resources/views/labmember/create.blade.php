@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('pageTitle')
+    Add new member
+@endsection
+
+{{-- @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -55,5 +59,56 @@
             @include ('layouts.errors')
         </div>
     </div>
+
+@endsection --}}
+
+@section ('content')
+<div class="wrapper wrapper-content animated fadeInRight">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Add new member to the team</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <form method="POST" action="{{ route('members.store') }}" class="form-horizontal">
+                                @csrf
+                                <div class="form-group"><label class="col-sm-2 control-label">Name</label>
+
+                                    <div class="col-sm-10"><input name="name" type="text" class="form-control" id="name" required></div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10"><input name="email" type="email" class="form-control" id="email" required>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">Password</label>
+
+                                    <div class="col-sm-10"><input name="password" type="password" class="form-control" id="password" required></div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">Password confirmation</label>
+
+                                    <div class="col-sm-10"><input name="password_confirmation" type="password" class="form-control"
+                                           id="password_confirmation" required></div>
+                                </div>
+
+            
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-white" type="submit">Cancel</button>
+                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                    </div>
+                            @include ('layouts.errors')
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 @endsection

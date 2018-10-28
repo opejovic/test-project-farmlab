@@ -15,7 +15,7 @@ class LabMemberController extends Controller
      */
     public function index()
     {
-        $members = User::whereType(User::FARM_LAB_MEMBER)->paginate(10);
+        $members = User::whereType(User::FARM_LAB_MEMBER)->paginate(12);
 
         return view('labmember.index', compact('members'));
     }
@@ -39,9 +39,14 @@ class LabMemberController extends Controller
     public function store(LabMemberRequest $request)
     {
         auth()->user()->addFarmLabMember();
+
+        if ($request->fails())
+        {
+            return response()->json(['errors'=>$request->errors()->all()]);
+        }
         session()->flash('message', 'New FarmLab team member added.');
 
-        return redirect('home');
+        return back();
     }
 
     /**

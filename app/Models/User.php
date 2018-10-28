@@ -34,6 +34,21 @@ class User extends Authenticatable
     ];
 
     /**
+     * Check if the user is verified.
+     *
+     * @return bool
+     */
+    public function isVerified()
+    {
+        if (! $this->whereStatus(User::VERIFIED)) {
+             return false;
+        }
+
+        return true; 
+    }
+
+
+    /**
      *
      * If the authenticated user is of type1 or type2 return true.
      * Using this for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin class.

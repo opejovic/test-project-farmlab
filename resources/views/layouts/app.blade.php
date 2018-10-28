@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'FARMLAB+') }}</title>
+    <title>{{ config('app.name', 'FARMLAB+') }} | @yield('pageTitle')</title>
 
 
     <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}" />
@@ -14,9 +14,22 @@
 
   <!-- Wrapper-->
     <div id="wrapper">
-
         <!-- Navigation -->
-        @include('layouts.navigation')
+        @if (auth()->user()->type === \App\Models\User::ADMIN)
+            @include('navigation.admin')
+        @endif
+
+        @if (auth()->user()->type === \App\Models\User::FARM_LAB_MEMBER)
+            @include('navigation.labmember')
+        @endif        
+
+        @if (auth()->user()->type === \App\Models\User::PRACTICE_ADMIN)
+            @include('navigation.practice')
+        @endif        
+
+        @if (auth()->user()->type === \App\Models\User::VET)
+            @include('navigation.vet')
+        @endif
 
         <!-- Page wraper -->
         <div id="page-wrapper" class="gray-bg">
