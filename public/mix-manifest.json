@@ -1,8 +1,5 @@
 {
-    "/js/plugins/validate/jquery.validate.min.js": "/js/plugins/validate/jquery.validate.min.js",
-    "/js/inspinia.js": "/js/inspinia.js",
     "/css/app.css": "/css/app.css",
-    "/js/plugins/wow/wow.min.js": "/js/plugins/wow/wow.min.js",
     "/css/vendor.css": "/css/vendor.css",
     "/js/app.js": "/js/app.js"
 }

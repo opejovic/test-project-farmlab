@@ -49,9 +49,10 @@
     </div>
     <!-- End wrapper-->
 
-<script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
+
 
 @section('scripts')
+    <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
 @show
 
 </body>
