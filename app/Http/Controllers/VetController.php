@@ -55,7 +55,8 @@ class VetController extends Controller
      */
     public function show(User $vet)
     {
-        abort_unless(auth()->user()->practice_id == $vet->practice_id, 404);
+        // temporary - create new middleware class for this.
+        abort_unless(auth()->user()->practice_id == $vet->practice_id || auth()->user()->type === User::ADMIN, 403);
 
         $results = $vet->results()->paginate();
 

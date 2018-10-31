@@ -13,7 +13,7 @@ class Practice extends Model
      */
     public function vets()
     {
-        return $this->hasMany(User::class, 'practice_id')->paginate(10);
+        return $this->hasMany(User::class, 'practice_id')->get();
     }
 
     /**
@@ -38,5 +38,8 @@ class Practice extends Model
         return $query->whereId($column)->first()->name;
     }
 
-
+    public function admin()
+    {
+        return $this->vets()->where('type', User::PRACTICE_ADMIN);
+    }
 }

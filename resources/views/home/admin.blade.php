@@ -4,9 +4,6 @@
 	Home
 @endsection
 
-@section('navigation')
-	@include ('navigation.admin')
-@endsection
 
 @section('content')
 {{--   <a href="{{ route('members.create') }}" class="btn btn-md btn-secondary">Add new lab member</a><hr>

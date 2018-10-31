@@ -16,8 +16,8 @@ class MustBePracticeAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->user()->isOfType(User::PRACTICE_ADMIN)) {
-            return redirect('home');
+        if (! $request->user()->isOfType(User::PRACTICE_ADMIN, User::ADMIN)) {
+            abort(403, 'No way.');
         }
 
         return $next($request);

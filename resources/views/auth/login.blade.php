@@ -18,23 +18,23 @@
         <p>Login in. To start browsing.</p>
         <form method="POST" class="m-t" role="form" action="{{ route('login') }}">
             @csrf
-            <div class="form-group">
-                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus placeholder="Username">
+            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus placeholder="Username">
 
                  @if ($errors->has('email'))
-                    <span class="invalid-feedback" role="alert">
+                    <label class="control-label">
                         <strong>{{ $errors->first('email') }}</strong>
-                    </span>
+                    </label>
                 @endif
             </div>
 
-            <div class="form-group">
-                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required placeholder="Password">
+            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <input id="password" type="password" class="form-control" name="password" required placeholder="Password">
 
                 @if ($errors->has('password'))
-                    <span class="invalid-feedback" role="alert">
+                    <label class="control-label">
                         <strong>{{ $errors->first('password') }}</strong>
-                    </span>
+                    </label>
                 @endif
             </div>
 

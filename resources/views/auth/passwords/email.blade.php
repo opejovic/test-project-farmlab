@@ -26,13 +26,13 @@
 
                             <form method="POST" class="m-t" role="form" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
                                 @csrf
-                                <div class="form-group">
-                                    <input type="email" id="email" class="form-control" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Email address" required>
+                                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                    <input type="email" id="email" class="form-control" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email address" required>
                                 
                                     @if ($errors->has('email'))
-                                        <span class="invalid-feedback" role="alert">
+                                        <label class="control-label">
                                             <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                        </label>
                                     @endif
                                 </div>
 

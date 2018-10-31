@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PracticeRequest;
 use App\Models\Practice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PracticeController extends Controller
@@ -15,7 +16,7 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        $practices = Practice::oldest()->paginate(10);
+        $practices = Practice::oldest()->paginate(9);
 
         return view('practice.index', compact('practices'));
     }

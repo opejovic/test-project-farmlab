@@ -57,7 +57,7 @@ class LabMemberController extends Controller
      */
     public function show($id)
     {
-        $member = User::whereType(User::FARM_LAB_MEMBER)->findOrFail($id);
+        $member = User::whereType(User::FARM_LAB_MEMBER)->orWhere('type', User::ADMIN)->findOrFail($id);
 
         return view('labmember.show', compact('member'));
     }
