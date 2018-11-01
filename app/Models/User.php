@@ -113,7 +113,10 @@ class User extends Authenticatable
     {
 
         $practice = $this->practice()
-            ->create(['name' => request('name')]);
+            ->create([
+                'name' => request('name'),
+                'created_by' => auth()->id()
+        ]);
 
         $newUser = $this->create([
             'name'        => request('admin_name'),

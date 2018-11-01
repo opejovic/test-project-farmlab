@@ -33,18 +33,21 @@
                 <div class="col-lg-4">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <span class="label label-primary pull-right">NEW</span>
-                            <h5>{{ $practice->name }}</h5>
+                        <a href="{{ route('practice.show', $practice->id) }}" class="text-navy">
+                            <span class="label label-primary pull-right">VISIT</span>
+                            <i class="fa fa-ambulance fa-lg"></i>
+                            <span><strong>{{ $practice->name }}</strong></span>
+                        </a>
                         </div>
                         <div class="ibox-content">
-                            <div class="team-members text-center">
-                                @foreach ($practice->admin() as $admin)
+                            <div class="team-members">
+                                @foreach ($practice->admin as $admin)
+                                    <a href="{{ route('vets.show', $admin->id) }}">
+                                        <span class="label">Admin</span>
                                     <img alt="member" class="img-circle" src="images/profiles/{{ $admin->id }}.jpg" 
                                         onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';"> 
-                                        <h5>{{ $admin->name }}</h5>
-                                    <a href="{{ route('vets.show', $admin->id) }}">
-                                        <span class="label label-success">Admin</span>
                                     </a>
+                                        <h5>{{ $admin->name }}</h5>
                                     <hr>
                                 @endforeach
                             </div>
@@ -54,24 +57,24 @@
                                 of a page when looking at its layout. The point of using Lorem Ipsum is that it has.
                             </p>
                             <div>
-                                <span>Status of current project:</span>
-                                <div class="stat-percent">48%</div>
+                                <span>Status of processed results:</span>
+                                <div class="stat-percent">{{ $practice->processedResultsPercentage() }}%</div>
                                 <div class="progress progress-mini">
-                                    <div style="width: 48%;" class="progress-bar"></div>
+                                    <div style="width: {{ $practice->processedResultsPercentage() }}%;" class="progress-bar"></div>
                                 </div>
                             </div>
                             <div class="row  m-t-sm">
                                 <div class="col-sm-4">
                                     <div class="font-bold">VETS</div>
-                                    {{ count($practice->vets()) }}
+                                    {{ count($practice->vets) }}
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="font-bold">RANKING</div>
                                     4th
                                 </div>
                                 <div class="col-sm-4 text-right">
-                                    <div class="font-bold">FARMERS</div>
-                                     50<i class="fa fa-level-up text-navy"></i>
+                                    <div class="font-bold">LABRESULTS</div>
+                                     {{ count($practice->noScopeResults) }}<i class="fa fa-level-up text-navy"></i>
                                 </div>
                             </div>
 

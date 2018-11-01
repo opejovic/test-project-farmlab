@@ -39,7 +39,6 @@ class LabResult extends Model
         return $this->belongsTo(User::class, 'vet_id');
     }
 
-
     /**
      * Lab result belongs to a practice.
      *

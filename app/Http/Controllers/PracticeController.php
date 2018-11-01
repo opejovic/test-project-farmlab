@@ -16,7 +16,7 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        $practices = Practice::oldest()->paginate(9);
+        $practices = Practice::oldest()->with('vets')->with('noScopeResults')->with('admin')->paginate(9);
 
         return view('practice.index', compact('practices'));
     }
@@ -58,7 +58,7 @@ class PracticeController extends Controller
      */
     public function show(Practice $practice)
     {
-        $vets = $practice->vets();
+        $vets = $practice->vets;
         return view('practice.show', compact('practice', 'vets'));
     }
 

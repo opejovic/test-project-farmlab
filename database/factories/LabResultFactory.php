@@ -3,7 +3,7 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Models\LabResult::class, function (Faker $faker) {
-    $practice = factory('App\Models\Practice')->create();
+    // $practice = factory('App\Models\Practice')->create();
     return [
         'herd_number'       => $faker->numberBetween(10000, 50000),
         'date_of_arrival'   => $faker->date($format = 'Y-m-d', $max = 'now'),
@@ -17,7 +17,7 @@ $factory->define(App\Models\LabResult::class, function (Faker $faker) {
         'farmer_name'       => $faker->name,
         'vet_comment'       => $faker->text($maxNbChars = 255),
         'vet_indicator'     => $faker->text($maxNbChars = 255),
-        'practice_id'       => $practice->id,
-        'practice_name'     => $practice->name
+        'practice_id'       => $faker->randomNumber,
+        'practice_name'     => $faker->company
     ];
 });
