@@ -39,7 +39,6 @@
 
             <!-- Main view  -->
             @yield('content')
-
             <!-- Footer -->
             @include('layouts.footer')
 
@@ -51,9 +50,9 @@
 
 
 
-@section('scripts')
     <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
-@show
+    @include('layouts.flash')
 
+    @yield('scripts')
 </body>
 </html>

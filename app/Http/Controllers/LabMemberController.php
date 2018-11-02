@@ -40,13 +40,14 @@ class LabMemberController extends Controller
     {
         auth()->user()->addFarmLabMember();
 
-        if ($request->fails())
-        {
-            return response()->json(['errors'=>$request->errors()->all()]);
-        }
-        session()->flash('message', 'New FarmLab team member added.');
+        // SweetAlert config
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'New FarmLab team member added successfully.',
+            'type'  => 'success'
+        ]);
 
-        return back();
+        return redirect(route('members.index'));
     }
 
     /**
@@ -57,7 +58,7 @@ class LabMemberController extends Controller
      */
     public function show($id)
     {
-        $member = User::whereType(User::FARM_LAB_MEMBER)->orWhere('type', User::ADMIN)->findOrFail($id);
+        $member = User::whereType(User::FARM_LAB_MEMBER)->findOrFail($id);
 
         return view('labmember.show', compact('member'));
     }
@@ -94,10 +95,15 @@ class LabMemberController extends Controller
     public function destroy($id)
     {
         $user = User::whereId($id)->firstOrFail();
+
         $user->delete();
 
-        session()->flash('message', 'Lab member successfully deleted');
+        session()->flash('message', [
+            'title' => 'Done.',
+            'text'  => 'Lab member successfully deleted.',
+            'type'  => 'success'
+        ]);
 
-        return redirect('members');
+        return redirect(route('members.index'));
     }
 }

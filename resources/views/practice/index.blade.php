@@ -32,18 +32,17 @@
             @foreach ($practices as $practice)
                 <div class="col-lg-4">
                     <div class="ibox">
-                        <div class="ibox-title">
-                        <a href="{{ route('practice.show', $practice->id) }}" class="text-navy">
-                            <span class="label label-primary pull-right">VISIT</span>
+                <a href="{{ route('practice.show', $practice->id) }}" class="text-navy">
+                        <div class="ibox-title bg-primary text-center">
                             <i class="fa fa-ambulance fa-lg"></i>
                             <span><strong>{{ $practice->name }}</strong></span>
-                        </a>
                         </div>
+                        </a>
                         <div class="ibox-content">
-                            <div class="team-members">
+                            <div class="team-members text-center">
                                 @foreach ($practice->admin as $admin)
                                     <a href="{{ route('vets.show', $admin->id) }}">
-                                        <span class="label">Admin</span>
+                                        <span class="badge">Admin</span>
                                     <img alt="member" class="img-circle" src="images/profiles/{{ $admin->id }}.jpg" 
                                         onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';"> 
                                     </a>

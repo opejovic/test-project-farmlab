@@ -41,7 +41,13 @@ class VetController extends Controller
     public function store(VetRequest $request)
     {
         auth()->user()->addVet();
-        session()->flash('message', 'New vet created.');
+
+        // SweetAlert config
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'New vet created successfully.',
+            'type'  => 'success'
+        ]);
 
         return redirect()->home();
     }
@@ -100,7 +106,11 @@ class VetController extends Controller
         $vet = User::where('id', $id)->firstOrFail();
         $vet->delete();
 
-        session()->flash('message', 'Vet successfully removed');
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'Vet successfully removed.',
+            'type'  => 'success'
+        ]);
 
         return redirect('vets');
     }

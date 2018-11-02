@@ -26,7 +26,7 @@ class ValidateCsv extends FormRequest
     public function rules()
     {
         return [
-            'csv_file' => 'required|file|mimes:csv,txt'
+            'file' => 'file|mimes:csv,txt'
         ];
     }
 
@@ -38,9 +38,8 @@ class ValidateCsv extends FormRequest
      */
     public function checkHeader()
     {
-        $file = request()->file('csv_file');
-        $getPath = $file->getRealPath();
-        $csv_file = fopen($getPath, 'r');
+        $file = request()->file('file');
+        $csv_file = fopen($file, 'r');
         $header = fgetcsv($csv_file, 0, ',');
 
         $countHeader = count($header);
@@ -66,6 +65,7 @@ class ValidateCsv extends FormRequest
         }
 
         fclose($csv_file);
+        return false;
     }
 }
 

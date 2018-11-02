@@ -8,7 +8,37 @@ use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
-    protected $fillable = ['name', 'file_path'];
+    protected $fillable = ['name', 'file_path', 'uploaded_by'];
+
+    /**
+     * A File belongs to an uploader.
+     *
+     * @return void
+     */
+    public function uploader()
+    {
+        return $this->belongsTo(User::class, 'uploaded_by');
+    }
+
+    /**
+     * Retruns the name of the files uploader.
+     *
+     * @return void
+     */
+    public function uploaderName()
+    {
+        return $this->uploader->name;
+    }
+
+    /**
+     * Returns the time of the file upload.
+     *
+     * @return void
+     */
+    public function getUploadedAtAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
 
     /**
      *
@@ -44,7 +74,8 @@ class File extends Model
     {
         $this->create([
             'name'      => $fileName,
-            'file_path' => storage_path($filePath)
+            'file_path' => storage_path($filePath),
+            'uploaded_by' => auth()->id()
         ]);
     }
 
@@ -54,21 +85,19 @@ class File extends Model
      */
     public function upload()
     {
-        $file = request('csv_file');
+        $file = request()->file('file');
         $fileName = $file->getClientOriginalName();
 
         if ($this->existsInDb($fileName)) {
-            return back()->withErrors(["The {$fileName} already exists in our database records."]);
+            abort(400, 'The file already exists in our database records.');
         }
 
         if ($this->existsInStorage($fileName)) {
-            return back()->withErrors(["The {$fileName} already exists in the storage."]);
+            abort(400, 'The file already exists in our storage.');
         }
 
         $this->saveToDb($fileName, Storage::putFileAs('labresults', $file, $fileName));
 
         (new LabResult)->parseAndSave($file);
-
-        session()->flash('message', 'File successfully uploaded.');
     }
 }

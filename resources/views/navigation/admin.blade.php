@@ -35,6 +35,10 @@
                     FL+
                 </div>
             </li>
+            <li class="{{ isActiveRoute('home')}}">
+                <a href="{{ route('home') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span></a>
+            </li>
+
             <li class="{{ isActiveRoute('members.index') }} {{ isActiveRoute('members.create') }} {{ isActiveRoute('members.show') }}">
                 <a href=""><i class="fa fa-flask"></i> <span class="nav-label">Team</span>
                     <span class="fa arrow"></span></a>
@@ -52,14 +56,8 @@
                 </ul>
             </li>            
 
-            <li>
-                <a href="index.html"><i class="fa fa-table"></i> <span class="nav-label">Results</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="active"><a href="{{ route('members.index') }}">Practices</a></li>
-                    <li><a href="dashboard_2.html">Upload</a></li>
-                    <li><a href="dashboard_3.html">Dashboard v.3</a></li>
-                    <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
-                </ul>
+            <li class="{{ isActiveRoute('files.index') }} {{ isActiveRoute('files.create') }}">
+                <a href="{{ route('files.index') }}"><i class="fa fa-file"></i> <span class="nav-label">Files</span></a>
             </li>
         </ul>
 

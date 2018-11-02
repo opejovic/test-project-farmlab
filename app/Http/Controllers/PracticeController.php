@@ -44,9 +44,14 @@ class PracticeController extends Controller
     public function store(PracticeRequest $request)
     {
         auth()->user()->addPractice();
-        session()->flash('message', 'New practice created.');
+        
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'New Practice team added successfully.',
+            'type'  => 'success'
+        ]);        
 
-        return redirect()->home();
+        return redirect(route('practice.index'));
     }
 
     /**

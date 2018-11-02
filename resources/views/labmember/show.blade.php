@@ -3,16 +3,6 @@
 @section ('pageTitle')
     {{ $member->name }}
 @endsection
-{{-- @section ('content')
-                    <div class="card-footer">
-                       <form action="{{ route('members.destroy', $member->id) }}" method="POST">
-                           @csrf
-                           @method('DELETE')
-
-                           <button type="submit" onclick="return confirm('Are you sure you want to remove this user?')" class="btn btn-danger">Delete</button>
-                       </form>
-                    </div>
-@endsection  --}}
 
 @section('content')
            <div class="row wrapper border-bottom white-bg page-heading">
@@ -54,6 +44,12 @@
                                     There are many variations of passages of Lorem Ipsum available, but the majority
                                     have suffered alteration in some form Ipsum available.
                                 </small>
+                           <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
+                           @csrf
+                           @method('DELETE')
+
+                           <button type="submit" class="btn btn-danger button3">Delete</button>
+                       </form>
                             </div>
                         </div>
                     </div>
@@ -443,5 +439,21 @@
             </div>
 
         </div>
-
+<script>
+    document.querySelector('#form').addEventListener('submit', function(e) {
+        var form = this;
+        e.preventDefault();
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to undo this.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            form.submit();
+        });
+    });
+</script>
 @endsection

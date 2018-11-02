@@ -72,11 +72,4 @@
             </div>
         </div>
 
-        @if(Session::has('errors'))
-            <script>
-                $(document).ready(function(){
-                    $('#myModal').modal({show: true});
-                }
-            </script>
-        @endif
 @endsection

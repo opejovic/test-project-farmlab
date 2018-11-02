@@ -18,6 +18,9 @@ let mix = require('laravel-mix');
         'resources/assets/vendor/bootstrap/css/bootstrap.css',
         'resources/assets/vendor/animate/animate.css',
         'resources/assets/vendor/font-awesome/css/font-awesome.css',
+        'resources/assets/vendor/sweetalert/sweetalert.css',
+        'resources/assets/vendor/dropzone/basic.css',
+        'resources/assets/vendor/dropzone/dropzone.css'
     ], 'public/css/vendor.css', './')
       .scripts([
         'resources/assets/vendor/jquery/jquery-3.1.1.min.js',
@@ -25,5 +28,7 @@ let mix = require('laravel-mix');
         'resources/assets/vendor/metisMenu/jquery.metisMenu.js',
         'resources/assets/vendor/slimscroll/jquery.slimscroll.min.js',
         'resources/assets/vendor/pace/pace.min.js',
+        'resources/assets/vendor/sweetalert/sweetalert.min.js',
+        'resources/assets/vendor/dropzone/dropzone.js',
         'resources/assets/js/app.js'
       ], 'public/js/app.js', './');
