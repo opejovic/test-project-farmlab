@@ -88,12 +88,7 @@
                             <a href="{{ route('home') }}">Home</a>
                         </li>
                         <li>
-                            @if (auth()->user()->isOfType(\App\Models\User::ADMIN))
-                                <a href="{{ route('practice.index') }}">Practices</a>
-                            @else
-                                <a href="{{ route('vets.index') }}">Practice members</a>
-                            @endif
-
+                            <a href="{{ route('vets.index') }}">Team members</a>
                         </li>
                         <li class="active">
                             <strong>{{ $vet->name }}</strong>
@@ -111,7 +106,8 @@
                 <div class="col-md-6">
 
                     <div class="profile-image">
-                        <img src="/images/profiles/{{ $vet->id }}.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                        <img alt="image" class="img-circle circle-border m-b-md" src="images/profiles/{{ $vet->id }}.jpg" 
+                        onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">
                     </div>
                     <div class="profile-info">
                         <div class="">
@@ -193,7 +189,7 @@
 
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>Practices created</h3>
+                            <h3>Processed results</h3>
                             <p class="small">
                                 If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
                                 anything embarrassing

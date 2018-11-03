@@ -22,7 +22,7 @@ class HomeController extends Controller
         } elseif ($user->type === User::ADMIN) {
             return view('home.admin', compact('user'));
         } elseif ($user->type === User::FARM_LAB_MEMBER) {
-            return view('home.member', compact('user'));
+            return view('home.labmember', compact('user'));
         } elseif ($user->type === User::PRACTICE_ADMIN) {
             return view('home.practice', compact('user'));
         } elseif ($user->type === User::VET) {

@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section ('pageTitle')
+    Result # {{ $labresult->id }}
+@endsection
 @section('content')
     <div class="container">
         <div class="row justify-content-center">

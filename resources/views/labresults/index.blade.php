@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section ('pageTitle')
+    Results
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -50,6 +54,11 @@
                 <div class="card-body">There are no new results.</div>
             @endif
 
+        </div>
+            <div class="text-center">
+                {{ $allResults->links() }}
+            </div>
+        </div>
         </div>
     </div>
 @endsection

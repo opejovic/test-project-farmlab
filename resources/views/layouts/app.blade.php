@@ -13,22 +13,14 @@
   <!-- Wrapper-->
     <div id="wrapper">
         <!-- Navigation -->
-        @if (\Auth::check())
-            @if (auth()->user()->type === \App\Models\User::ADMIN)
-                @include('navigation.admin')
-            @endif
-
-            @if (auth()->user()->type === \App\Models\User::FARM_LAB_MEMBER)
-                @include('navigation.labmember')
-            @endif        
-
-            @if (auth()->user()->type === \App\Models\User::PRACTICE_ADMIN)
-                @include('navigation.practice')
-            @endif        
-
-            @if (auth()->user()->type === \App\Models\User::VET)
-                @include('navigation.vet')
-            @endif
+        @if (auth()->user()->type === \App\Models\User::ADMIN)
+            @include('navigation.admin')
+        @elseif (auth()->user()->type === \App\Models\User::FARM_LAB_MEMBER)
+            @include('navigation.labmember')
+        @elseif (auth()->user()->type === \App\Models\User::PRACTICE_ADMIN)
+            @include('navigation.practice')
+        @elseif (auth()->user()->type === \App\Models\User::VET)
+            @include('navigation.vet')
         @endif
 
         <!-- Page wraper -->
