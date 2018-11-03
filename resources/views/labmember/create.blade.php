@@ -78,7 +78,7 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-                                        <button class="btn btn-white" onclick="window.history.go(-1); return false;">
+                                        <button class="btn btn-white" onclick="goBack()">
                                             Go back
                                         </button>
                                         <button class="btn btn-primary" type="submit">Submit</button>
@@ -90,5 +90,9 @@
                 </div>
             </div>
         </div>
-
+<script type="text/javascript">
+    function goBack() {
+        window.history.back();
+    }
+</script>
 @endsection
