@@ -89,7 +89,7 @@
                                 <div class="col-lg-5">
                                     <dl class="dl-horizontal">
 
-                                        <dt>Created By:</dt> <dd>{{ $practice->creatorName() }}</dd>
+                                        <dt>Created By:</dt> <dd>{{ $practice->creatorName }}</dd>
                                         <dt>Number Of Vets:</dt> <dd>  {{ count($vets) }}</dd>
                                         <dt>Client:</dt> <dd><a href="#" class="text-navy"> Zender Company</a> </dd>
                                         <dt>Version:</dt> <dd>  v1.4.2 </dd>
@@ -113,10 +113,10 @@
                                         <dt>Processed results:</dt>
                                         <dd>
                                             <div class="progress progress-striped active m-b-sm">
-                                                <div style="width: {{ $practice->processedResultsPercentage() }}%;" class="progress-bar"></div>
+                                                <div style="width: {{ $practice->processedResultsPercentage }}%;" class="progress-bar"></div>
                                             </div>
                                             <small>Proccesed results percentage is 
-                                                <strong>{{ $practice->processedResultsPercentage() }}%</strong>. 
+                                                <strong>{{ $practice->processedResultsPercentage }}%</strong>. 
                                                 Total number of results is <strong>{{ count($practice->noScopeResults) }}</strong>.
                                             </small>
                                         </dd>

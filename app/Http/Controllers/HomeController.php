@@ -18,8 +18,7 @@ class HomeController extends Controller
         $user = auth()->user();
 
         if (!\Auth::check()) {
-            return view('home.landing');
-            // return view('home.guest');
+            return view('auth.login');
         } elseif ($user->type === User::ADMIN) {
             return view('home.admin', compact('user'));
         } elseif ($user->type === User::FARM_LAB_MEMBER) {

@@ -13,7 +13,7 @@ class File extends Model
     /**
      * A File belongs to an uploader.
      *
-     * @return void
+     * @return App\Models\User::class
      */
     public function uploader()
     {
@@ -23,7 +23,6 @@ class File extends Model
     /**
      * Retruns the name of the files uploader.
      *
-     * @return void
      */
     public function uploaderName()
     {
@@ -33,7 +32,6 @@ class File extends Model
     /**
      * Returns the time of the file upload.
      *
-     * @return void
      */
     public function getUploadedAtAttribute()
     {

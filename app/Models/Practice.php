@@ -31,7 +31,7 @@ class Practice extends Model
      *
      * @return void
      */
-    public function creatorName()
+    public function getCreatorNameAttribute()
     {
         return $this->creator->name;
     }
@@ -61,7 +61,7 @@ class Practice extends Model
      *
      * @return integer
      */
-    public function processedResultsPercentage()
+    public function getProcessedResultsPercentageAttribute()
     {
         if (count($this->noScopeResults) > 0) {
             return number_format(

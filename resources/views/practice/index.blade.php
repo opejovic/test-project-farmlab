@@ -57,9 +57,9 @@
                             </p>
                             <div>
                                 <span>Status of processed results:</span>
-                                <div class="stat-percent">{{ $practice->processedResultsPercentage() }}%</div>
+                                <div class="stat-percent">{{ $practice->processedResultsPercentage }}%</div>
                                 <div class="progress progress-mini">
-                                    <div style="width: {{ $practice->processedResultsPercentage() }}%;" class="progress-bar"></div>
+                                    <div style="width: {{ $practice->processedResultsPercentage }}%;" class="progress-bar"></div>
                                 </div>
                             </div>
                             <div class="row  m-t-sm">
