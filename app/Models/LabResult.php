@@ -61,7 +61,10 @@ class LabResult extends Model
      */
     public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
-        return $query->where('status', $status)->where('vet_id', auth()->id())->oldest('id')->get();
+        return $query->where('status', $status)
+                     ->where('vet_id', auth()->id())
+                     ->oldest('id')
+                     ->get();
     }
 
     /**
@@ -135,7 +138,6 @@ class LabResult extends Model
             ]);
             $vet = User::whereId($column[13])->first();
             // For this to work, it needs a queue:listen command in terminal and .env file QUEUE_DRIVER set to database.
-            // Need to refactor this -- use Eventing instead?
             \Mail::to($vet->email)->queue(new NewResultNotification($labresult, $vet));
 
         }
@@ -149,12 +151,17 @@ class LabResult extends Model
     public function process()
     {
         $this->whereId($this->id)
-            ->update([
+             ->update([
                 'vet_comment'   => request('vet_comment'),
                 'vet_indicator' => request('vet_indicator'),
                 'vet_id'        => auth()->user()->id,
                 'status'        => LabResult::PROCESSED
             ]);
-        session()->flash('message', 'Lab result successfully processed');
+
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'Labresult proccessed successfully.',
+            'type'  => 'success'
+        ]);
     }
 }

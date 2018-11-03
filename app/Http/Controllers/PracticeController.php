@@ -16,7 +16,11 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        $practices = Practice::oldest()->with('vets')->with('noScopeResults')->with('admin')->paginate(9);
+        $practices = Practice::oldest()
+            ->with('vets')
+            ->with('noScopeResults')
+            ->with('admin')
+            ->paginate(9);
 
         return view('practice.index', compact('practices'));
     }
@@ -34,7 +38,8 @@ class PracticeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * Adds new FL member if the auth user is admin / or  practice (and practice admin, (if the auth user is
+     * Adds new FL member if the auth user is admin / 
+     * or  practice (and practice admin, (if the auth user is
      * FARMLAB_MEMBER)).
      *
      * @param PracticeRequest $request

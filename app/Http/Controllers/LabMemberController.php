@@ -40,7 +40,6 @@ class LabMemberController extends Controller
     {
         auth()->user()->addFarmLabMember();
 
-        // SweetAlert config
         session()->flash('message', [
             'title' => 'Success!',
             'text'  => 'New FarmLab team member added successfully.',

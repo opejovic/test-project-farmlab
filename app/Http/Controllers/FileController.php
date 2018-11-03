@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 class FileController extends Controller
 {
     /**
-     * Show the form for the file upload and all the files
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -22,13 +22,12 @@ class FileController extends Controller
     }
 
     /**
+     * If the validation passes, store the file in the storage.
+     * 
      * @param ValidateCsv $request
      * @param File        $file
      *
-     * If the validation passes, store the file in the storage
-     *
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(ValidateCsv $request, File $file)
     {

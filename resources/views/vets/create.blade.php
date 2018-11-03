@@ -78,7 +78,7 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-                                        <button class="btn btn-white" onclick="history.go(-1);">Cancel</button>
+                                        <button class="btn btn-white" onclick="window.history.go(-1); return false;">Cancel</button>
                                         <button class="btn btn-primary" type="submit">Submit</button>
                                     </div>
                                 </div>

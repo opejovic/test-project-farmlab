@@ -72,9 +72,10 @@ class User extends Authenticatable
      */   
     public function allVets()
     {
-        return $this->where('practice_id', auth()->user()->practice_id)->whereType(User::VET)
-            ->oldest()
-            ->paginate(10);
+        return $this->where('practice_id', auth()->user()->practice_id)
+                    ->whereType(User::VET)
+                    ->oldest()
+                    ->paginate(10);
     }
 
     /**
@@ -114,7 +115,7 @@ class User extends Authenticatable
 
         $practice = $this->practice()
             ->create([
-                'name' => request('name'),
+                'name'       => request('name'),
                 'created_by' => auth()->id()
         ]);
 

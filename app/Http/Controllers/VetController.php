@@ -42,7 +42,6 @@ class VetController extends Controller
     {
         auth()->user()->addVet();
 
-        // SweetAlert config
         session()->flash('message', [
             'title' => 'Success!',
             'text'  => 'New vet created successfully.',
@@ -62,7 +61,9 @@ class VetController extends Controller
     public function show(User $vet)
     {
         // temporary - create new middleware class for this.
-        abort_unless(auth()->user()->practice_id == $vet->practice_id || auth()->user()->type === User::ADMIN, 403);
+        abort_unless(
+            auth()->user()->practice_id == $vet->practice_id || auth()->user()->type === User::ADMIN, 403
+        );
 
         $results = $vet->results()->paginate();
 

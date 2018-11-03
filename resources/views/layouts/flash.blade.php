@@ -5,7 +5,7 @@
 	        text: "{{ session('message.text') }}",
 	        type: "{{ session('message.type') }}",
 	        confirmationText: false,
-	        timer: 3000
+	        timer: 2000
 	    });
 	</script>
 @endif 

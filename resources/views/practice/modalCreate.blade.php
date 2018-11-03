@@ -21,10 +21,10 @@
                                 <div class="col-md-8">
                                     <input name="name" type="text" class="form-control" id="name" value="{{ old('name') }}" required="">
                                     @if ($errors->has('name'))
-                                    <label class="control-label">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </label>
-                                @endif
+                                        <label class="control-label">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </label>
+                                    @endif
                                 </div>
                             </div>                            
 
@@ -33,10 +33,10 @@
                                 <div class="col-md-8">
                                     <input name="admin_name" type="text" class="form-control" id="admin_name" value="{{ old('admin_name') }}" required="">
                                     @if ($errors->has('admin_name'))
-                                    <label class="control-label">
-                                        <strong>{{ $errors->first('admin_name') }}</strong>
-                                    </label>
-                                @endif
+                                        <label class="control-label">
+                                            <strong>{{ $errors->first('admin_name') }}</strong>
+                                        </label>
+                                    @endif
                                 </div>
                             </div>
 
@@ -57,10 +57,10 @@
                                 <div class="col-md-8">
                                     <input name="password" type="password" class="form-control" id="password" required="">
                                     @if ($errors->has('password'))
-                                    <label class="control-label text-md-left">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </label>
-                                @endif
+                                        <label class="control-label text-md-left">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </label>
+                                    @endif
                                 </div>
                             </div>
 

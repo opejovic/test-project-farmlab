@@ -60,7 +60,9 @@ class LabResultController extends Controller
      */
     public function show(LabResult $labresult)
     {
-        abort_unless(auth()->user()->practice_id == $labresult->practice_id, 404);
+        abort_unless(
+            auth()->user()->practice_id == $labresult->practice_id, 404
+        );
 
         return view('labresults.show', compact('labresult'));
     }
@@ -89,7 +91,7 @@ class LabResultController extends Controller
     {
         $labresult->process();
 
-        return redirect()->back();
+        return back();
     }
 
     /**

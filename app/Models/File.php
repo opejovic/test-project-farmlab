@@ -24,7 +24,7 @@ class File extends Model
      * Retruns the name of the files uploader.
      *
      */
-    public function uploaderName()
+    public function getUploaderNameAttribute()
     {
         return $this->uploader->name;
     }
@@ -59,6 +59,7 @@ class File extends Model
     private function existsInDb($fileName)
     {
         $dbFile = $this->where('name', $fileName)->first();
+
         return ($dbFile !== null) ? true : false;
     }
 
@@ -71,8 +72,8 @@ class File extends Model
     private function saveToDb($fileName, $filePath)
     {
         $this->create([
-            'name'      => $fileName,
-            'file_path' => storage_path($filePath),
+            'name'        => $fileName,
+            'file_path'   => storage_path($filePath),
             'uploaded_by' => auth()->id()
         ]);
     }
@@ -80,6 +81,7 @@ class File extends Model
     /**
      * Upload the file from the request to storage (if its not a duplicate),
      * and then trigger the LabResult parseAndSave method.
+     *
      */
     public function upload()
     {

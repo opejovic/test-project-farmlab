@@ -36,11 +36,14 @@
                 </div>
             </li>
             <li class="{{ isActiveRoute('home')}}">
-                <a href="{{ route('home') }}"><i class="fa fa-th-large"></i> <span class="nav-label">{{ __('Home') }}</span></a>
+                <a href="{{ route('home') }}"><i class="fa fa-th-large"></i> 
+                    <span class="nav-label">{{ __('Home') }}</span></a>
             </li>
 
-            <li class="{{ isActiveRoute('labresults.index') }} {{ isActiveRoute('labresults.show') }}">
-                <a href="{{ route('labresults.index') }}"><i class="fa fa-th"></i> <span class="nav-label">{{ __('Lab Results') }}</span></a>
+            <li class="{{ isActiveRoute('labresults.index') }} 
+                       {{ isActiveRoute('labresults.show') }}">
+                <a href="{{ route('labresults.index') }}"><i class="fa fa-th"></i> 
+                    <span class="nav-label">{{ __('Lab Results') }}</span></a>
             </li>
         </ul>
 

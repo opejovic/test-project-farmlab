@@ -44,12 +44,12 @@
                                     There are many variations of passages of Lorem Ipsum available, but the majority
                                     have suffered alteration in some form Ipsum available.
                                 </small>
-                           <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
-                           @csrf
-                           @method('DELETE')
+                                <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
+                                    @csrf
+                                    @method('DELETE')
 
-                           <button type="submit" class="btn btn-danger button3">Delete</button>
-                       </form>
+                                    <button type="submit" class="btn btn-danger button3">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>

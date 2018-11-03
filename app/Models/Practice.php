@@ -29,7 +29,6 @@ class Practice extends Model
     /**
      * Returns the name of the practice creator.
      *
-     * @return void
      */
     public function getCreatorNameAttribute()
     {
@@ -66,7 +65,7 @@ class Practice extends Model
         if (count($this->noScopeResults) > 0) {
             return number_format(
                 (count($this->noScopeResults->where('status', LabResult::PROCESSED)) / 
-                count($this->noScopeResults)) * 100);
+                 count($this->noScopeResults)) * 100);
         }
 
         return '0';

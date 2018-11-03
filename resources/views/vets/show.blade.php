@@ -121,6 +121,16 @@
                                     have suffered alteration in some form Ipsum available.
                                 </small>
                             </div>
+
+                           <form action="{{ route('vets.destroy', $vet->id) }}" method="POST" id="form">
+                               @csrf
+                               @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger">
+                                    Delete
+                                </button>
+                           </form>
+
                         </div>
                     </div>
                 </div>
@@ -509,5 +519,21 @@
             </div>
 
         </div>
-
+<script>
+    document.querySelector('#form').addEventListener('submit', function(e) {
+        var form = this;
+        e.preventDefault();
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to undo this.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            form.submit();
+        });
+    });
+</script>
 @endsection
