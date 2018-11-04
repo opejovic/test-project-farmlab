@@ -6,7 +6,7 @@
 
 @section('content')
            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
+                <div class="col-lg-11">
                     <h2>Team</h2>
                     <ol class="breadcrumb">
                         <li>
@@ -20,8 +20,14 @@
                         </li>
                     </ol>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-1">
 
+                        {{-- <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
+                        </form> --}}
                 </div>
             </div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -39,58 +45,33 @@
                                 <h2 class="no-margins">
                                     {{ $member->name }}
                                 </h2>
+
                                 <h4>{{ __('Team Member') }}</h4>
+                                
                                 <small>
                                     There are many variations of passages of Lorem Ipsum available, but the majority
                                     have suffered alteration in some form Ipsum available.
                                 </small>
-                                <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit" class="btn btn-danger button3">Delete</button>
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <table class="table small m-b-xs">
                         <tbody>
                         <tr>
                             <td>
-                                <strong>142</strong> Projects
+                                <h2><strong>{{ $practicesCreated }}</strong> Practices created</h2>
                             </td>
                             <td>
-                                <strong>22</strong> Followers
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>61</strong> Comments
-                            </td>
-                            <td>
-                                <strong>54</strong> Articles
+                                <h2><strong>{{ $member->uploadedFiles }}</strong> Uploaded Files</h2>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <strong>154</strong> Tags
-                            </td>
-                            <td>
-                                <strong>32</strong> Friends
-                            </td>
-                        </tr>
+                    
                         </tbody>
                     </table>
+                    <hr>
                 </div>
-                <div class="col-md-3">
-                    <small>Sales in last 24h</small>
-                    <h2 class="no-margins">206 480</h2>
-                    <div id="sparkline1"></div>
-                </div>
-
 
             </div>
             <div class="row">
@@ -99,7 +80,7 @@
 
                     <div class="ibox">
                         <div class="ibox-content">
-                                <h3>About {{ $member->name }}</h3>
+                            <h3>About {{ $member->name }}</h3>
 
                             <p class="small">
                                 There are many variations of passages of Lorem Ipsum available, but the majority have
@@ -113,7 +94,6 @@
                             <p class="small font-bold">
                                 <span><i class="fa fa-circle text-navy"></i> Online status</span>
                                 </p>
-
                         </div>
                     </div>
 

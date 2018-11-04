@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LabMemberRequest;
+use App\Models\File;
+use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -58,8 +60,9 @@ class LabMemberController extends Controller
     public function show($id)
     {
         $member = User::whereType(User::FARM_LAB_MEMBER)->findOrFail($id);
+        $practicesCreated = count(Practice::where('created_by', $id)->get());
 
-        return view('labmember.show', compact('member'));
+        return view('labmember.show', compact('member', 'practicesCreated'));
     }
 
     /**

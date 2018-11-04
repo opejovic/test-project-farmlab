@@ -65,6 +65,26 @@ class User extends Authenticatable
         return $this->belongsTo(Practice::class);
     }
 
+    /**
+     * User can upload many files.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class, 'uploaded_by');
+    }
+
+    /**
+     * Returns the number of the uploaded files by the user.
+     *
+     * @return void
+     */
+    public function getUploadedFilesAttribute()
+    {
+        return count($this->files);
+    }
+
      /**
       * Returns all practice members for the practice of the authenticated user.
       * 
