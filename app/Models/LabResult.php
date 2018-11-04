@@ -50,6 +50,16 @@ class LabResult extends Model
     }
 
     /**
+     * Returns the labresults practice name
+     *
+     * @return void
+     */
+    public function getPracticeNameAttribute()
+    {
+        return $this->practice->name;
+    }
+
+    /**
      * query scope
      *
      * Return all results for the currently auth user.
@@ -89,7 +99,7 @@ class LabResult extends Model
      */
     public function fetchAll()
     {
-        return $this->with('vet')->oldest('id')->paginate();
+        return $this->with('vet')->oldest('id')->get();
     }
 
     /**
@@ -102,6 +112,18 @@ class LabResult extends Model
     public function fetchByFarmer($farmer)
     {
         return $this->where('farmer_name', $farmer)->get();
+    }
+
+    /**
+     * summary
+     *
+     * @return void
+     * @author 
+     */
+    public function isProccessed()
+    {
+        return ($this->status === LabResult::PROCESSED) ? true : false;
+
     }
 
     /**

@@ -48,7 +48,7 @@ class VetController extends Controller
             'type'  => 'success'
         ]);
 
-        return redirect()->home();
+        return redirect(route('vets.index'));
     }
 
     /**

@@ -47,7 +47,7 @@
                 </ul>
             </li>            
 
-            <li class="{{ isActiveRoute('labresults.index') }} {{ isActiveRoute('labresults.create') }}">
+            <li class="{{ isActiveRoute('labresults.index') }} {{ isActiveRoute('labresults.show') }}">
                 <a href="{{ route('labresults.index') }}"><i class="fa fa-th"></i> <span class="nav-label">Results</span></a>
             </li>
         </ul>
