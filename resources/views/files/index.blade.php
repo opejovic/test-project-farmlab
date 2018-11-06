@@ -73,7 +73,7 @@
                                     <td>
                                         <small>Uploaded: {{ $file->uploaded_at }}</small>
                                         <br/>
-                                        <small>Uploader: {{ $file->uploaderName }}</small>
+                                        <small>Uploader: {{ $file->uploader_name }}</small>
                                     </td>
                                     <td class="project-people">
                                         <small>{{ $file->file_path }}</small>

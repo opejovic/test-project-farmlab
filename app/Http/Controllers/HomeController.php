@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\LabResult;
+use App\Models\Practice;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -13,14 +15,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $labresult)
+    public function index(LabResult $labresult, Practice $practice, File $file)
     {
         $user = auth()->user();
 
         if (!\Auth::check()) {
             return view('auth.login');
         } elseif ($user->type === User::ADMIN) {
-            return view('home.admin', compact('user'));
+            return view('home.admin', compact('user', 'practice', 'file'));
         } elseif ($user->type === User::FARM_LAB_MEMBER) {
             return view('home.labmember', compact('user'));
         } elseif ($user->type === User::PRACTICE_ADMIN) {

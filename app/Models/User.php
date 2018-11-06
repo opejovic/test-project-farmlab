@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Mail\Welcome;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -50,6 +51,8 @@ class User extends Authenticatable
     }
 
     /**
+     * Vet has many lab results.
+     * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function results()
@@ -66,6 +69,60 @@ class User extends Authenticatable
     }
 
     /**
+     * Lab team member can create many practices.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function createdPractices()
+    {
+        return $this->hasMany(Practice::class, 'created_by');
+    }    
+
+    /**
+     * Returns the practices created this month by the authenticated user.
+     *
+     * @return Integer
+     */
+    public function getCreatedPracticesThisMonthAttribute()
+    {
+        return count($this->createdPractices()
+            ->where('created_at', '>=', Carbon::now()->startOfMonth())
+            ->get());
+    }
+
+    /**
+     * Counts all created practices by the authenticated user.
+     *
+     * @return void
+     */
+    public function getCountCreatedPracticesAttribute()
+    {
+        return count($this->createdPractices()->get());
+    }
+
+    /**
+     * Returns the number of created team members for the current month.
+     *
+     * @return Integer
+     */
+    public function getTeamMembersAddedThisMonthAttribute()
+    {
+        return count($this->whereType(User::FARM_LAB_MEMBER)
+                          ->where('created_at', '>=', Carbon::now()->startOfMonth())
+                          ->get());
+    }    
+
+    /**
+     * Returns the total number of farm lab team members.
+     *
+     * @return integer
+     */
+    public function getCountAllTeamMembersAttribute()
+    {
+        return count($this->whereType(User::FARM_LAB_MEMBER)->get());
+    }
+
+    /**
      * User can upload many files.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -78,7 +135,7 @@ class User extends Authenticatable
     /**
      * Returns the number of the uploaded files by the user.
      *
-     * @return void
+     * @return Integer
      */
     public function getUploadedFilesAttribute()
     {

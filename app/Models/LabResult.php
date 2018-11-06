@@ -99,7 +99,7 @@ class LabResult extends Model
      */
     public function fetchAll()
     {
-        return $this->with('vet')->oldest('id')->get();
+        return $this->with('vet')->with('practice')->oldest('id')->get();
     }
 
     /**

@@ -61,7 +61,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                <h2><strong>{{ $practicesCreated }}</strong> Practices created</h2>
+                                <h2><strong>{{ $member->countCreatedPractices }}</strong> Practices created</h2>
                             </td>
                             <td>
                                 <h2><strong>{{ $member->uploadedFiles }}</strong> Uploaded Files</h2>
@@ -100,22 +100,11 @@
                     <div class="ibox">
                         <div class="ibox-content">
                             <h3>Practices created</h3>
-                            <p class="small">
-                                If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                                anything embarrassing
-                            </p>
-                            <div class="user-friends">
-                                <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a6.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a7.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a8.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-                            </div>
+                            <ul class="list-unstyled file-list">
+                                @foreach ($member->createdPractices as $practice)
+                                    <li><a href=""><i class="fa fa-ambulance"></i> {{ $practice->name }}</a></li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
 
@@ -123,12 +112,9 @@
                         <div class="ibox-content">
                             <h3>Uploaded files</h3>
                             <ul class="list-unstyled file-list">
-                                <li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>
-                                <li><a href=""><i class="fa fa-file-picture-o"></i> Logo_zender_company.jpg</a></li>
-                                <li><a href=""><i class="fa fa-stack-exchange"></i> Email_from_Alex.mln</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> Contract_20_11_2014.docx</a></li>
-                                <li><a href=""><i class="fa fa-file-powerpoint-o"></i> Presentation.pptx</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> 10_08_2015.docx</a></li>
+                                @foreach ($member->files as $file)
+                                    <li><a href=""><i class="fa fa-file"></i> {{ $file->name }}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

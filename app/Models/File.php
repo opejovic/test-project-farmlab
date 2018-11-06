@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,6 +37,27 @@ class File extends Model
     public function getUploadedAtAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+
+    /**
+     * Returns the number of the uploaded files for the current month.
+     *
+     * @return Integer
+     */
+    public function getUploadedThisMonthAttribute()
+    {
+        return count($this->where('created_at', '>=', Carbon::now()->startOfMonth())
+                          ->get());
+    }    
+
+    /**
+     * Returns the number of the all uploaded files.
+     *
+     * @return Integer
+     */
+    public function getCountAllAttribute()
+    {
+        return count($this->all());
     }
 
     /**

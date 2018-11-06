@@ -4,92 +4,92 @@
 	Home
 @endsection
 
-
 @section('content')
-{{--   <a href="{{ route('members.create') }}" class="btn btn-md btn-secondary">Add new lab member</a><hr>
-  <a href="{{ route('members.index') }}" class="btn btn-md btn-secondary">See lab members</a><hr>
-  <a href="{{ route('practice.create') }}" class="btn btn-md btn-secondary">Add new practice</a><hr>
-  <a href="{{ route('practice.index') }}" class="btn btn-md btn-secondary">See practices</a> --}}
 
  <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-lg-2">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-success pull-right">Monthly</span>
-                        <h5>Views</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">386,200</h1>
-                        <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
-                        <small>Total views</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-info pull-right">Annual</span>
-                        <h5>Orders</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">80,800</h1>
-                        <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
-                        <small>New orders</small>
-                    </div>
-                </div>
-            </div>
 
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <span class="label label-primary pull-right">Today</span>
-                        <h5>visits</h5>
+                        <i class="fa fa-users pull-right fa-lg"></i>
+                        <h5>Team</h5>
                     </div>
                     <div class="ibox-content">
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <h1 class="no-margins">406,42</h1>
-                                <div class="font-bold text-navy">44% <i class="fa fa-level-up"></i> <small>Rapid pace</small></div>
+                            <div class="col-md-6 text-center">
+                                <h1 class="no-margins">{{ $user->team_members_added_this_month}}</i></h1>
+                                <div class="font-bold text-success"><small>Added this month</small></div>
                             </div>
-                            <div class="col-md-6">
-                                <h1 class="no-margins">206,12</h1>
-                                <div class="font-bold text-navy">22% <i class="fa fa-level-up"></i> <small>Slow pace</small></div>
+                            <div class="col-md-6 text-center">
+                                <h1 class="no-margins">{{ $user->count_all_team_members }}</h1>
+                                <div class="font-bold text-navy"><small>Total count</small></div>
                             </div>
                         </div>
 
 
                     </div>
                 </div>
-            </div>
+            </div>            
+
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Monthly income</h5>
-                        <div class="ibox-tools">
-                            <span class="label label-primary">Updated 12.2015</span>
-                        </div>
+                        <i class="fa fa-ambulance pull-right fa-lg"></i>
+                        <h5>Practices</h5>
                     </div>
-                    <div class="ibox-content no-padding">
-                        <div class="flot-chart m-t-lg" style="height: 55px;">
-                            <div class="flot-chart-content" id="flot-chart1"></div>
-                        </div>
-                    </div>
+                    <div class="ibox-content">
 
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <h1 class="no-margins">{{ $practice->created_this_month }}</h1>
+                                <div class="font-bold text-success"><small>Created this month</small></div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <h1 class="no-margins">{{ $practice->count_all }}</h1>
+                                <div class="font-bold text-navy"><small>Total count</small></div>
+                            </div>
+                        </div> 
+
+                    </div>
+                </div>
+            </div>    
+
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <i class="fa fa-file fa-lg pull-right"></i>
+                        <h5>Files</h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <h1 class="no-margins">{{ $file->uploaded_this_month }}</h1>
+                                <div class="font-bold text-success"><small>Uploaded this month</small></div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <h1 class="no-margins">{{ $file->count_all }}</h1>
+                                <div class="font-bold text-navy"><small>Total count</small></div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
+
         </div>
         <div class="row">
             <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <div>
-                                        <span class="pull-right text-right">
-                                        <small>Average value of sales in the past month in: <strong>United states</strong></small>
-                                            <br/>
-                                            All sales: 162,862
-                                        </span>
+                            <span class="pull-right text-right">
+                            <small>Average value of sales in the past month in: <strong>United states</strong></small>
+                                <br/>
+                                All sales: 162,862
+                            </span>
                             <h3 class="font-bold no-margins">
                                 Half-year revenue margin
                             </h3>

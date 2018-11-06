@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Practice extends Model
@@ -33,6 +34,26 @@ class Practice extends Model
     public function getCreatorNameAttribute()
     {
         return $this->creator->name;
+    }
+
+    /**
+     * Returns the number of the practices created for the current month.
+     *
+     * @return Integer
+     */
+    public function getCreatedThisMonthAttribute()
+    {
+        return count($this->where('created_at', '>=', Carbon::now()->startOfMonth())->get());
+    }    
+
+    /**
+     * Returns the total number of created practices.
+     *
+     * @return Integer
+     */
+    public function getCountAllAttribute()
+    {
+        return count($this->all());
     }
 
     /**
