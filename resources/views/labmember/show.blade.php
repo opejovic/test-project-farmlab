@@ -22,12 +22,12 @@
                 </div>
                 <div class="col-lg-1">
 
-                        {{-- <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
+                        <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
                             @csrf
                             @method('DELETE')
 
                             <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
-                        </form> --}}
+                        </form>
                 </div>
             </div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -37,7 +37,8 @@
                 <div class="col-md-6">
 
                     <div class="profile-image">
-                        <img src="/images/profiles/{{ $member->id }}.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                        <img alt="image" class="img-circle circle-border m-b-md" src="/images/profiles/{{ $member->id }}.jpg" 
+                        onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">
                     </div>
                     <div class="profile-info">
                         <div class="">

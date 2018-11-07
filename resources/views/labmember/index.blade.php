@@ -54,7 +54,7 @@
                     <div class="m-t-xs btn-group">
                         <a class="btn btn-xs btn-white"><i class="fa fa-phone"></i> Call </a>
                         <a class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> Email</a>
-                        @if ($member->status === \App\Models\User::VERIFIED)
+                        @if ($member->is_verified)
                             <a class="btn btn-xs btn-primary">
                         @else
                             <a class="btn btn-xs btn-warning">
@@ -72,4 +72,12 @@
             </div>
         </div>
 
+@endsection
+
+@section ('scripts')
+    @if ($errors->any())
+        <script type="text/javascript">
+            $('#myModal').modal('show');
+        </script>
+    @endif
 @endsection

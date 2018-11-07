@@ -123,6 +123,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Returns true if the user is verified.
+     *
+     * @return boolean
+     */
+    public function getIsVerifiedAttribute()
+    {
+        return ($this->status === User::VERIFIED) ? true : false;
+    }
+
+    /**
      * User can upload many files.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

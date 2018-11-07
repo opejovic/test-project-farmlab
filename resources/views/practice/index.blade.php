@@ -88,3 +88,11 @@
             </div>
 
 @endsection
+
+@section ('scripts')
+    @if ($errors->any())
+        <script type="text/javascript">
+            $('#myPracticeModal').modal('show');
+        </script>
+    @endif
+@endsection

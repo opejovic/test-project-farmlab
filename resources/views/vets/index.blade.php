@@ -71,6 +71,12 @@
             </div>
         </div>
 
+@endsection
 
-
+@section ('scripts')
+    @if ($errors->any())
+        <script type="text/javascript">
+            $('#myModal').modal('show');
+        </script>
+    @endif
 @endsection
