@@ -16,7 +16,7 @@
                 <li class="active">
                     <strong>Team Members</strong>
                 </li>                
-        </ol>
+            </ol>
 
         </div>
             <div class="col-lg-4">
@@ -24,10 +24,10 @@
                     @include ('vets.modalCreate')
                 </div>
             </div>
-        </div>
+    </div>
 
     </div>
-        <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             @foreach ($vets as $vet)
             <div class="col-lg-3">

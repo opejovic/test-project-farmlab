@@ -519,21 +519,27 @@
             </div>
 
         </div>
-<script>
-    document.querySelector('#form').addEventListener('submit', function(e) {
-        var form = this;
-        e.preventDefault();
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to undo this.",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        }, function () {
-            form.submit();
+
+@endsection
+
+@section ('scripts')
+
+    <script>
+        document.querySelector('#form').addEventListener('submit', function(e) {
+            var form = this;
+            e.preventDefault();
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to undo this.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+                form.submit();
+            });
         });
-    });
-</script>
+    </script>
+
 @endsection

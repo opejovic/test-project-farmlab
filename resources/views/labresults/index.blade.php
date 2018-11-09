@@ -51,58 +51,58 @@
                     <div class="ibox-content">
 
                         <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables" id="example">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Herd</th>
-                        <th>Date Of Test</th>
-                        <th>Animal ID</th>
-                        <th>Lab Code</th>
-                        <th>Test Name</th>
-                        <th>Reading</th>
-                        <th>Farmer Name</th>
-                        <th>Practice Name</th>
-                        <th>Vet</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($allResults as $result)
-                    <tr>
-                        <td>{{ $result->id }}</td>
-                        <td>{{ $result->herd_number}}</td>
-                        <td>{{ $result->date_of_test}}</td>
-                        <td>{{ $result->animal_id}}</td>
-                        <td>{{ $result->lab_code}}</td>
-                        <td>{{ $result->test_name}}</td>
-                        <td>{{ $result->reading}}</td>
-                        <td>{{ $result->farmer_name}}</td>
-                        <td>{{ $result->practice_name}}</td>
-                        <td>{{ $result->vet->name }}</td>
-                        <td>
-                        <a href="{{ route('labresults.show', $result->id) }}">
-                            <span class="label label-{{ $result->isProccessed() ? 'primary' : 'warning' }}">
-                                {{ $result->status }}
-                            </span>
-                        </a>
-                        </td>
-                    </tr>
-                    @endforeach
-                    <tfoot>
-                        <th>#</th>
-                        <th>Herd</th>
-                        <th>Date Of Test</th>
-                        <th>Animal ID</th>
-                        <th>Lab Code</th>
-                        <th>Test Name</th>
-                        <th>Reading</th>
-                        <th>Farmer Name</th>
-                        <th>Practice Name</th>
-                        <th>Vet</th>
-                        <th>Status</th>
-                    </tfoot>
-                    </table>
+                            <table class="table table-striped table-bordered table-hover dataTables" id="example">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Herd</th>
+                                <th>Date Of Test</th>
+                                <th>Animal ID</th>
+                                <th>Lab Code</th>
+                                <th>Test Name</th>
+                                <th>Reading</th>
+                                <th>Farmer Name</th>
+                                <th>Practice Name</th>
+                                <th>Vet</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($allResults as $result)
+                            <tr>
+                                <td>{{ $result->id }}</td>
+                                <td>{{ $result->herd_number}}</td>
+                                <td>{{ $result->date_of_test}}</td>
+                                <td>{{ $result->animal_id}}</td>
+                                <td>{{ $result->lab_code}}</td>
+                                <td>{{ $result->test_name}}</td>
+                                <td>{{ $result->reading}}</td>
+                                <td>{{ $result->farmer_name}}</td>
+                                <td>{{ $result->practice_name}}</td>
+                                <td>{{ $result->vet->name }}</td>
+                                <td>
+                                <a href="{{ route('labresults.show', $result->id) }}">
+                                    <span class="label label-{{ $result->isProccessed() ? 'primary' : 'warning' }}">
+                                        {{ $result->status }}
+                                    </span>
+                                </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tfoot>
+                                <th>#</th>
+                                <th>Herd</th>
+                                <th>Date Of Test</th>
+                                <th>Animal ID</th>
+                                <th>Lab Code</th>
+                                <th>Test Name</th>
+                                <th>Reading</th>
+                                <th>Farmer Name</th>
+                                <th>Practice Name</th>
+                                <th>Vet</th>
+                                <th>Status</th>
+                            </tfoot>
+                            </table>
                         </div>
 
                     </div>

@@ -62,7 +62,7 @@ class LabResult extends Model
     /**
      * query scope
      *
-     * Return all results for the currently auth user.
+     * Return all results for the auth user.
      *
      * @param        $query
      * @param string $status
@@ -79,7 +79,7 @@ class LabResult extends Model
 
     /**
      * Returns results based on their status (by default, returns Unprocessed (if there are any)
-     * for the currently auth user.
+     * for the auth user.
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
@@ -93,7 +93,7 @@ class LabResult extends Model
     }
 
     /**
-     * Returns all results for the practice  of the currently authenticated vet
+     * Returns all results for the practice  of the authenticated vet
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
@@ -124,6 +124,17 @@ class LabResult extends Model
     {
         return ($this->status === LabResult::PROCESSED) ? true : false;
 
+    }
+
+    /**
+     * summary
+     *
+     * @return void
+     * @author 
+     */
+    public function getUnprocessedAttribute()
+    {
+        return count($this->results());
     }
 
     /**

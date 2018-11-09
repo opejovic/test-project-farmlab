@@ -57,7 +57,8 @@ class Practice extends Model
     }
 
     /**
-     * Returns the results for the practice of the authenticated user. Global scope from LabResult model is applied.
+     * Returns the results for the practice of the authenticated user. 
+     * Global scope from LabResult model is applied.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

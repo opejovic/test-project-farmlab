@@ -30,7 +30,7 @@ class HomeController extends Controller
         } elseif ($user->type === User::VET) {
             $resultsByStatus = $labresult->fetchByStatus(); // tmp
 
-            return view('home.vet', compact('resultsByStatus', 'user'));
+            return view('home.vet', compact('resultsByStatus', 'user', 'labresult'));
         }
 
     }
