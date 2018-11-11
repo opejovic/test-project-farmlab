@@ -7,28 +7,28 @@
 @section ('content')
 
  <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Home</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="{{ route('home') }}">Home</a>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-            @if ($labresult->unprocessed > 0)
-                <h5>You have {{ $labresult->unprocessed }} unprocessed results</h5>
-            @else
-                <h5>You have {{ $labresult->where('status', 'PROCESSED')->count() }} processed results</h5>
-            @endif
-                </div>
-            </div>
-        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="col-lg-10">
+            <h2>Home</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ route('home') }}">Home</a>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+    @if ($labresult->unprocessed > 0)
+        <h5>You have {{ $labresult->unprocessed }} unprocessed results</h5>
+    @else
+        <h5>You have {{ $labresult->where('status', 'PROCESSED')->count() }} processed results</h5>
+    @endif
+        </div>
+    </div>
+        <div class="wrapper wrapper-content animated fadeInRight text-center">
             <div class="row">
                 <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Your Lab Results</h5>
+                        <h5>Lab Results Assigned To This Account</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>

@@ -50,19 +50,9 @@ class LabResult extends Model
     }
 
     /**
-     * Returns the labresults practice name
+     * Query scope
      *
-     * @return void
-     */
-    public function getPracticeNameAttribute()
-    {
-        return $this->practice->name;
-    }
-
-    /**
-     * query scope
-     *
-     * Return all results for the auth user.
+     * Returns all results for the auth user.
      *
      * @param        $query
      * @param string $status
@@ -78,7 +68,7 @@ class LabResult extends Model
     }
 
     /**
-     * Returns results based on their status (by default, returns Unprocessed (if there are any)
+     * Returns results based on their status (by default, returns Unprocessed (if there are any))
      * for the auth user.
      *
      * @return Illuminate\Database\Eloquent\Collection
@@ -93,7 +83,7 @@ class LabResult extends Model
     }
 
     /**
-     * Returns all results for the practice  of the authenticated vet
+     * Returns all results for the practice  of the authenticated vet.
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
@@ -103,7 +93,7 @@ class LabResult extends Model
     }
 
     /**
-     * Returns the results for a farmer of the current practice
+     * Returns the results for a farmer of the current practice.
      *
      * @param $farmer
      *
@@ -115,26 +105,14 @@ class LabResult extends Model
     }
 
     /**
-     * summary
+     * Check it the Lab result is proccessed.
      *
-     * @return void
-     * @author 
+     * @return boolean
      */
     public function isProccessed()
     {
         return ($this->status === LabResult::PROCESSED) ? true : false;
 
-    }
-
-    /**
-     * summary
-     *
-     * @return void
-     * @author 
-     */
-    public function getUnprocessedAttribute()
-    {
-        return count($this->results());
     }
 
     /**
@@ -187,7 +165,7 @@ class LabResult extends Model
              ->update([
                 'vet_comment'   => request('vet_comment'),
                 'vet_indicator' => request('vet_indicator'),
-                'vet_id'        => auth()->user()->id,
+                'vet_id'        => auth()->id(),
                 'status'        => LabResult::PROCESSED
             ]);
 
@@ -196,5 +174,25 @@ class LabResult extends Model
             'text'  => 'Labresult proccessed successfully.',
             'type'  => 'success'
         ]);
+    }
+
+    /**
+     * Returns the labresults practice name
+     *
+     * @return void
+     */
+    public function getPracticeNameAttribute()
+    {
+        return $this->practice->name;
+    }
+
+    /**
+     * Returns the number of the unproccesed results.
+     *
+     * @return integer
+     */
+    public function getUnprocessedAttribute()
+    {
+        return count($this->results());
     }
 }

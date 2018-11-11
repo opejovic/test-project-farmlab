@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class File extends Model
 {
     protected $fillable = ['name', 'file_path', 'uploaded_by'];
-
+    
     /**
      * A File belongs to an uploader.
      *
@@ -19,45 +19,6 @@ class File extends Model
     public function uploader()
     {
         return $this->belongsTo(User::class, 'uploaded_by');
-    }
-
-    /**
-     * Retruns the name of the files uploader.
-     *
-     */
-    public function getUploaderNameAttribute()
-    {
-        return $this->uploader->name;
-    }
-
-    /**
-     * Returns the time of the file upload.
-     *
-     */
-    public function getUploadedAtAttribute()
-    {
-        return $this->created_at->diffForHumans();
-    }
-
-    /**
-     * Returns the number of the uploaded files for the current month.
-     *
-     * @return Integer
-     */
-    public function getUploadedThisMonthAttribute()
-    {
-        return count($this->where('created_at', '>=', Carbon::now()->startOfMonth())
-                          ->get());
-    }    
-
-    /**
-     * Returns the number of the all uploaded files.
-     *
-     * @return Integer
-     */
-    public function getCountAllAttribute()
-    {
-        return count($this->all());
     }
 
     /**
@@ -121,5 +82,43 @@ class File extends Model
         $this->saveToDb($fileName, Storage::putFileAs('labresults', $file, $fileName));
 
         (new LabResult)->parseAndSave($file);
+    }
+        /**
+     * Retruns the name of the files uploader.
+     *
+     */
+    public function getUploaderNameAttribute()
+    {
+        return $this->uploader->name;
+    }
+
+    /**
+     * Returns the time of the file upload.
+     *
+     */
+    public function getUploadedAtAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    /**
+     * Returns the number of the uploaded files for the current month.
+     *
+     * @return Integer
+     */
+    public function getUploadedThisMonthAttribute()
+    {
+        return count($this->where('created_at', '>=', Carbon::now()->startOfMonth())
+                          ->get());
+    }    
+
+    /**
+     * Returns the number of the all uploaded files.
+     *
+     * @return Integer
+     */
+    public function getCountAllAttribute()
+    {
+        return count($this->all());
     }
 }

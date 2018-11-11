@@ -1,83 +1,8 @@
 @extends('layouts.app')
 
-{{-- @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body" id="card-div">
-                        <table class="table text-center">
-                            <tbody>
-                                <tr>
-                                    <td class="card-header text-center border-top-0">Id</td>
-                                    <td class="card-header text-center border-top-0">Vet name</td>
-                                    <td class="card-header text-center border-top-0">Created at</td>
-                                    <td class="card-header text-center border-top-0">Status</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-capitalize border-bottom-1">{{ $vet->id }}</td>
-                                    <td class="text-capitalize border-bottom-1">{{ $vet->name }}</td>
-                                    <td class="text-capitalize border-bottom-1">{{ $vet->created_at }}</td>
-                                    <td class="text-capitalize border-bottom-1">{{ $vet->status }}</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="card-footer">
-                       <form action="{{ route('vets.destroy', $vet->id) }}" method="POST">
-                           @csrf
-                           @method('DELETE')
-
-                            <button type="submit" onclick="return confirm('Are you sure you want to remove this user?')" class="btn btn-danger">
-                                Delete
-                            </button>
-                       </form>
-                    </div>
-
-
-                </div>
-            </div>
-                  <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">Results belonging to {{ $vet->name }}</div>
-
-                    <table class="table table-hover table-sm">
-                        <thead class="thead-labresult">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Date of test</th>
-                            <th scope="col">Test name</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                        </thead>
-
-                        @foreach ($results as $result)
-                            <tbody>
-
-                            <tr>
-                                <th scope="row">
-                                    <a href="{{ route('labresults.show', $result->id) }}">{{ $result->id }}</a>
-                                </th>
-                                <td>{{ $result->date_of_test}}</td>
-                                <td>{{ $result->test_name}}</td>
-                                <td>
-                                    <a href="{{ route('labresults.show', $result->id) }}">{{ $result->status }}</a>
-                                </td>
-                            </tr>
-
-                            </tbody>
-                        @endforeach
-
-                    </table>
-                    <div class="card-footer">{{ $results->links() }}</div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-@endsection --}}
+@section ('pageTitle')
+    {{ $vet->name }}
+@endsection
 
 @section('content')
            <div class="row wrapper border-bottom white-bg page-heading">
@@ -115,7 +40,7 @@
                                 <h2 class="no-margins">
                                     {{ $vet->name }}
                                 </h2>
-                                <h4>{{ ucfirst(strtolower(str_replace('_', ' ', $vet->type))) }}</h4>
+                                <h4>{{ __('Vet') }}</h4>
                                 <small>
                                     There are many variations of passages of Lorem Ipsum available, but the majority
                                     have suffered alteration in some form Ipsum available.
@@ -134,43 +59,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <table class="table small m-b-xs">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <strong>142</strong> Projects
-                            </td>
-                            <td>
-                                <strong>22</strong> Followers
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>61</strong> Comments
-                            </td>
-                            <td>
-                                <strong>54</strong> Articles
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>154</strong> Tags
-                            </td>
-                            <td>
-                                <strong>32</strong> Friends
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-3">
-                    <small>Sales in last 24h</small>
-                    <h2 class="no-margins">206 480</h2>
-                    <div id="sparkline1"></div>
-                </div>
-
+            <div class="col-md-6 text-center">
+                <table class="table small m-b-xs">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <h2><strong>{{ count($results) }}</strong> Total Results</h2>
+                        </td>
+                        <td>
+                            <h2><strong>{{ count($results->where('status', 'PROCESSED')) }}</strong> Processed Results</h2>
+                        </td>
+                    </tr>
+                
+                    </tbody>
+                </table>
+                    <div class="progress progress-striped active m-b-sm" style="background: silver;">
+                        <div style="width: {{ $vet->processed_results_percentage }}%;" class="progress-bar"></div>
+                    </div>
+                    <small>Proccesed results percentage is 
+                        <strong>{{ $vet->processed_results_percentage }}%</strong>. 
+                    </small>
+            </div>
 
             </div>
             <div class="row">
@@ -437,12 +346,9 @@
 
                     </div>
 
-
-
-
                 </div>
                 <div class="col-lg-4 m-b-lg">
-                    <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
+                    <div id="vertical-timeline" class="light-timeline no-margins">
                         <div class="vertical-timeline-block">
                             <div class="vertical-timeline-icon navy-bg">
                                 <i class="fa fa-briefcase"></i>

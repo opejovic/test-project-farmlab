@@ -35,7 +35,6 @@
                             <div class="fallback">
                                 <input type="file" name="file" id="file">
                             </div>
-                            @include ('layouts.errors')
                         </form>
                     </div>
                         

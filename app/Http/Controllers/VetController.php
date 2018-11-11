@@ -65,7 +65,7 @@ class VetController extends Controller
             auth()->user()->practice_id == $vet->practice_id || auth()->user()->type === User::ADMIN, 403
         );
 
-        $results = $vet->results()->paginate();
+        $results = $vet->results()->get();
 
         return view('vets.show', compact('vet', 'results'));
     }

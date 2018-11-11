@@ -26,7 +26,7 @@ class ValidateCsv extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'file|mimes:csv'
+            'file' => 'file|mimes:csv,txt'
         ];
     }
 

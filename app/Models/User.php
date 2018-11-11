@@ -79,60 +79,6 @@ class User extends Authenticatable
     }    
 
     /**
-     * Returns the practices created this month by the authenticated user.
-     *
-     * @return Integer
-     */
-    public function getCreatedPracticesThisMonthAttribute()
-    {
-        return count($this->createdPractices()
-            ->where('created_at', '>=', Carbon::now()->startOfMonth())
-            ->get());
-    }
-
-    /**
-     * Counts all created practices by the authenticated user.
-     *
-     * @return void
-     */
-    public function getCountCreatedPracticesAttribute()
-    {
-        return count($this->createdPractices()->get());
-    }
-
-    /**
-     * Returns the number of created team members for the current month.
-     *
-     * @return Integer
-     */
-    public function getTeamMembersAddedThisMonthAttribute()
-    {
-        return count($this->whereType(User::FARM_LAB_MEMBER)
-                          ->where('created_at', '>=', Carbon::now()->startOfMonth())
-                          ->get());
-    }    
-
-    /**
-     * Returns the total number of farm lab team members.
-     *
-     * @return integer
-     */
-    public function getCountAllTeamMembersAttribute()
-    {
-        return count($this->whereType(User::FARM_LAB_MEMBER)->get());
-    }
-
-    /**
-     * Returns true if the user is verified.
-     *
-     * @return boolean
-     */
-    public function getIsVerifiedAttribute()
-    {
-        return ($this->status === User::VERIFIED) ? true : false;
-    }
-
-    /**
      * User can upload many files.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -140,16 +86,6 @@ class User extends Authenticatable
     public function files()
     {
         return $this->hasMany(File::class, 'uploaded_by');
-    }
-
-    /**
-     * Returns the number of the uploaded files by the user.
-     *
-     * @return Integer
-     */
-    public function getUploadedFilesAttribute()
-    {
-        return count($this->files);
     }
 
      /**
@@ -233,5 +169,84 @@ class User extends Authenticatable
         ]);
 
         $this->sendWelcomeEmail($newUser);
+    }
+
+        /**
+     * Returns the practices created this month by the authenticated user.
+     *
+     * @return Integer
+     */
+    public function getCreatedPracticesThisMonthAttribute()
+    {
+        return count($this->createdPractices()
+            ->where('created_at', '>=', Carbon::now()->startOfMonth())
+            ->get());
+    }
+
+    /**
+     * Counts all created practices by the authenticated user.
+     *
+     * @return void
+     */
+    public function getCountCreatedPracticesAttribute()
+    {
+        return count($this->createdPractices()->get());
+    }
+
+    /**
+     * Returns the number of created team members for the current month.
+     *
+     * @return Integer
+     */
+    public function getTeamMembersAddedThisMonthAttribute()
+    {
+        return count($this->whereType(User::FARM_LAB_MEMBER)
+                          ->where('created_at', '>=', Carbon::now()->startOfMonth())
+                          ->get());
+    }    
+
+    /**
+     * Returns the total number of farm lab team members.
+     *
+     * @return integer
+     */
+    public function getCountAllTeamMembersAttribute()
+    {
+        return count($this->whereType(User::FARM_LAB_MEMBER)->get());
+    }
+
+    /**
+     * Returns true if the user is verified.
+     *
+     * @return boolean
+     */
+    public function getIsVerifiedAttribute()
+    {
+        return ($this->status === User::VERIFIED) ? true : false;
+    }
+
+    /**
+     * Returns the number of the uploaded files by the user.
+     *
+     * @return Integer
+     */
+    public function getUploadedFilesAttribute()
+    {
+        return count($this->files);
+    }
+
+    /**
+     * Returns the percentage of processed results for the vet.
+     *
+     * @return integer
+     */
+    public function getProcessedResultsPercentageAttribute()
+    {   
+        if (count($this->results) > 0) {
+            return number_format(
+                (count($this->results->where('status', 'PROCESSED')) / count($this->results)) * 100
+            );
+        }
+        return '0';
     }
 }
