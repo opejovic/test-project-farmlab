@@ -89,6 +89,10 @@ class LabResultController extends Controller
      */
     public function update(LabResult $labresult)
     {
+        request()->validate([
+            'vet_comment' => 'required|min:10',
+            'vet_indicator' => 'required|min:10'
+        ]);
         $labresult->process();
 
         return back();

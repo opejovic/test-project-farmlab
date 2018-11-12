@@ -4,198 +4,6 @@
     Result # {{ $labresult->id }}
 @endsection
 
-{{-- @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header text-center"><h4>Result # {{ $labresult->id }}</h4></div>
-                    <div class="card-body" id="card-div">
-                        <table class="table text-center">
-                            <tbody>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <td class="border-top-0">{{ $labresult->herd_number }}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <td class=""> {{ $labresult->date_of_arrival}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <td class="">{{ $labresult->date_of_test}} </td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <td class="">{{ $labresult->animal_id}}</td>
-
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <td class="">{{ $labresult->lab_code}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <td class="">{{ $labresult->test_name}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <td class="">{{ $labresult->farmer_name}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <th class="text-capitalize">Type of samples</th>
-                                <td class="">{{ $labresult->type_of_samples}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <th class="text-capitalize">Type of samples</th>
-                                <th class="text-capitalize">Reading</th>
-                                <td class=""> {{ $labresult->reading}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <th class="text-capitalize">Type of samples</th>
-                                <th class="text-capitalize">Reading</th>
-                                <th class="text-capitalize">Interpretation</th>
-                                <td class="">{{ $labresult->interpretation}}</td>
-                            </tr>
-
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <th class="text-capitalize">Type of samples</th>
-                                <th class="text-capitalize">Reading</th>
-                                <th class="text-capitalize">Interpretation</th>
-                                <th class="text-capitalize">Vet name</th>
-                                <td class="" style="max-width: 150px;">{{ $labresult->vet->name}}</td>
-                            </tr>
-
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <th class="text-capitalize">Type of samples</th>
-                                <th class="text-capitalize">Reading</th>
-                                <th class="text-capitalize">Interpretation</th>
-                                <th class="text-capitalize">Vet name</th>
-                                <th class="text-capitalize">Vet comment</th>
-                                <td class="" style="max-width: 150px;">{{ $labresult->vet_comment}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <th class="text-capitalize">Type of samples</th>
-                                <th class="text-capitalize">Reading</th>
-                                <th class="text-capitalize">Interpretation</th>
-                                <th class="text-capitalize">Vet name</th>
-                                <th class="text-capitalize">Vet comment</th>
-                                <th class="text-capitalize">Vet indicator</th>
-                                <td class="" style="max-width: 150px;">{{ $labresult->vet_indicator}}</td>
-                            </tr>
-
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <th class="text-capitalize">Type of samples</th>
-                                <th class="text-capitalize">Reading</th>
-                                <th class="text-capitalize">Interpretation</th>
-                                <th class="text-capitalize">Vet name</th>
-                                <th class="text-capitalize">Vet comment</th>
-                                <th class="text-capitalize">Vet indicator</th>
-                                <th class="text-capitalize">Practice name</th>
-                                <td class="">{{ $labresult->practice_name}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize border-top-0">Herd</th>
-                                <th class="text-capitalize">Date of arrival</th>
-                                <th class="text-capitalize">Date of test</th>
-                                <th class="text-capitalize">Animal ID</th>
-                                <th class="text-capitalize">Lab code</th>
-                                <th class="text-capitalize">Test name</th>
-                                <th class="text-capitalize">Farmer name</th>
-                                <th class="text-capitalize">Type of samples</th>
-                                <th class="text-capitalize">Reading</th>
-                                <th class="text-capitalize">Interpretation</th>
-                                <th class="text-capitalize">Vet name</th>
-                                <th class="text-capitalize">Vet comment</th>
-                                <th class="text-capitalize">Vet indicator</th>
-                                <th class="text-capitalize">Practice name</th>
-                                <th class="text-capitalize">Status</th>
-                                <td class="">{{ $labresult->status}}</td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            @if ($labresult->status === \App\Models\LabResult::UNPROCESSED && $labresult->vet_id === auth()->id())
-                @include ('labresults.process')
-            @endif
-        </div>
-    </div>
-@endsection --}}
-
 @section ('content')
 
            <div class="row wrapper border-bottom white-bg page-heading">
@@ -214,9 +22,11 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="title-action">
-                        <a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Edit </a>
-                        <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Save </a>
-                        <a href="invoice_print.html" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Result </a>
+                        @if ($labresult->status === \App\Models\LabResult::UNPROCESSED && $labresult->vet_id === auth()->id())
+                            @include ('labresults.modalProcess')
+                        @elseif ($labresult->isProcessed())
+                            <a href="invoice_print.html" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Result </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -287,40 +97,26 @@
 
                                     </tbody>
                                 </table>
-                            </div><!-- /table-responsive -->
-
-                          {{--   <table class="table invoice-total">
-                                <tbody>
-                                <tr>
-                                    <td><strong>Sub Total :</strong></td>
-                                    <td>$1026.00</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>TAX :</strong></td>
-                                    <td>$235.98</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>TOTAL :</strong></td>
-                                    <td>$1261.98</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="text-right">
-                                <button class="btn btn-primary"><i class="fa fa-dollar"></i> Make A Payment</button>
-                            </div> --}}
+                            </div>
 
                             <div class="well m-t"><strong>Vet Comment:</strong>
-                                {{ $labresult->vet_comment}}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                {{ $labresult->vet_comment}}
                             </div>                            
 
                             <div class="well m-t"><strong>Vet Indicator:</strong>
-                                {{ $labresult->vet_indicator}}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                {{ $labresult->vet_indicator}}
                             </div>
                         </div>
                 </div>
             </div>
         </div>
         <br />
+@endsection
 
-
+@section ('scripts')
+    @if ($errors->any())
+        <script type="text/javascript">
+            $('#myLabresultModal').modal('show');
+        </script>
+    @endif
 @endsection

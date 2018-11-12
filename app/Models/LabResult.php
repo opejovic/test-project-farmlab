@@ -109,7 +109,7 @@ class LabResult extends Model
      *
      * @return boolean
      */
-    public function isProccessed()
+    public function isProcessed()
     {
         return ($this->status === LabResult::PROCESSED) ? true : false;
 

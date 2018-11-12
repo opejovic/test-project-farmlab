@@ -69,7 +69,7 @@
                                 <td>{{ $result->farmer_name}}</td>
                                 <td>
                                 <a href="{{ route('labresults.show', $result->id) }}">
-                                    <span class="label label-{{ $result->isProccessed() ? 'primary' : 'warning' }}">
+                                    <span class="label label-{{ $result->isProcessed() ? 'primary' : 'warning' }}">
                                         {{ $result->status }}
                                     </span>
                                 </a>

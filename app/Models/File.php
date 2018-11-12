@@ -12,7 +12,7 @@ class File extends Model
     protected $fillable = ['name', 'file_path', 'uploaded_by'];
     
     /**
-     * A File belongs to an uploader.
+     * A File has an uploader.
      *
      * @return App\Models\User::class
      */
@@ -83,7 +83,8 @@ class File extends Model
 
         (new LabResult)->parseAndSave($file);
     }
-        /**
+
+    /**
      * Retruns the name of the files uploader.
      *
      */
