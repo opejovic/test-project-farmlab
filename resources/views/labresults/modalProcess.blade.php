@@ -31,7 +31,7 @@ Process the result
             </div>                            
 
             <div class="form-group{{ $errors->has('vet_indicator') ? ' has-error' : '' }} row">
-                <label for="vet_indicator" class="col-sm-4 col-form-label text-md-right">Practice Admin Name</label>
+                <label for="vet_indicator" class="col-sm-4 col-form-label text-md-right">Vets Indicator</label>
                 <div class="col-md-8">
                     <textarea name="vet_indicator" class="form-control" id="vet_indicator" value="{{ old('vet_indicator') }}" required="" rows="5"></textarea>
                     @if ($errors->has('vet_indicator'))

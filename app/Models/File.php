@@ -109,7 +109,7 @@ class File extends Model
      */
     public function getUploadedThisMonthAttribute()
     {
-        return count($this->where('created_at', '>=', Carbon::now()->startOfMonth())
+        return count($this->where('created_at', '>=', now()->startOfMonth())
                           ->get());
     }    
 

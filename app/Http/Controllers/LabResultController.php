@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProcessLabResultRequest;
 use App\Models\LabResult;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -87,12 +88,8 @@ class LabResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(LabResult $labresult)
+    public function update(ProcessLabResultRequest $request, LabResult $labresult)
     {
-        request()->validate([
-            'vet_comment' => 'required|min:10',
-            'vet_indicator' => 'required|min:10'
-        ]);
         $labresult->process();
 
         return back();

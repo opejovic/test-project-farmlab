@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Mail\Welcome;
-use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -39,8 +39,8 @@ class User extends Authenticatable
      * If the authenticated user is of type1 or type2 return true.
      * Using this for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin class.
      *
-     * @param      $type1
-     * @param null $type2
+     * @param      $type1 (Constant - User type)
+     * @param null $type2 (Constant - User type)
      *
      * @return bool
      */
@@ -61,6 +61,8 @@ class User extends Authenticatable
     }
 
     /**
+     * A Vet belongs to a Practice.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function practice()
@@ -121,7 +123,7 @@ class User extends Authenticatable
         $newUser = $this->create([
             'name'     => request('name'),
             'email'    => request('email'),
-            'password' => bcrypt(request('password')),
+            'password' => Hash::make(request('password')),
             'type'     => User::FARM_LAB_MEMBER,
             'status'   => User::NOT_VERIFIED
         ]);
@@ -136,10 +138,9 @@ class User extends Authenticatable
     public function addPractice()
     {
 
-        $practice = $this->practice()
-        ->create([
-            'name'       => request('name'),
-            'created_by' => auth()->id()
+        $practice = $this->practice()->create([
+            'name'        => request('name'),
+            'created_by'  => auth()->id()
         ]);
 
         $newUser = $this->create([
@@ -159,19 +160,19 @@ class User extends Authenticatable
      */
     public function addVet()
     {
-        $newUser = $this->create([
+        $newVet = $this->create([
             'name'        => request('name'),
             'email'       => request('email'),
-            'password'    => bcrypt(request('password')),
+            'password'    => Hash::make(request('password')),
             'type'        => User::VET,
             'status'      => User::NOT_VERIFIED,
             'practice_id' => auth()->user()->practice_id
         ]);
 
-        $this->sendWelcomeEmail($newUser);
+        $this->sendWelcomeEmail($newVet);
     }
 
-        /**
+    /**
      * Returns the practices created this month by the authenticated user.
      *
      * @return Integer
@@ -179,7 +180,7 @@ class User extends Authenticatable
     public function getCreatedPracticesThisMonthAttribute()
     {
         return count($this->createdPractices()
-            ->where('created_at', '>=', Carbon::now()->startOfMonth())
+            ->where('created_at', '>=', now()->startOfMonth())
             ->get());
     }
 
@@ -201,7 +202,7 @@ class User extends Authenticatable
     public function getTeamMembersAddedThisMonthAttribute()
     {
         return count($this->whereType(User::FARM_LAB_MEMBER)
-                          ->where('created_at', '>=', Carbon::now()->startOfMonth())
+                          ->where('created_at', '>=', now()->startOfMonth())
                           ->get());
     }    
 
