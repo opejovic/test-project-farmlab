@@ -41,9 +41,14 @@ class VetController extends Controller
     public function store(VetRequest $request)
     {
         auth()->user()->addVet();
-        session()->flash('message', 'New vet created.');
 
-        return redirect()->home();
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'New vet created successfully.',
+            'type'  => 'success'
+        ]);
+
+        return redirect(route('vets.index'));
     }
 
     /**
@@ -55,9 +60,12 @@ class VetController extends Controller
      */
     public function show(User $vet)
     {
-        abort_unless(auth()->user()->practice_id == $vet->practice_id, 404);
+        // temporary - create new middleware class for this.
+        abort_unless(
+            auth()->user()->practice_id == $vet->practice_id || auth()->user()->type === User::ADMIN, 403
+        );
 
-        $results = $vet->results()->paginate();
+        $results = $vet->results()->get();
 
         return view('vets.show', compact('vet', 'results'));
     }
@@ -99,7 +107,11 @@ class VetController extends Controller
         $vet = User::where('id', $id)->firstOrFail();
         $vet->delete();
 
-        session()->flash('message', 'Vet successfully removed');
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'Vet successfully removed.',
+            'type'  => 'success'
+        ]);
 
         return redirect('vets');
     }

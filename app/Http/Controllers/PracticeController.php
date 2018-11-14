@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PracticeRequest;
 use App\Models\Practice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PracticeController extends Controller
@@ -15,7 +16,11 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        $practices = Practice::oldest()->paginate(10);
+        $practices = Practice::oldest()
+            ->with('vets')
+            ->with('noScopeResults')
+            ->with('admin')
+            ->paginate(9);
 
         return view('practice.index', compact('practices'));
     }
@@ -33,7 +38,8 @@ class PracticeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * Adds new FL member if the auth user is admin / or  practice (and practice admin, (if the auth user is
+     * Adds new FL member if the auth user is admin / 
+     * or  practice (and practice admin, (if the auth user is
      * FARMLAB_MEMBER)).
      *
      * @param PracticeRequest $request
@@ -43,9 +49,14 @@ class PracticeController extends Controller
     public function store(PracticeRequest $request)
     {
         auth()->user()->addPractice();
-        session()->flash('message', 'New practice created.');
+        
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'New Practice team added successfully.',
+            'type'  => 'success'
+        ]);        
 
-        return redirect()->home();
+        return redirect(route('practice.index'));
     }
 
     /**
@@ -57,7 +68,7 @@ class PracticeController extends Controller
      */
     public function show(Practice $practice)
     {
-        $vets = $practice->vets();
+        $vets = $practice->vets;
         return view('practice.show', compact('practice', 'vets'));
     }
 

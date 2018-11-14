@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LabMemberRequest;
+use App\Models\File;
+use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,7 @@ class LabMemberController extends Controller
      */
     public function index()
     {
-        $members = User::whereType(User::FARM_LAB_MEMBER)->paginate(10);
+        $members = User::whereType(User::FARM_LAB_MEMBER)->paginate(12);
 
         return view('labmember.index', compact('members'));
     }
@@ -39,9 +41,14 @@ class LabMemberController extends Controller
     public function store(LabMemberRequest $request)
     {
         auth()->user()->addFarmLabMember();
-        session()->flash('message', 'New FarmLab team member added.');
 
-        return redirect('home');
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'New FarmLab team member added successfully.',
+            'type'  => 'success'
+        ]);
+
+        return redirect(route('members.index'));
     }
 
     /**
@@ -53,8 +60,9 @@ class LabMemberController extends Controller
     public function show($id)
     {
         $member = User::whereType(User::FARM_LAB_MEMBER)->findOrFail($id);
+        $practicesCreated = count(Practice::where('created_by', $id)->get());
 
-        return view('labmember.show', compact('member'));
+        return view('labmember.show', compact('member', 'practicesCreated'));
     }
 
     /**
@@ -89,10 +97,15 @@ class LabMemberController extends Controller
     public function destroy($id)
     {
         $user = User::whereId($id)->firstOrFail();
+
         $user->delete();
 
-        session()->flash('message', 'Lab member successfully deleted');
+        session()->flash('message', [
+            'title' => 'Done.',
+            'text'  => 'Lab member successfully deleted.',
+            'type'  => 'success'
+        ]);
 
-        return redirect('members');
+        return redirect(route('members.index'));
     }
 }

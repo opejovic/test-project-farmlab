@@ -24,10 +24,10 @@ class PracticeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => 'required|unique:practices',
-            'admin_name' => 'required',
-            'email'      => 'required|email|unique:users',
-            'password'   => 'required|confirmed'
+            'name'       => ['required', 'unique:practices', 'min:3'],
+            'admin_name' => ['required', 'min:3'],
+            'email'      => ['required', 'email', 'unique:users'],
+            'password'   => ['required', 'confirmed', 'min:6']
         ];
     }
 }

@@ -17,7 +17,7 @@ class MustBePracticeMember
     public function handle($request, Closure $next)
     {
         if (! $request->user()->isOfType(User::VET, User::PRACTICE_ADMIN)) {
-            return redirect('home');
+            abort(403, 'No way.');
         }
 
         return $next($request);

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Mail\Welcome;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -38,8 +39,8 @@ class User extends Authenticatable
      * If the authenticated user is of type1 or type2 return true.
      * Using this for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin class.
      *
-     * @param      $type1
-     * @param null $type2
+     * @param      $type1 (Constant - User type)
+     * @param null $type2 (Constant - User type)
      *
      * @return bool
      */
@@ -50,6 +51,8 @@ class User extends Authenticatable
     }
 
     /**
+     * Vet has many lab results.
+     * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function results()
@@ -58,11 +61,33 @@ class User extends Authenticatable
     }
 
     /**
+     * A Vet belongs to a Practice.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function practice()
     {
         return $this->belongsTo(Practice::class);
+    }
+
+    /**
+     * Lab team member can create many practices.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function createdPractices()
+    {
+        return $this->hasMany(Practice::class, 'created_by');
+    }    
+
+    /**
+     * User can upload many files.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class, 'uploaded_by');
     }
 
      /**
@@ -72,9 +97,10 @@ class User extends Authenticatable
      */   
     public function allVets()
     {
-        return $this->where('practice_id', auth()->user()->practice_id)->whereType(User::VET)
-            ->oldest()
-            ->paginate(10);
+        return $this->where('practice_id', auth()->user()->practice_id)
+                    ->whereType(User::VET)
+                    ->oldest()
+                    ->paginate(10);
     }
 
     /**
@@ -97,7 +123,7 @@ class User extends Authenticatable
         $newUser = $this->create([
             'name'     => request('name'),
             'email'    => request('email'),
-            'password' => bcrypt(request('password')),
+            'password' => Hash::make(request('password')),
             'type'     => User::FARM_LAB_MEMBER,
             'status'   => User::NOT_VERIFIED
         ]);
@@ -112,8 +138,10 @@ class User extends Authenticatable
     public function addPractice()
     {
 
-        $practice = $this->practice()
-            ->create(['name' => request('name')]);
+        $practice = $this->practice()->create([
+            'name'        => request('name'),
+            'created_by'  => auth()->id()
+        ]);
 
         $newUser = $this->create([
             'name'        => request('admin_name'),
@@ -132,15 +160,94 @@ class User extends Authenticatable
      */
     public function addVet()
     {
-        $newUser = $this->create([
+        $newVet = $this->create([
             'name'        => request('name'),
             'email'       => request('email'),
-            'password'    => bcrypt(request('password')),
+            'password'    => Hash::make(request('password')),
             'type'        => User::VET,
             'status'      => User::NOT_VERIFIED,
             'practice_id' => auth()->user()->practice_id
         ]);
 
-        $this->sendWelcomeEmail($newUser);
+        $this->sendWelcomeEmail($newVet);
+    }
+
+    /**
+     * Returns the practices created this month by the authenticated user.
+     *
+     * @return Integer
+     */
+    public function getCreatedPracticesThisMonthAttribute()
+    {
+        return count($this->createdPractices()
+            ->where('created_at', '>=', now()->startOfMonth())
+            ->get());
+    }
+
+    /**
+     * Counts all created practices by the authenticated user.
+     *
+     * @return void
+     */
+    public function getCountCreatedPracticesAttribute()
+    {
+        return count($this->createdPractices()->get());
+    }
+
+    /**
+     * Returns the number of created team members for the current month.
+     *
+     * @return Integer
+     */
+    public function getTeamMembersAddedThisMonthAttribute()
+    {
+        return count($this->whereType(User::FARM_LAB_MEMBER)
+                          ->where('created_at', '>=', now()->startOfMonth())
+                          ->get());
+    }    
+
+    /**
+     * Returns the total number of farm lab team members.
+     *
+     * @return integer
+     */
+    public function getCountAllTeamMembersAttribute()
+    {
+        return count($this->whereType(User::FARM_LAB_MEMBER)->get());
+    }
+
+    /**
+     * Returns true if the user is verified.
+     *
+     * @return boolean
+     */
+    public function getIsVerifiedAttribute()
+    {
+        return ($this->status === User::VERIFIED) ? true : false;
+    }
+
+    /**
+     * Returns the number of the uploaded files by the user.
+     *
+     * @return Integer
+     */
+    public function getUploadedFilesAttribute()
+    {
+        return count($this->files);
+    }
+
+    /**
+     * Returns the percentage of processed results for the vet.
+     *
+     * @return integer
+     */
+    public function getProcessedResultsPercentageAttribute()
+    {   
+        if (count($this->results) > 0) {
+            return number_format(
+                (count($this->results->where('status', 'PROCESSED')) / count($this->results)) * 100
+            );
+        }
+        return '0';
     }
 }

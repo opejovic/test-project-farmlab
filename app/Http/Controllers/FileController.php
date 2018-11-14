@@ -2,40 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\File;
 use App\Http\Requests\ValidateCsv;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
-
 
 class FileController extends Controller
 {
     /**
-     * Show the form for the file upload.
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
-        return view('file.create');
+        $files = File::with('uploader')->paginate(10);
+
+        return view('files.index', compact('files'));
     }
 
     /**
+     * If the validation passes, store the file in the storage.
+     * 
      * @param ValidateCsv $request
      * @param File        $file
      *
-     * If the validation passes, store the file in the storage
-     *
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(ValidateCsv $request, File $file)
     {
         if (! $request->checkHeader()) {
-            return redirect()->back()->withErrors(['Whoops, theres something wrong with your CSV file.']);
+            abort(400, 'There is something wrong with your csv file.');
         }
 
         $file->upload();
+
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'File successfully uploaded.',
+            'type'  => 'success'
+        ]);
 
         return back();
     }

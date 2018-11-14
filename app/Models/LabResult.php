@@ -39,7 +39,6 @@ class LabResult extends Model
         return $this->belongsTo(User::class, 'vet_id');
     }
 
-
     /**
      * Lab result belongs to a practice.
      *
@@ -51,9 +50,9 @@ class LabResult extends Model
     }
 
     /**
-     * query scope
+     * Query scope
      *
-     * Return all results for the currently auth user.
+     * Returns all results for the auth user.
      *
      * @param        $query
      * @param string $status
@@ -62,12 +61,15 @@ class LabResult extends Model
      */
     public function scopeResults($query, $status = LabResult::UNPROCESSED)
     {
-        return $query->where('status', $status)->where('vet_id', auth()->id())->oldest('id')->get();
+        return $query->where('status', $status)
+                     ->where('vet_id', auth()->id())
+                     ->oldest('id')
+                     ->get();
     }
 
     /**
-     * Returns results based on their status (by default, returns Unprocessed (if there are any)
-     * for the currently auth user.
+     * Returns results based on their status (by default, returns Unprocessed (if there are any))
+     * for the auth user.
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
@@ -81,17 +83,17 @@ class LabResult extends Model
     }
 
     /**
-     * Returns all results for the practice  of the currently authenticated vet
+     * Returns all results for the practice  of the authenticated vet.
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
     public function fetchAll()
     {
-        return $this->with('vet')->oldest('id')->get();
+        return $this->with('vet')->with('practice')->oldest('id')->get();
     }
 
     /**
-     * Returns the results for a farmer of the current practice
+     * Returns the results for a farmer of the current practice.
      *
      * @param $farmer
      *
@@ -100,6 +102,17 @@ class LabResult extends Model
     public function fetchByFarmer($farmer)
     {
         return $this->where('farmer_name', $farmer)->get();
+    }
+
+    /**
+     * Check it the Lab result is proccessed.
+     *
+     * @return boolean
+     */
+    public function isProcessed()
+    {
+        return ($this->status === LabResult::PROCESSED) ? true : false;
+
     }
 
     /**
@@ -136,7 +149,6 @@ class LabResult extends Model
             ]);
             $vet = User::whereId($column[13])->first();
             // For this to work, it needs a queue:listen command in terminal and .env file QUEUE_DRIVER set to database.
-            // Need to refactor this -- use Eventing instead?
             \Mail::to($vet->email)->queue(new NewResultNotification($labresult, $vet));
 
         }
@@ -150,12 +162,37 @@ class LabResult extends Model
     public function process()
     {
         $this->whereId($this->id)
-            ->update([
+             ->update([
                 'vet_comment'   => request('vet_comment'),
                 'vet_indicator' => request('vet_indicator'),
-                'vet_id'        => auth()->user()->id,
+                'vet_id'        => auth()->id(),
                 'status'        => LabResult::PROCESSED
             ]);
-        session()->flash('message', 'Lab result successfully processed');
+
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'Labresult proccessed successfully.',
+            'type'  => 'success'
+        ]);
+    }
+
+    /**
+     * Returns the labresults practice name
+     *
+     * @return void
+     */
+    public function getPracticeNameAttribute()
+    {
+        return $this->practice->name;
+    }
+
+    /**
+     * Returns the number of the unproccesed results.
+     *
+     * @return integer
+     */
+    public function getUnprocessedAttribute()
+    {
+        return count($this->results());
     }
 }

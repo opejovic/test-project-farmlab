@@ -13,11 +13,9 @@ Route::middleware(['auth'])->group(function ()
 {
     Route::resource('members',    'LabMemberController')->middleware('farmlab.admin');
     Route::resource('practice',   'PracticeController')->middleware('farmlab');
-    Route::resource('file',       'FileController')->middleware('farmlab');
-    Route::resource('vets',       'VetController')->middleware('practice.admin');
+    Route::resource('files',      'FileController')->middleware('farmlab');
+	Route::resource('vets',       'VetController')->middleware('practice.admin');
     Route::resource('labresults', 'LabResultController')->middleware('practice');
 
     Route::get('/labresults/farmer/{farmerName}', 'LabResultController@index')->name('labresults.farmer')->middleware('practice');
 });
-
-

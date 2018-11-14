@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProcessLabResultRequest;
 use App\Models\LabResult;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -60,7 +61,9 @@ class LabResultController extends Controller
      */
     public function show(LabResult $labresult)
     {
-        abort_unless(auth()->user()->practice_id == $labresult->practice_id, 404);
+        abort_unless(
+            auth()->user()->practice_id == $labresult->practice_id, 404
+        );
 
         return view('labresults.show', compact('labresult'));
     }
@@ -85,11 +88,11 @@ class LabResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(LabResult $labresult)
+    public function update(ProcessLabResultRequest $request, LabResult $labresult)
     {
         $labresult->process();
 
-        return redirect()->back();
+        return back();
     }
 
     /**
