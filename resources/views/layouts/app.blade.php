@@ -13,15 +13,7 @@
   <!-- Wrapper-->
     <div id="wrapper">
         <!-- Navigation -->
-        @if (auth()->user()->type === \App\Models\User::ADMIN)
-            @include('navigation.admin')
-        @elseif (auth()->user()->type === \App\Models\User::FARM_LAB_MEMBER)
-            @include('navigation.labmember')
-        @elseif (auth()->user()->type === \App\Models\User::PRACTICE_ADMIN)
-            @include('navigation.practice')
-        @elseif (auth()->user()->type === \App\Models\User::VET)
-            @include('navigation.vet')
-        @endif
+        @include ('layouts.navigation')
 
         <!-- Page wraper -->
         <div id="page-wrapper" class="gray-bg">

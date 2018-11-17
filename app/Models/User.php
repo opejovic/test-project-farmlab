@@ -250,4 +250,14 @@ class User extends Authenticatable
         }
         return '0';
     }
+
+    /**
+     * Returns the formatted type, for the auth user.
+     *
+     * @return string
+     */
+    public function getFormattedTypeAttribute()
+    {
+        return ucwords(strtolower(str_replace('_', ' ', auth()->user()->type)));
+    }
 }

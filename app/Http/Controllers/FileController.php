@@ -31,7 +31,7 @@ class FileController extends Controller
      */
     public function store(ValidateCsv $request, File $file)
     {
-        if (! $request->checkHeader()) {
+        if (! $request->validateFile()) {
             abort(400, 'There is something wrong with your csv file.');
         }
 

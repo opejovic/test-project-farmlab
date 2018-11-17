@@ -95,7 +95,7 @@ class Practice extends Model
      */
     public function getCreatorNameAttribute()
     {
-        return $this->creator->name;
+        return ($this->creator !== null) ? $this->creator->name : 'Not Available';
     }
 
     /**

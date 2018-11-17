@@ -36,15 +36,12 @@ class ValidateCsv extends FormRequest
      *
      * @return bool
      */
-    public function checkHeader()
+    public function validateFile()
     {
-        $file = request()->file('file');
-        $csv_file = fopen($file, 'r');
+        $csv_file = fopen(request('file'), 'r');
         $header = fgetcsv($csv_file, 0, ',');
 
-        $countHeader = count($header);
-
-        if ($countHeader == 14
+        if (count($header) == 14
             && in_array('herd_number', $header)
             && in_array('date_of_arrival', $header)
             && in_array('date_of_test', $header)
@@ -60,8 +57,8 @@ class ValidateCsv extends FormRequest
             && in_array('practice_id', $header)
             && in_array('vet_id', $header)) {
 
-            return true;
             fclose($csv_file);
+            return true;
         }
 
         fclose($csv_file);

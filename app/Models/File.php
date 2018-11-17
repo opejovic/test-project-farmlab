@@ -68,7 +68,7 @@ class File extends Model
      */
     public function upload()
     {
-        $file = request()->file('file');
+        $file = request('file');
         $fileName = $file->getClientOriginalName();
 
         if ($this->existsInDb($fileName)) {
