@@ -60,7 +60,7 @@ class LabMemberController extends Controller
     public function show($id)
     {
         $member = User::whereType(User::FARM_LAB_MEMBER)->findOrFail($id);
-        $practicesCreated = count(Practice::where('created_by', $id)->get());
+        $practicesCreated = Practice::where('created_by', $id)->count();
 
         return view('labmember.show', compact('member', 'practicesCreated'));
     }

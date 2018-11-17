@@ -13,28 +13,7 @@
                             </span> <span class="text-muted text-xs block">{{ auth()->user()->formatted_type }}<b class="caret"></b></span>
                         </span>
                     </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="{{ route('members.show', auth()->id()) }}">{{ __('Profile') }}</a></li>
-                        <li><a href="#">{{ __('Contact') }}</a></li>
-                        <li><a href="#">{{ __('Mailbox') }}</a></li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="{{ route('logout') }}" 
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                {{ __('Log out') }}
-                            </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                <div class="logo-element">
-                    FL+
-                </div>
-            </li>
                 @if (auth()->user()->type === \App\Models\User::ADMIN)
                     @include('navigation.admin')
                 @elseif (auth()->user()->type === \App\Models\User::FARM_LAB_MEMBER)

@@ -109,8 +109,8 @@ class File extends Model
      */
     public function getUploadedThisMonthAttribute()
     {
-        return count($this->where('created_at', '>=', now()->startOfMonth())
-                          ->get());
+        return $this->where('created_at', '>=', now()->startOfMonth())->count();
+                         
     }    
 
     /**
@@ -120,6 +120,6 @@ class File extends Model
      */
     public function getCountAllAttribute()
     {
-        return count($this->all());
+        return $this->count();
     }
 }

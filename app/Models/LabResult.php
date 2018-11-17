@@ -193,6 +193,6 @@ class LabResult extends Model
      */
     public function getUnprocessedAttribute()
     {
-        return count($this->results());
+        return $this->results()->count();
     }
 }

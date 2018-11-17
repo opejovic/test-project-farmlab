@@ -80,10 +80,9 @@ class Practice extends Model
      */
     public function getProcessedResultsPercentageAttribute()
     {
-        if (count($this->noScopeResults) > 0) {
+        if ($this->noScopeResults->count() > 0) {
             return number_format(
-                (count($this->noScopeResults->where('status', LabResult::PROCESSED)) / 
-                 count($this->noScopeResults)) * 100);
+                ($this->noScopeResults->where('status', LabResult::PROCESSED)->count() / $this->noScopeResults->count()) * 100);
         }
 
         return '0';
@@ -105,7 +104,7 @@ class Practice extends Model
      */
     public function getCreatedThisMonthAttribute()
     {
-        return count($this->where('created_at', '>=', Carbon::now()->startOfMonth())->get());
+        return $this->where('created_at', '>=', Carbon::now()->startOfMonth())->count();
     }    
 
     /**
@@ -115,6 +114,6 @@ class Practice extends Model
      */
     public function getCountAllAttribute()
     {
-        return count($this->all());
+        return $this->count();
     }
 }

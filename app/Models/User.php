@@ -179,9 +179,9 @@ class User extends Authenticatable
      */
     public function getCreatedPracticesThisMonthAttribute()
     {
-        return count($this->createdPractices()
+        return $this->createdPractices()
             ->where('created_at', '>=', now()->startOfMonth())
-            ->get());
+            ->count();
     }
 
     /**
@@ -191,7 +191,7 @@ class User extends Authenticatable
      */
     public function getCountCreatedPracticesAttribute()
     {
-        return count($this->createdPractices()->get());
+        return $this->createdPractices()->count();
     }
 
     /**
@@ -201,9 +201,9 @@ class User extends Authenticatable
      */
     public function getTeamMembersAddedThisMonthAttribute()
     {
-        return count($this->whereType(User::FARM_LAB_MEMBER)
-                          ->where('created_at', '>=', now()->startOfMonth())
-                          ->get());
+        return $this->whereType(User::FARM_LAB_MEMBER)
+                    ->where('created_at', '>=', now()->startOfMonth())
+                    ->count();
     }    
 
     /**
@@ -213,7 +213,7 @@ class User extends Authenticatable
      */
     public function getCountAllTeamMembersAttribute()
     {
-        return count($this->whereType(User::FARM_LAB_MEMBER)->get());
+        return $this->whereType(User::FARM_LAB_MEMBER)->count();
     }
 
     /**
@@ -233,7 +233,7 @@ class User extends Authenticatable
      */
     public function getUploadedFilesAttribute()
     {
-        return count($this->files);
+        return $this->files->count();
     }
 
     /**
@@ -243,9 +243,9 @@ class User extends Authenticatable
      */
     public function getProcessedResultsPercentageAttribute()
     {   
-        if (count($this->results) > 0) {
+        if ($this->results->count() > 0) {
             return number_format(
-                (count($this->results->where('status', 'PROCESSED')) / count($this->results)) * 100
+                ($this->results->where('status', 'PROCESSED')->count() / $this->results->count()) * 100
             );
         }
         return '0';

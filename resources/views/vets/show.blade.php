@@ -47,14 +47,16 @@
                                 </small>
                             </div>
 
-                           <form action="{{ route('vets.destroy', $vet->id) }}" method="POST" id="form">
-                               @csrf
-                               @method('DELETE')
+                            @if (auth()->id() !== $vet->id)
+                               <form action="{{ route('vets.destroy', $vet->id) }}" method="POST" id="form">
+                                   @csrf
+                                   @method('DELETE')
 
-                                <button type="submit" class="btn btn-danger">
-                                    Delete
-                                </button>
-                           </form>
+                                    <button type="submit" class="btn btn-danger">
+                                        Delete
+                                    </button>
+                               </form>
+                           @endif
 
                         </div>
                     </div>
