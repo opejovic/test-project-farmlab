@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,6 +11,8 @@ class Practice extends Model
     protected $guarded = [];
 
     /**
+     * Practice can have many vets.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function vets()
@@ -50,17 +52,31 @@ class Practice extends Model
     }
 
     /**
+     * summary
+     *
+     * @return void
+     * @author 
+     */
+    public function allVets()
+    {
+        return $this->whereId(auth()->user()->practice_id)
+                    ->firstOrFail()
+                    ->vets()
+                    ->whereType(User::VET)
+                    ->paginate(12);
+    }
+    /**
      * Query scope
      *
      * @param $query
-     * @param $column from CSV file column practice_id.
+     * @param $practice_id from CSV file column practice_id.
      *                returns the name of the practice.
      *
      * @return mixed
      */
-    public function scopeName($query, $column)
+    public function scopeName($query, $practice_id)
     {
-        return $query->whereId($column)->first()->name;
+        return $query->whereId($practice_id)->first()->name;
     }
 
     /**
@@ -70,7 +86,7 @@ class Practice extends Model
      */
     public function admin()
     {
-        return $this->vets()->where('type', User::PRACTICE_ADMIN);
+        return $this->vets()->whereType(User::PRACTICE_ADMIN);
     }
 
     /**
@@ -82,7 +98,8 @@ class Practice extends Model
     {
         if ($this->noScopeResults->count() > 0) {
             return number_format(
-                ($this->noScopeResults->where('status', LabResult::PROCESSED)->count() / $this->noScopeResults->count()) * 100);
+                ($this->noScopeResults->whereStatus(LabResult::PROCESSED)->count() / $this->noScopeResults->count()) * 100
+            );
         }
 
         return '0';
@@ -104,7 +121,7 @@ class Practice extends Model
      */
     public function getCreatedThisMonthAttribute()
     {
-        return $this->where('created_at', '>=', Carbon::now()->startOfMonth())->count();
+        return $this->where('created_at', '>=', now()->startOfMonth())->count();
     }    
 
     /**

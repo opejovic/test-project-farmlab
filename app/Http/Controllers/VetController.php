@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VetRequest;
+use App\Models\LabResult;
 use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,11 +15,9 @@ class VetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Practice $practice)
     {
-        // $practice = Practice::whereId(auth()->user()->practice_id)->first();
-        // $vets = $practice->vets()->paginate(12);
-        $vets = auth()->user()->allVets();
+        $vets = $practice->allVets();
 
         return view('vets.index', compact('vets'));
     }
@@ -69,8 +68,9 @@ class VetController extends Controller
         );
 
         $results = $vet->results()->get();
+        $processedResults = $vet->results()->processed()->get();
 
-        return view('vets.show', compact('vet', 'results'));
+        return view('vets.show', compact('vet', 'results', 'processedResults'));
     }
 
     /**

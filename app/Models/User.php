@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Mail\Welcome;
+use App\Models\LabResult;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -15,8 +16,8 @@ class User extends Authenticatable
     const FARM_LAB_MEMBER   = 'FARM_LAB_TEAM_MEMBER';
     const PRACTICE_ADMIN    = 'PRACTICE_ADMIN';
     const VET               = 'PRACTICE_VET';
-    const VERIFIED          = 'VERIFIED'; // tmp user status
-    const NOT_VERIFIED      = 'NOT_VERIFIED';  // tmp user status
+    const VERIFIED          = 'VERIFIED';
+    const NOT_VERIFIED      = 'NOT_VERIFIED';
 
     /**
      * The attributes that are not mass assignable.
@@ -37,7 +38,7 @@ class User extends Authenticatable
     /**
      *
      * If the authenticated user is of type1 or type2 return true.
-     * Using this for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin class.
+     * Using this helper function for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin classes.
      *
      * @param      $type1 (Constant - User type)
      * @param null $type2 (Constant - User type)
@@ -245,7 +246,7 @@ class User extends Authenticatable
     {   
         if ($this->results->count() > 0) {
             return number_format(
-                ($this->results->where('status', 'PROCESSED')->count() / $this->results->count()) * 100
+                ($this->results->where('status', LabResult::PROCESSED)->count() / $this->results->count()) * 100
             );
         }
         return '0';

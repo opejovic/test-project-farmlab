@@ -67,6 +67,11 @@ class LabResult extends Model
                      ->get();
     }
 
+    public function scopeProcessed($query)
+    {
+        return $query->where('status', LabResult::PROCESSED);
+    }
+
     /**
      * Returns results based on their status (by default, returns Unprocessed (if there are any))
      * for the auth user.

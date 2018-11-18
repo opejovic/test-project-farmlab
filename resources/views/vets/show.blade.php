@@ -40,7 +40,7 @@
                                 <h2 class="no-margins">
                                     {{ $vet->name }}
                                 </h2>
-                                <h4>{{ __('Vet') }}</h4>
+                                <h4>{{ $vet->type }}</h4>
                                 <small>
                                     There are many variations of passages of Lorem Ipsum available, but the majority
                                     have suffered alteration in some form Ipsum available.
@@ -66,10 +66,10 @@
                     <tbody>
                     <tr>
                         <td>
-                            <h2><strong>{{ count($results) }}</strong> Total Results</h2>
+                            <h2><strong>{{ $results->count() }}</strong> Total Results</h2>
                         </td>
                         <td>
-                            <h2><strong>{{ count($results->where('status', 'PROCESSED')) }}</strong> Processed Results</h2>
+                            <h2><strong>{{ $processedResults->count() }}</strong> Processed Results</h2>
                         </td>
                     </tr>
                 
