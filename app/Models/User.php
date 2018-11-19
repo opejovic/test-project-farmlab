@@ -4,11 +4,12 @@ namespace App\Models;
 
 use App\Mail\Welcome;
 use App\Models\LabResult;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     
@@ -138,7 +139,6 @@ class User extends Authenticatable
      */
     public function addPractice()
     {
-
         $practice = $this->practice()->create([
             'name'        => request('name'),
             'created_by'  => auth()->id()
@@ -218,13 +218,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Returns true if the user is verified.
+     * Returns true if the user has verified email.
      *
      * @return boolean
      */
     public function getIsVerifiedAttribute()
     {
-        return ($this->status === User::VERIFIED) ? true : false;
+        return $this->email_verified_at !== null ? true : false;
     }
 
     /**

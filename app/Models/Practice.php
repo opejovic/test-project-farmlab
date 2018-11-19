@@ -98,7 +98,7 @@ class Practice extends Model
     {
         if ($this->noScopeResults->count() > 0) {
             return number_format(
-                ($this->noScopeResults->whereStatus(LabResult::PROCESSED)->count() / $this->noScopeResults->count()) * 100
+                ($this->noScopeResults->where('status', LabResult::PROCESSED)->count() / $this->noScopeResults->count()) * 100
             );
         }
 

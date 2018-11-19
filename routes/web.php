@@ -1,16 +1,15 @@
 <?php
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 // Without this route, it throws a MethodNotAllowed exception when user types logout in the url
 // if the user is already signed in.
 Route::get('/logout', 'Auth\LoginController@getLogout');
 
-Route::get('/',       'HomeController@index')->name('home');
-Route::get('/home',   'HomeController@index');
-
-Route::middleware(['auth'])->group(function ()
+Route::middleware(['auth', 'verified'])->group(function ()
 {
+	Route::get('/home',   		  'HomeController@index');
+	Route::get('/',       		  'HomeController@index')->name('home');
     Route::resource('members',    'LabMemberController')->middleware('farmlab.admin');
     Route::resource('practice',   'PracticeController')->middleware('farmlab');
     Route::resource('files',      'FileController')->middleware('farmlab');
