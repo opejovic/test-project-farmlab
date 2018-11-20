@@ -106,7 +106,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Send a welcome email to newly created user.
+     * Send a welcome email to newly created user, with a link for a password creation.
      *
      * @param $newUser
      *
@@ -114,7 +114,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected function sendWelcomeEmail($newUser)
     {
-        return \Mail::to(request('email'))->queue(new Welcome($newUser));
+        $token = app('auth.password.broker')->createToken($newUser);
+
+        return \Mail::to(request('email'))->queue(new Welcome($newUser, $token));
     }
 
     /**

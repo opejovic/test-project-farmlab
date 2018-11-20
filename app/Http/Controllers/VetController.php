@@ -107,8 +107,7 @@ class VetController extends Controller
      */
     public function destroy($id)
     {
-        $vet = User::whereId($id)->firstOrFail();
-        $vet->delete();
+        User::whereId($id)->firstOrFail()->delete();
 
         session()->flash('message', [
             'title' => 'Success!',

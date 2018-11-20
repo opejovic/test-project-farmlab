@@ -12,14 +12,16 @@ class Welcome extends Mailable
     use Queueable, SerializesModels;
 
     public $newUser;
+    public $token;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($newUser)
+    public function __construct($newUser, $token)
     {
         $this->newUser = $newUser;
+        $this->token = $token;
     }
 
     /**
