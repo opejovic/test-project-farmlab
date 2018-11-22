@@ -37,22 +37,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     *
-     * If the authenticated user is of type1 or type2 return true.
-     * Using this helper function for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin classes.
-     *
-     * @param      $type1 (Constant - User type)
-     * @param null $type2 (Constant - User type)
-     *
-     * @return bool
-     */
-    public function isOfType($type1, $type2 = null)
-    {
-        $user = auth()->user();
-        return ($user->type === $type1 || $user->type === $type2) ? true : false;
-    }
-
-    /**
      * Vet has many lab results.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -173,6 +157,22 @@ class User extends Authenticatable implements MustVerifyEmail
         ]);
 
         $this->sendWelcomeEmail($newVet);
+    }
+
+    /**
+     *
+     * If the authenticated user is of type1 or type2 return true.
+     * Using this helper function for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin classes.
+     *
+     * @param      $type1 (Constant - User type)
+     * @param null $type2 (Constant - User type)
+     *
+     * @return bool
+     */
+    public function isOfType($type1, $type2 = null)
+    {
+        $user = auth()->user();
+        return ($user->type === $type1 || $user->type === $type2) ? true : false;
     }
 
     /**

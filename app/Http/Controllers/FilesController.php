@@ -7,7 +7,7 @@ use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class FileController extends Controller
+class FilesController extends Controller
 {
     /**
      * Display a listing of the resource.

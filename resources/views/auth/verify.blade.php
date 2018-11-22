@@ -11,7 +11,7 @@
             <h1 class="logo-name">FL+</h1>
 
         </div>
-        <h3>Welcome to FARMLAB</h3>
+        <h3>Please verify your email address.</h3>
 
         <div>
             @if (session('resent'))

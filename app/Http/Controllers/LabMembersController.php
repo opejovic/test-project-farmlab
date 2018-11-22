@@ -8,7 +8,7 @@ use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LabMemberController extends Controller
+class LabMembersController extends Controller
 {
     /**
      * Display a listing of the resource.

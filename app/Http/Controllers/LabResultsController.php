@@ -7,7 +7,7 @@ use App\Models\LabResult;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LabResultController extends Controller
+class LabResultsController extends Controller
 {
     /**
      * Displays the results. If there are no unprocessed results,
@@ -23,10 +23,6 @@ class LabResultController extends Controller
 
         $resultsByStatus = $labresult->fetchByStatus();
         
-        if (request()->has('my')) {
-            $allResults = auth()->user()->results()->with('vet')->get();
-        }
-
         return view('labresults.index', compact('resultsByStatus', 'allResults'));
     }
 
