@@ -52,10 +52,9 @@ class Practice extends Model
     }
 
     /**
-     * summary
+     * Returns all practice members for the practice of the authenticated user
      *
-     * @return void
-     * @author 
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function allVets()
     {
@@ -65,8 +64,9 @@ class Practice extends Model
                     ->whereType(User::VET)
                     ->paginate(12);
     }
+
     /**
-     * Query scope
+     * Query scope - using this function for the LabResult@parseAndSave method.
      *
      * @param $query
      * @param $practice_id from CSV file column practice_id.

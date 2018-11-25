@@ -76,19 +76,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(File::class, 'uploaded_by');
     }
 
-     /**
-      * Returns all practice members for the practice of the authenticated user.
-      * 
-     * @return \Illuminate\Database\Eloquent\Collection
-     */   
-    public function allVets()
-    {
-        return $this->where('practice_id', auth()->user()->practice_id)
-                    ->whereType(User::VET)
-                    ->oldest()
-                    ->paginate(10);
-    }
-
     /**
      * Send a welcome email to newly created user, with a link for a password creation.
      *
