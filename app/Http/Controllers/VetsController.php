@@ -62,9 +62,10 @@ class VetsController extends Controller
      */
     public function show(User $vet)
     {
-        // temporary - create new middleware class for this or policy
+        // temporary - create new middleware class for this
         abort_unless(
-            auth()->user()->practice_id == $vet->practice_id || auth()->user()->type === User::ADMIN, 403
+            auth()->user()->practice_id == $vet->practice_id || 
+            auth()->user()->isOfType(User::ADMIN, User::FARM_LAB_MEMBER), 403
         );
 
         $results = $vet->results()->get();

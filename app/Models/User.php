@@ -147,6 +147,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Return users with type FARM_LAB_TEAM_MEMBER
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function scopeLabMembers($query)
+    {
+        return $query->whereType(User::FARM_LAB_MEMBER);
+    }
+
+    /**
      *
      * If the authenticated user is of type1 or type2 return true.
      * Using this helper function for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin classes.
