@@ -12,6 +12,11 @@ class LabResult extends Model
     const PROCESSED     = 'PROCESSED';
     const UNPROCESSED   = 'UNPROCESSED';
 
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
     /**
@@ -74,6 +79,15 @@ class LabResult extends Model
                      ->get();
     }
 
+    /**
+     * Query scope
+     *
+     * Returns all processed results.
+     *
+     * @param $query
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
     public function scopeProcessed($query)
     {
         return $query->where('status', LabResult::PROCESSED);
@@ -105,18 +119,6 @@ class LabResult extends Model
     }
 
     /**
-     * Returns the results for a farmer of the current practice.
-     *
-     * @param $farmer
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function fetchByFarmer($farmer)
-    {
-        return $this->where('farmer_name', $farmer)->get();
-    }
-
-    /**
      * Check it the Lab result is proccessed.
      *
      * @return boolean
@@ -124,7 +126,6 @@ class LabResult extends Model
     public function isProcessed()
     {
         return ($this->status === LabResult::PROCESSED) ? true : false;
-
     }
 
     /**

@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
-    protected $fillable = ['name', 'file_path', 'uploaded_by'];
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
     
     /**
      * A File has an uploader.

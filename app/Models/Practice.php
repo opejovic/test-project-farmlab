@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Hash;
 
 class Practice extends Model
 {
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
     /**

@@ -11,19 +11,16 @@ class LabResultsController extends Controller
 {
     /**
      * Displays the results. If there are no unprocessed results,
-     * display processed results. If there is a farmer in the URI (If the user filters the results by farmer name),
-     * then return the results belonging to that farmer.
-     *
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $labresult, $farmerName = null)
+    public function index(LabResult $labresult)
     {
-        $farmerName ? $allResults = $labresult->fetchByFarmer($farmerName) : $allResults = $labresult->fetchAll();
+        $allResults = $labresult->fetchAll();
 
         $resultsByStatus = $labresult->fetchByStatus();
         
-        return view('labresults.index', compact('resultsByStatus', 'allResults'));
+        return view('labresults.index', compact('allResults', 'resultsByStatus'));
     }
 
     /**
