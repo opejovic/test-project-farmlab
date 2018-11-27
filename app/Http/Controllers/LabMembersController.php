@@ -59,8 +59,8 @@ class LabMembersController extends Controller
      */
     public function show($id)
     {
-        $member = User::whereType(User::FARM_LAB_MEMBER)->findOrFail($id);
-        $practicesCreated = Practice::where('created_by', $id)->count();
+        $member = User::labMembers()->findOrFail($id);
+        $practicesCreated = $member->createdPractices()->count();
 
         return view('labmember.show', compact('member', 'practicesCreated'));
     }
@@ -96,9 +96,9 @@ class LabMembersController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::whereId($id)->firstOrFail();
+        $member = User::whereId($id)->firstOrFail();
 
-        $user->delete();
+        $member->delete();
 
         session()->flash('message', [
             'title' => 'Done.',

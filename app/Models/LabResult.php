@@ -177,12 +177,6 @@ class LabResult extends Model
                 'vet_id'        => auth()->id(),
                 'status'        => LabResult::PROCESSED
             ]);
-
-        session()->flash('message', [
-            'title' => 'Success!',
-            'text'  => 'Labresult proccessed successfully.',
-            'type'  => 'success'
-        ]);
     }
 
     /**

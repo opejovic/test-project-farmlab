@@ -55,7 +55,7 @@ class LabResultsController extends Controller
     public function show(LabResult $labresult)
     {
         abort_unless(
-            auth()->user()->practice_id == $labresult->practice_id, 404
+            auth()->user()->practice_id == $labresult->practice_id, 403
         );
 
         return view('labresults.show', compact('labresult'));
@@ -84,6 +84,12 @@ class LabResultsController extends Controller
     public function update(ProcessLabResultRequest $request, LabResult $labresult)
     {
         $labresult->process();
+
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => 'Labresult proccessed successfully.',
+            'type'  => 'success'
+        ]);
 
         return back();
     }
