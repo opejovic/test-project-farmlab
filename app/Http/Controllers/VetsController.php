@@ -68,8 +68,8 @@ class VetsController extends Controller
             auth()->user()->isOfType(User::ADMIN, User::FARM_LAB_MEMBER), 403
         );
 
-        $results = $vet->results()->get();
-        $processedResults = $vet->results()->processed()->get();
+        $results = $vet->results()->withoutGlobalScopes()->get();
+        $processedResults = $vet->results()->withoutGlobalScopes()->processed()->get();
 
         return view('vets.show', compact('vet', 'results', 'processedResults'));
     }
@@ -108,7 +108,7 @@ class VetsController extends Controller
      */
     public function destroy($id)
     {
-        User::whereId($id)->firstOrFail()->delete();
+        User::findOrFail($id)->delete();
 
         session()->flash('message', [
             'title' => 'Success!',

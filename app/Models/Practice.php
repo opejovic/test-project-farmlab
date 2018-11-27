@@ -57,7 +57,7 @@ class Practice extends Model
     }
 
     /**
-     * Returns all practice members for the practice of the authenticated user
+     * Returns all vets of the practice of the authenticated user.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -101,9 +101,9 @@ class Practice extends Model
      */
     public function getProcessedResultsPercentageAttribute()
     {
-        if ($this->noScopeResults->count() > 0) {
+        if ($this->noScopeResults()->count() > 0) {
             return number_format(
-                ($this->noScopeResults->where('status', LabResult::PROCESSED)->count() / $this->noScopeResults->count()) * 100
+                ($this->noScopeResults()->processed()->count() / $this->noScopeResults()->count()) * 100
             );
         }
 

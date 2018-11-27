@@ -147,6 +147,19 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Vets processes the result via form/modal.
+     *
+     */
+    public function processResult($comment, $indicator)
+    {
+        $this->results()->update([
+                'vet_comment'   => $comment,
+                'vet_indicator' => $indicator,
+                'status'        => LabResult::PROCESSED
+            ]);
+    }
+
+    /**
      * Return users with type FARM_LAB_TEAM_MEMBER
      *
      * @return Illuminate\Database\Eloquent\Collection
@@ -201,7 +214,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getTeamMembersAddedThisMonthAttribute()
     {
-        return $this->whereType(User::FARM_LAB_MEMBER)
+        return $this->labMembers()
                     ->where('created_at', '>=', now()->startOfMonth())
                     ->count();
     }    
@@ -213,7 +226,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getCountAllTeamMembersAttribute()
     {
-        return $this->whereType(User::FARM_LAB_MEMBER)->count();
+        return $this->labMembers()->count();
     }
 
     /**
@@ -243,9 +256,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getProcessedResultsPercentageAttribute()
     {   
-        if ($this->results->count() > 0) {
+        if ($this->results()->withoutGlobalScopes()->count() > 0) {
             return number_format(
-                ($this->results->where('status', LabResult::PROCESSED)->count() / $this->results->count()) * 100
+                ($this->results()->withoutGlobalScopes()->processed()->count() / 
+                 $this->results()->withoutGlobalScopes()->count()) 
+                 * 100
             );
         }
         return '0';

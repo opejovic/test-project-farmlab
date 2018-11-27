@@ -96,9 +96,7 @@ class LabMembersController extends Controller
      */
     public function destroy($id)
     {
-        $member = User::whereId($id)->firstOrFail();
-
-        $member->delete();
+        User::findOrFail($id)->delete();
 
         session()->flash('message', [
             'title' => 'Done.',

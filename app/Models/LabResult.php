@@ -21,8 +21,10 @@ class LabResult extends Model
 
     /**
      * The "booting" method of the model.
-     * Applies a anonymous global scope for the model. All queries will return
+     * Applies an anonymous global scope for the model. All queries will return
      * results for the practice of the authenticated user.
+     *
+     * Also, when the new result is uploaded, the email notification is sent to the owner (vet) of that result.
      *
      * @return void
      */
@@ -162,21 +164,6 @@ class LabResult extends Model
             ]);
         }
         fclose($handle);
-    }
-
-    /**
-     * Vets processes the result through a form
-     *
-     */
-    public function process()
-    {
-        $this->whereId($this->id)
-             ->update([
-                'vet_comment'   => request('vet_comment'),
-                'vet_indicator' => request('vet_indicator'),
-                'vet_id'        => auth()->id(),
-                'status'        => LabResult::PROCESSED
-            ]);
     }
 
     /**
