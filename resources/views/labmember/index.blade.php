@@ -52,14 +52,13 @@
                 </a>
                 <div class="contact-box-footer">
                     <div class="m-t-xs btn-group">
-                        <a class="btn btn-xs btn-white"><i class="fa fa-phone"></i> Call </a>
-                        <a class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> Email</a>
+                        <a class="btn btn-xs btn-white"><i class="fa fa-phone"></i> {{ __('Call') }}</a>
+                        <a class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> {{ __('Email') }}</a>
                         @if ($member->is_verified)
-                            <a class="btn btn-xs btn-primary">
+                            <a class="btn btn-xs btn-primary">{{ __('Verified') }}</a>
                         @else
-                            <a class="btn btn-xs btn-warning">
+                            <a class="btn btn-xs btn-warning">{{ __('Not Verified') }}</a>
                         @endif 
-                            {{ ucfirst(strtolower(str_replace('_', ' ', $member->status)))  }}</a>
                     </div>
                 </div>
             </div>

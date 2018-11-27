@@ -5,12 +5,18 @@ namespace App\Models;
 use App\Mail\NewResultNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
 class LabResult extends Model
 {
     const PROCESSED     = 'PROCESSED';
     const UNPROCESSED   = 'UNPROCESSED';
 
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
     /**
@@ -26,6 +32,12 @@ class LabResult extends Model
 
         static::addGlobalScope('practice_id', function (Builder $builder) {
             $builder->where('practice_id', auth()->user()->practice_id);
+        });
+
+        static::created(function ($labresult) {
+            Mail::to($labresult->vet->email)->queue(
+                new NewResultNotification($labresult, $labresult->vet)
+            );
         });
     }
 
@@ -68,6 +80,20 @@ class LabResult extends Model
     }
 
     /**
+     * Query scope
+     *
+     * Returns all processed results.
+     *
+     * @param $query
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function scopeProcessed($query)
+    {
+        return $query->where('status', LabResult::PROCESSED);
+    }
+
+    /**
      * Returns results based on their status (by default, returns Unprocessed (if there are any))
      * for the auth user.
      *
@@ -93,18 +119,6 @@ class LabResult extends Model
     }
 
     /**
-     * Returns the results for a farmer of the current practice.
-     *
-     * @param $farmer
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function fetchByFarmer($farmer)
-    {
-        return $this->where('farmer_name', $farmer)->get();
-    }
-
-    /**
      * Check it the Lab result is proccessed.
      *
      * @return boolean
@@ -112,7 +126,6 @@ class LabResult extends Model
     public function isProcessed()
     {
         return ($this->status === LabResult::PROCESSED) ? true : false;
-
     }
 
     /**
@@ -147,10 +160,6 @@ class LabResult extends Model
                 'practice_name'   => Practice::name($column[12]),
                 'vet_id'          => $column[13]
             ]);
-            $vet = User::whereId($column[13])->first();
-            // For this to work, it needs a queue:listen command in terminal and .env file QUEUE_DRIVER set to database.
-            \Mail::to($vet->email)->queue(new NewResultNotification($labresult, $vet));
-
         }
         fclose($handle);
     }
@@ -193,6 +202,6 @@ class LabResult extends Model
      */
     public function getUnprocessedAttribute()
     {
-        return count($this->results());
+        return $this->results()->count();
     }
 }

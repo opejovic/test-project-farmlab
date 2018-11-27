@@ -100,10 +100,6 @@
 
                                         <dt>Last Updated:</dt> <dd>{{ $practice->updated_at->diffForHumans() }}</dd>
                                         <dt>Created:</dt> <dd>  {{ $practice->created_at->diffForHumans() }}</dd>
-                                        <dt>Participants:</dt>
-                                        <dd class="project-people">
-                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                        </dd>
                                     </dl>
                                 </div>
                             </div>
@@ -142,17 +138,13 @@
                                     <div class="feed-activity-list">
                                         @foreach ($vets as $vet)
                                         <div class="feed-element">
-                                            <a href="#" class="pull-left">
-                                                <img alt="image" class="img-circle" src="img/a2.jpg">
+                                            <a href="{{ route('vets.show', $vet->id) }}" class="pull-left">
+                                                <img alt="image" class="img-circle" src="/images/profiles/{{ $vet->id }}.jpg" 
+                                                     onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">
                                             </a>
                                             <div class="media-body ">
                                                 <small class="pull-right">2h ago</small>
-                                                <strong>Mark Johnson</strong> posted message on <strong>Monica Smith</strong> site. <br>
-                                                <small class="text-muted">Today 2:10 pm - 12.06.2014</small>
-                                                <div class="well">
-                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                                                    Over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                </div>
+                                                <strong>{{ $vet->name }}</strong> 
                                             </div>
                                         </div>
                                         @endforeach

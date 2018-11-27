@@ -8,7 +8,7 @@ use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LabMemberController extends Controller
+class LabMembersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class LabMemberController extends Controller
      */
     public function index()
     {
-        $members = User::whereType(User::FARM_LAB_MEMBER)->paginate(12);
-
+        $members = User::labMembers()->paginate(12);
+        
         return view('labmember.index', compact('members'));
     }
 
@@ -60,7 +60,7 @@ class LabMemberController extends Controller
     public function show($id)
     {
         $member = User::whereType(User::FARM_LAB_MEMBER)->findOrFail($id);
-        $practicesCreated = count(Practice::where('created_by', $id)->get());
+        $practicesCreated = Practice::where('created_by', $id)->count();
 
         return view('labmember.show', compact('member', 'practicesCreated'));
     }

@@ -2,15 +2,22 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
 class Practice extends Model
 {
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
     /**
+     * Practice can have many vets.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function vets()
@@ -50,17 +57,31 @@ class Practice extends Model
     }
 
     /**
-     * Query scope
+     * Returns all practice members for the practice of the authenticated user
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function allVets()
+    {
+        return $this->whereId(auth()->user()->practice_id)
+                    ->firstOrFail()
+                    ->vets()
+                    ->whereType(User::VET)
+                    ->paginate(12);
+    }
+
+    /**
+     * Query scope - using this function for the LabResult@parseAndSave method.
      *
      * @param $query
-     * @param $column from CSV file column practice_id.
+     * @param $practice_id from CSV file column practice_id.
      *                returns the name of the practice.
      *
      * @return mixed
      */
-    public function scopeName($query, $column)
+    public function scopeName($query, $practice_id)
     {
-        return $query->whereId($column)->first()->name;
+        return $query->whereId($practice_id)->first()->name;
     }
 
     /**
@@ -70,7 +91,7 @@ class Practice extends Model
      */
     public function admin()
     {
-        return $this->vets()->where('type', User::PRACTICE_ADMIN);
+        return $this->vets()->whereType(User::PRACTICE_ADMIN);
     }
 
     /**
@@ -80,10 +101,10 @@ class Practice extends Model
      */
     public function getProcessedResultsPercentageAttribute()
     {
-        if (count($this->noScopeResults) > 0) {
+        if ($this->noScopeResults->count() > 0) {
             return number_format(
-                (count($this->noScopeResults->where('status', LabResult::PROCESSED)) / 
-                 count($this->noScopeResults)) * 100);
+                ($this->noScopeResults->where('status', LabResult::PROCESSED)->count() / $this->noScopeResults->count()) * 100
+            );
         }
 
         return '0';
@@ -95,7 +116,7 @@ class Practice extends Model
      */
     public function getCreatorNameAttribute()
     {
-        return $this->creator->name;
+        return ($this->creator !== null) ? $this->creator->name : 'Not Available';
     }
 
     /**
@@ -105,7 +126,7 @@ class Practice extends Model
      */
     public function getCreatedThisMonthAttribute()
     {
-        return count($this->where('created_at', '>=', Carbon::now()->startOfMonth())->get());
+        return $this->where('created_at', '>=', now()->startOfMonth())->count();
     }    
 
     /**
@@ -115,6 +136,6 @@ class Practice extends Model
      */
     public function getCountAllAttribute()
     {
-        return count($this->all());
+        return $this->count();
     }
 }
