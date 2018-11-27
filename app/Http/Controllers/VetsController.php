@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VetRequest;
+use App\Models\LabResult;
+use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class VetController extends Controller
+class VetsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Practice $practice)
     {
-        $vets = auth()->user()->allVets();
+        $vets = $practice->allVets();
 
         return view('vets.index', compact('vets'));
     }
@@ -60,14 +62,16 @@ class VetController extends Controller
      */
     public function show(User $vet)
     {
-        // temporary - create new middleware class for this.
+        // temporary - create new middleware class for this
         abort_unless(
-            auth()->user()->practice_id == $vet->practice_id || auth()->user()->type === User::ADMIN, 403
+            auth()->user()->practice_id == $vet->practice_id || 
+            auth()->user()->isOfType(User::ADMIN, User::FARM_LAB_MEMBER), 403
         );
 
         $results = $vet->results()->get();
+        $processedResults = $vet->results()->processed()->get();
 
-        return view('vets.show', compact('vet', 'results'));
+        return view('vets.show', compact('vet', 'results', 'processedResults'));
     }
 
     /**
@@ -104,8 +108,7 @@ class VetController extends Controller
      */
     public function destroy($id)
     {
-        $vet = User::where('id', $id)->firstOrFail();
-        $vet->delete();
+        User::whereId($id)->firstOrFail()->delete();
 
         session()->flash('message', [
             'title' => 'Success!',

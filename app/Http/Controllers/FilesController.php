@@ -7,7 +7,7 @@ use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class FileController extends Controller
+class FilesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class FileController extends Controller
      */
     public function store(ValidateCsv $request, File $file)
     {
-        if (! $request->checkHeader()) {
+        if (! $request->validateFile()) {
             abort(400, 'There is something wrong with your csv file.');
         }
 

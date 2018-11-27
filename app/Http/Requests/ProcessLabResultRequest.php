@@ -24,8 +24,8 @@ class ProcessLabResultRequest extends FormRequest
     public function rules()
     {
         return [
-            'vet_comment' => ['required', 'min:10'],
-            'vet_indicator' => ['required', 'min:10']
+            'vet_comment' => ['required', 'min:10', 'max:255'],
+            'vet_indicator' => ['required', 'min:10', 'max:255']
         ];
     }
 }

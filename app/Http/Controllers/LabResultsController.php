@@ -7,27 +7,20 @@ use App\Models\LabResult;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LabResultController extends Controller
+class LabResultsController extends Controller
 {
     /**
      * Displays the results. If there are no unprocessed results,
-     * display processed results. If there is a farmer in the URI (If the user filters the results by farmer name),
-     * then return the results belonging to that farmer.
-     *
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $labresult, $farmerName = null)
+    public function index(LabResult $labresult)
     {
-        $farmerName ? $allResults = $labresult->fetchByFarmer($farmerName) : $allResults = $labresult->fetchAll();
+        $allResults = $labresult->fetchAll();
 
         $resultsByStatus = $labresult->fetchByStatus();
         
-        if (request()->has('my')) {
-            $allResults = auth()->user()->results()->with('vet')->get();
-        }
-
-        return view('labresults.index', compact('resultsByStatus', 'allResults'));
+        return view('labresults.index', compact('allResults', 'resultsByStatus'));
     }
 
     /**

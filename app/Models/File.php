@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
-    protected $fillable = ['name', 'file_path', 'uploaded_by'];
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
     
     /**
      * A File has an uploader.
@@ -29,7 +34,7 @@ class File extends Model
      */
     private function existsInStorage($fileName)
     {
-        return (Storage::exists("labresults/{$fileName}")) ? true : false;
+        return Storage::exists("labresults/{$fileName}") ? true : false;
     }
 
     /**
@@ -68,7 +73,7 @@ class File extends Model
      */
     public function upload()
     {
-        $file = request()->file('file');
+        $file = request('file');
         $fileName = $file->getClientOriginalName();
 
         if ($this->existsInDb($fileName)) {
@@ -109,8 +114,8 @@ class File extends Model
      */
     public function getUploadedThisMonthAttribute()
     {
-        return count($this->where('created_at', '>=', now()->startOfMonth())
-                          ->get());
+        return $this->where('created_at', '>=', now()->startOfMonth())->count();
+                         
     }    
 
     /**
@@ -120,6 +125,6 @@ class File extends Model
      */
     public function getCountAllAttribute()
     {
-        return count($this->all());
+        return $this->count();
     }
 }

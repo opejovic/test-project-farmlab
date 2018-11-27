@@ -1,24 +1,32 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('pageTitle', 'Verify E-mail')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
+<div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+        <div>
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
-                </div>
-            </div>
+            <h1 class="logo-name">FL+</h1>
+
         </div>
+        <h3>Please verify your email address.</h3>
+
+        <div>
+            @if (session('resent'))
+                <div class="alert alert-success" role="alert">
+                    {{ __('A fresh verification link has been sent to your email address.') }}
+                </div>
+            @endif
+
+            {{ __('Before proceeding, please check your email for a verification link.') }}
+            {{ __('If you did not receive the email') }}, 
+            <a class="btn btn-primary" type="submit" href="{{ route('verification.resend') }}">{{ __('click here to request another') }}
+            </a>
+        </div>
+        <p class="m-t"> <small>FarmLab+ all rights reserved.</small> </p>
     </div>
 </div>
 @endsection
+

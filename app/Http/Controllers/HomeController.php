@@ -19,53 +19,21 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
-        if (!\Auth::check()) {
+        if (! auth()->check()) {
             return view('auth.login');
+
         } elseif ($user->type === User::ADMIN) {
             return view('home.admin', compact('user', 'practice', 'file'));
+
         } elseif ($user->type === User::FARM_LAB_MEMBER) {
             return view('home.labmember', compact('user'));
+
         } elseif ($user->type === User::PRACTICE_ADMIN) {
             return view('home.practice', compact('user'));
+
         } elseif ($user->type === User::VET) {
             $resultsByStatus = $labresult->fetchByStatus(); // tmp
-
             return view('home.vet', compact('resultsByStatus', 'user', 'labresult'));
         }
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy()
-    {
-        //
     }
 }

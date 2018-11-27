@@ -40,21 +40,23 @@
                                 <h2 class="no-margins">
                                     {{ $vet->name }}
                                 </h2>
-                                <h4>{{ __('Vet') }}</h4>
+                                <h4>{{ $vet->type }}</h4>
                                 <small>
                                     There are many variations of passages of Lorem Ipsum available, but the majority
                                     have suffered alteration in some form Ipsum available.
                                 </small>
                             </div>
 
-                           <form action="{{ route('vets.destroy', $vet->id) }}" method="POST" id="form">
-                               @csrf
-                               @method('DELETE')
+                            @if (auth()->id() !== $vet->id)
+                               <form action="{{ route('vets.destroy', $vet->id) }}" method="POST" id="form">
+                                   @csrf
+                                   @method('DELETE')
 
-                                <button type="submit" class="btn btn-danger">
-                                    Delete
-                                </button>
-                           </form>
+                                    <button type="submit" class="btn btn-danger">
+                                        Delete
+                                    </button>
+                               </form>
+                           @endif
 
                         </div>
                     </div>
@@ -64,10 +66,10 @@
                     <tbody>
                     <tr>
                         <td>
-                            <h2><strong>{{ count($results) }}</strong> Total Results</h2>
+                            <h2><strong>{{ $results->count() }}</strong> Total Results</h2>
                         </td>
                         <td>
-                            <h2><strong>{{ count($results->where('status', 'PROCESSED')) }}</strong> Processed Results</h2>
+                            <h2><strong>{{ $processedResults->count() }}</strong> Processed Results</h2>
                         </td>
                     </tr>
                 

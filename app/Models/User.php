@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Mail\Welcome;
+use App\Models\LabResult;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     
@@ -15,8 +17,8 @@ class User extends Authenticatable
     const FARM_LAB_MEMBER   = 'FARM_LAB_TEAM_MEMBER';
     const PRACTICE_ADMIN    = 'PRACTICE_ADMIN';
     const VET               = 'PRACTICE_VET';
-    const VERIFIED          = 'VERIFIED'; // tmp user status
-    const NOT_VERIFIED      = 'NOT_VERIFIED';  // tmp user status
+    const VERIFIED          = 'VERIFIED';
+    const NOT_VERIFIED      = 'NOT_VERIFIED';
 
     /**
      * The attributes that are not mass assignable.
@@ -33,22 +35,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    /**
-     *
-     * If the authenticated user is of type1 or type2 return true.
-     * Using this for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin class.
-     *
-     * @param      $type1 (Constant - User type)
-     * @param null $type2 (Constant - User type)
-     *
-     * @return bool
-     */
-    public function isOfType($type1, $type2 = null)
-    {
-        $user = auth()->user();
-        return ($user->type === $type1 || $user->type === $type2) ? true : false;
-    }
 
     /**
      * Vet has many lab results.
@@ -90,21 +76,8 @@ class User extends Authenticatable
         return $this->hasMany(File::class, 'uploaded_by');
     }
 
-     /**
-      * Returns all practice members for the practice of the authenticated user.
-      * 
-     * @return \Illuminate\Database\Eloquent\Collection
-     */   
-    public function allVets()
-    {
-        return $this->where('practice_id', auth()->user()->practice_id)
-                    ->whereType(User::VET)
-                    ->oldest()
-                    ->paginate(10);
-    }
-
     /**
-     * Send a welcome email to newly created user.
+     * Send a welcome email to newly created user, with a link for a password creation.
      *
      * @param $newUser
      *
@@ -112,7 +85,9 @@ class User extends Authenticatable
      */
     protected function sendWelcomeEmail($newUser)
     {
-        return \Mail::to(request('email'))->queue(new Welcome($newUser));
+        $token = app('auth.password.broker')->createToken($newUser);
+
+        return \Mail::to(request('email'))->queue(new Welcome($newUser, $token));
     }
 
     /**
@@ -137,7 +112,6 @@ class User extends Authenticatable
      */
     public function addPractice()
     {
-
         $practice = $this->practice()->create([
             'name'        => request('name'),
             'created_by'  => auth()->id()
@@ -173,15 +147,41 @@ class User extends Authenticatable
     }
 
     /**
+     * Return users with type FARM_LAB_TEAM_MEMBER
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function scopeLabMembers($query)
+    {
+        return $query->whereType(User::FARM_LAB_MEMBER);
+    }
+
+    /**
+     *
+     * If the authenticated user is of type1 or type2 return true.
+     * Using this helper function for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin classes.
+     *
+     * @param      $type1 (Constant - User type)
+     * @param null $type2 (Constant - User type)
+     *
+     * @return bool
+     */
+    public function isOfType($type1, $type2 = null)
+    {
+        $user = auth()->user();
+        return ($user->type === $type1 || $user->type === $type2) ? true : false;
+    }
+
+    /**
      * Returns the practices created this month by the authenticated user.
      *
      * @return Integer
      */
     public function getCreatedPracticesThisMonthAttribute()
     {
-        return count($this->createdPractices()
+        return $this->createdPractices()
             ->where('created_at', '>=', now()->startOfMonth())
-            ->get());
+            ->count();
     }
 
     /**
@@ -191,7 +191,7 @@ class User extends Authenticatable
      */
     public function getCountCreatedPracticesAttribute()
     {
-        return count($this->createdPractices()->get());
+        return $this->createdPractices()->count();
     }
 
     /**
@@ -201,9 +201,9 @@ class User extends Authenticatable
      */
     public function getTeamMembersAddedThisMonthAttribute()
     {
-        return count($this->whereType(User::FARM_LAB_MEMBER)
-                          ->where('created_at', '>=', now()->startOfMonth())
-                          ->get());
+        return $this->whereType(User::FARM_LAB_MEMBER)
+                    ->where('created_at', '>=', now()->startOfMonth())
+                    ->count();
     }    
 
     /**
@@ -213,17 +213,17 @@ class User extends Authenticatable
      */
     public function getCountAllTeamMembersAttribute()
     {
-        return count($this->whereType(User::FARM_LAB_MEMBER)->get());
+        return $this->whereType(User::FARM_LAB_MEMBER)->count();
     }
 
     /**
-     * Returns true if the user is verified.
+     * Returns true if the user has verified email.
      *
      * @return boolean
      */
     public function getIsVerifiedAttribute()
     {
-        return ($this->status === User::VERIFIED) ? true : false;
+        return $this->email_verified_at !== null ? true : false;
     }
 
     /**
@@ -233,7 +233,7 @@ class User extends Authenticatable
      */
     public function getUploadedFilesAttribute()
     {
-        return count($this->files);
+        return $this->files->count();
     }
 
     /**
@@ -243,11 +243,21 @@ class User extends Authenticatable
      */
     public function getProcessedResultsPercentageAttribute()
     {   
-        if (count($this->results) > 0) {
+        if ($this->results->count() > 0) {
             return number_format(
-                (count($this->results->where('status', 'PROCESSED')) / count($this->results)) * 100
+                ($this->results->where('status', LabResult::PROCESSED)->count() / $this->results->count()) * 100
             );
         }
         return '0';
+    }
+
+    /**
+     * Returns the formatted type, for the auth user.
+     *
+     * @return string
+     */
+    public function getFormattedTypeAttribute()
+    {
+        return ucwords(strtolower(str_replace('_', ' ', auth()->user()->type)));
     }
 }
