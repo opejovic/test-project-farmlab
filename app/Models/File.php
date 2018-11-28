@@ -27,6 +27,7 @@ class File extends Model
     }
 
     /**
+     * Check if the file exists in the database
      *
      * @param   $fileName [requested files name]
      *
@@ -46,9 +47,19 @@ class File extends Model
      */
     private function existsInDb($fileName)
     {
-        $dbFile = $this->where('name', $fileName)->first();
-
-        return ($dbFile !== null) ? true : false;
+        return $this->whereName($fileName)->first() !== null ? true : false;
+    }
+    
+    /**
+     * Check if the file exists in the storage or database.
+     *
+     * @param   $fileName [requested files name]
+     *
+     * @return bool
+     */
+    private function fileExists($fileName)
+    {
+        return $this->existsInStorage($fileName) || $this->existsInDb($fileName) ? true : false;
     }
 
     /**
@@ -57,7 +68,7 @@ class File extends Model
      * @param $fileName
      * @param $filePath
      */
-    private function saveToDb($fileName, $filePath)
+    private function saveFile($fileName, $filePath)
     {
         $this->create([
             'name'        => $fileName,
@@ -76,15 +87,9 @@ class File extends Model
         $file = request('file');
         $fileName = $file->getClientOriginalName();
 
-        if ($this->existsInDb($fileName)) {
-            abort(400, 'The file already exists in our database records.');
-        }
+        abort_if($this->fileExists($fileName), 400, 'The file already exists in our database records.');
 
-        if ($this->existsInStorage($fileName)) {
-            abort(400, 'The file already exists in our storage.');
-        }
-
-        $this->saveToDb($fileName, Storage::putFileAs('labresults', $file, $fileName));
+        $this->saveFile($fileName, Storage::putFileAs('labresults', $file, $fileName));
 
         (new LabResult)->parseAndSave($file);
     }

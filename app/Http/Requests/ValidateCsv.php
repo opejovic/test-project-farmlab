@@ -36,7 +36,7 @@ class ValidateCsv extends FormRequest
      *
      * @return bool
      */
-    public function validateFile()
+    public function fileValidated()
     {
         $csv_file = fopen(request('file'), 'r');
         $header = fgetcsv($csv_file, 0, ',');

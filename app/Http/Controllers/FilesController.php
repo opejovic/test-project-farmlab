@@ -16,7 +16,7 @@ class FilesController extends Controller
      */
     public function index()
     {
-        $files = File::with('uploader')->paginate(10);
+        $files = File::oldest()->with('uploader')->paginate(10);
 
         return view('files.index', compact('files'));
     }
@@ -31,10 +31,8 @@ class FilesController extends Controller
      */
     public function store(ValidateCsv $request, File $file)
     {
-        if (! $request->validateFile()) {
-            abort(400, 'There is something wrong with your csv file.');
-        }
-
+        abort_unless($request->fileValidated(), 400, 'Something is wrong with your csv file.');
+        
         $file->upload();
 
         session()->flash('message', [

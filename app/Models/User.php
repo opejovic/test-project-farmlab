@@ -37,6 +37,23 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * The "booting" method of the model.
+     *
+     * Sends welcome email to the new user.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            $token = app('auth.password.broker')->createToken($user);
+            \Mail::to(request('email'))->queue(new Welcome($user, $token));
+        });
+    }
+
+    /**
      * Vet has many lab results.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -77,33 +94,17 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Send a welcome email to newly created user, with a link for a password creation.
-     *
-     * @param $newUser
-     *
-     * @return App\Mail\Welcome
-     */
-    protected function sendWelcomeEmail($newUser)
-    {
-        $token = app('auth.password.broker')->createToken($newUser);
-
-        return \Mail::to(request('email'))->queue(new Welcome($newUser, $token));
-    }
-
-    /**
      * User FARM_LAB_ADMIN can add a FARM_LAB_MEMBER
      */
     public function addFarmLabMember()
     {
-        $newUser = $this->create([
+        $this->create([
             'name'     => request('name'),
             'email'    => request('email'),
             'password' => Hash::make(request('password')),
             'type'     => User::FARM_LAB_MEMBER,
             'status'   => User::NOT_VERIFIED
         ]);
-
-        $this->sendWelcomeEmail($newUser);
     }
 
     /**
@@ -117,7 +118,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'created_by'  => auth()->id()
         ]);
 
-        $newUser = $this->create([
+        $this->create([
             'name'        => request('admin_name'),
             'email'       => request('email'),
             'password'    => bcrypt(request('password')),
@@ -125,8 +126,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'status'      => User::NOT_VERIFIED,
             'practice_id' => $practice->id
         ]);
-
-        $this->sendWelcomeEmail($newUser);
     }
 
     /**
@@ -134,7 +133,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function addVet()
     {
-        $newVet = $this->create([
+        $this->create([
             'name'        => request('name'),
             'email'       => request('email'),
             'password'    => Hash::make(request('password')),
@@ -142,8 +141,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'status'      => User::NOT_VERIFIED,
             'practice_id' => auth()->user()->practice_id
         ]);
-
-        $this->sendWelcomeEmail($newVet);
     }
 
     /**

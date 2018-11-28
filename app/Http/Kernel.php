@@ -51,18 +51,18 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'          => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can'           => \Illuminate\Auth\Middleware\Authorize::class,
-        'verified'           => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'guest'         => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'practice'      => \App\Http\Middleware\MustBePracticeMember::class,
-        'practice.admin'    => \App\Http\Middleware\MustBePracticeAdmin::class,
-        'farmlab'      => \App\Http\Middleware\MustBeFarmlabMember::class,
-        'farmlab.admin'      => \App\Http\Middleware\MustBeAdmin::class,
+        'auth'           => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth.basic'     => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings'       => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'cache.headers'  => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can'            => \Illuminate\Auth\Middleware\Authorize::class,
+        'verified'       => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'guest'          => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'signed'         => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle'       => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'practice'       => \App\Http\Middleware\MustBePracticeMember::class,
+        'practice.admin' => \App\Http\Middleware\MustBePracticeAdmin::class,
+        'farmlab'        => \App\Http\Middleware\MustBeFarmlabMember::class,
+        'farmlab.admin'  => \App\Http\Middleware\MustBeAdmin::class,
     ];
 }
