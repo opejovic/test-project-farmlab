@@ -16,9 +16,7 @@ class MustBePracticeMember
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->user()->isOfType(User::VET, User::PRACTICE_ADMIN)) {
-            abort(403, 'No way.');
-        }
+        abort_unless($request->user()->isOfType(User::VET, User::PRACTICE_ADMIN), 403);
 
         return $next($request);
     }

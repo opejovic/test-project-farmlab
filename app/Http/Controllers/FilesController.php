@@ -16,7 +16,7 @@ class FilesController extends Controller
      */
     public function index()
     {
-        $files = File::oldest()->with('uploader')->paginate(10);
+        $files = File::latest()->with('uploader')->paginate(10);
 
         return view('files.index', compact('files'));
     }

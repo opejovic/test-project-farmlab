@@ -103,11 +103,7 @@ class LabResult extends Model
      */
     public function fetchByStatus()
     {
-        $results = $this->results();
-        if ($results->isEmpty()) {
-            return $this->results(LabResult::PROCESSED);
-        }
-        return $results;
+        return $this->results()->isEmpty() ? $this->results(LabResult::PROCESSED) : $this->results();
     }
 
     /**

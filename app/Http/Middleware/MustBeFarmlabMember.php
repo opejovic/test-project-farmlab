@@ -16,9 +16,7 @@ class MustBeFarmlabMember
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->user()->isOfType(User::FARM_LAB_MEMBER, User::ADMIN)) {
-            abort(403, 'No way.');
-        }
+        abort_unless($request->user()->isOfType(User::FARM_LAB_MEMBER, User::ADMIN), 403);
 
         return $next($request);
     }

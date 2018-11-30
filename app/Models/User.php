@@ -129,21 +129,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * PRACTICE_ADMIN can add new vet to their practice.
-     */
-    public function addVet()
-    {
-        $this->create([
-            'name'        => request('name'),
-            'email'       => request('email'),
-            'password'    => Hash::make(request('password')),
-            'type'        => User::VET,
-            'status'      => User::NOT_VERIFIED,
-            'practice_id' => auth()->user()->practice_id
-        ]);
-    }
-
-    /**
      * Vets processes the result via form/modal.
      *
      */

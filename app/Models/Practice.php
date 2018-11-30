@@ -36,6 +36,21 @@ class Practice extends Model
     }
 
     /**
+     * PRACTICE_ADMIN can add new vet to their practice.
+     *
+     */
+    public function addVet()
+    {
+        $this->vets()->create([
+            'name'        => request('name'),
+            'email'       => request('email'),
+            'password'    => Hash::make(request('password')),
+            'type'        => User::VET,
+            'status'      => User::NOT_VERIFIED,
+        ]);
+    }
+
+    /**
      * Returns the results for the practice of the authenticated user. 
      * Global scope from LabResult model is applied.
      * 
@@ -70,6 +85,19 @@ class Practice extends Model
                     ->paginate(12);
     }
 
+
+    /**
+     * Query scope - returns all practices and eager loads vets, results, and admins.
+     *
+     */
+    public function scopeFetchAll($query)
+    {
+        return $query->oldest()
+                     ->with('vets')
+                     ->with('noScopeResults')
+                     ->with('admin');
+    }
+
     /**
      * Query scope - using this function for the LabResult@parseAndSave method.
      *
@@ -99,15 +127,21 @@ class Practice extends Model
      *
      * @return integer
      */
+    public function processedResultsPercentage()
+    {
+        return number_format(
+            ($this->noScopeResults()->processed()->count() / $this->noScopeResults()->count()) * 100
+        );
+    }
+
+    /**
+     * Returns the percentage of processed results for the practice, if there are any, else returns zero.
+     *
+     * @return integer
+     */
     public function getProcessedResultsPercentageAttribute()
     {
-        if ($this->noScopeResults()->count() > 0) {
-            return number_format(
-                ($this->noScopeResults()->processed()->count() / $this->noScopeResults()->count()) * 100
-            );
-        }
-
-        return '0';
+        return $this->noScopeResults()->count() > 0 ? $this->processedResultsPercentage() : 0;
     }
     
     /**

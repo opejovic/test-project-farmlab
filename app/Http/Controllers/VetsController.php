@@ -42,7 +42,7 @@ class VetsController extends Controller
      */
     public function store(VetRequest $request)
     {
-        auth()->user()->addVet();
+        auth()->user()->practice->addVet();
 
         session()->flash('message', [
             'title' => 'Success!',

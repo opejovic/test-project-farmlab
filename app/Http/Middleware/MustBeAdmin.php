@@ -16,10 +16,8 @@ class MustBeAdmin
      */
     public function handle($request, Closure $next)
     {
-        $user = $request->user();
-        if ($user && $user->type == User::ADMIN) {
-            return $next($request);
-        } 
-        abort(403, 'No way.');
+        abort_unless($request->user()->isOfType(User::ADMIN), 403);
+        
+        return $next($request);
     }
 }

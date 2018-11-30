@@ -57,7 +57,6 @@ class LabResultsController extends Controller
         abort_unless(
             auth()->user()->practice_id == $labresult->practice_id, 403
         );
-
         return view('labresults.show', compact('labresult'));
     }
 
