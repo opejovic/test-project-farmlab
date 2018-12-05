@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\LabResultCreated;
 use App\Mail\NewResultNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -19,12 +20,14 @@ class LabResult extends Model
      */
     protected $guarded = [];
 
+    protected $dispatchesEvents = [
+        'created' => LabResultCreated::class
+    ];
+    
     /**
      * The "booting" method of the model.
      * Applies an anonymous global scope for the model. All queries will return
      * results for the practice of the authenticated user.
-     *
-     * Also, when the new result is uploaded, the email notification is sent to the owner (vet) of that result.
      *
      * @return void
      */
@@ -34,12 +37,6 @@ class LabResult extends Model
 
         static::addGlobalScope('practice_id', function (Builder $builder) {
             $builder->where('practice_id', auth()->user()->practice_id);
-        });
-
-        static::created(function ($labresult) {
-            Mail::to($labresult->vet->email)->queue(
-                new NewResultNotification($labresult, $labresult->vet)
-            );
         });
     }
 

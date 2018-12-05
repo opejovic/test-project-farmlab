@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\UserCreated;
 use App\Mail\Welcome;
 use App\Models\LabResult;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -37,21 +38,12 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The "booting" method of the model.
+     * 
      *
-     * Sends welcome email to the new user.
-     *
-     * @return void
      */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($user) {
-            $token = app('auth.password.broker')->createToken($user);
-            \Mail::to(request('email'))->queue(new Welcome($user, $token));
-        });
-    }
+    protected $dispatchesEvents = [
+        'created' => UserCreated::class
+    ];
 
     /**
      * Vet has many lab results.

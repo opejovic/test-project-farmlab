@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\FileUploaded;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +17,14 @@ class File extends Model
      */
     protected $guarded = [];
     
+    /**
+     * 
+     *
+     */
+    protected $dispatchesEvents = [
+        'created' => FileUploaded::class
+    ];
+
     /**
      * A File has an uploader.
      *
