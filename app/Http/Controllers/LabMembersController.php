@@ -42,6 +42,12 @@ class LabMembersController extends Controller
     {
         auth()->user()->addFarmLabMember();
 
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => "New member added to the team.",
+            'type'  => 'success'
+        ]);
+
         return redirect(route('members.index'));
     }
 

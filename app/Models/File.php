@@ -16,14 +16,6 @@ class File extends Model
      * @var array
      */
     protected $guarded = [];
-    
-    /**
-     * 
-     *
-     */
-    protected $dispatchesEvents = [
-        'created' => FileUploaded::class
-    ];
 
     /**
      * A File has an uploader.

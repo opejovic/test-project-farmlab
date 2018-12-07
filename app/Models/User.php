@@ -38,8 +38,8 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * The attributes that fire off the events.
      * 
-     *
      */
     protected $dispatchesEvents = [
         'created' => UserCreated::class

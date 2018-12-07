@@ -23,17 +23,12 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         UserCreated::class => [
-            FlashMemberSuccessfullyAdded::class,
             SendWelcomeEmail::class,
-            // SendEmailVerificationNotification::class,
+            SendEmailVerificationNotification::class,
         ],
 
         LabResultCreated::class => [
             SendResultCreatedNotification::class,
-        ],        
-
-        FileUploaded::class => [
-            FlashFileUploadedSuccess::class,
         ],
     ];
 

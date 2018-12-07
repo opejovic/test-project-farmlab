@@ -20,6 +20,10 @@ class LabResult extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The attributes that fire off the events.
+     * 
+     */
     protected $dispatchesEvents = [
         'created' => LabResultCreated::class
     ];

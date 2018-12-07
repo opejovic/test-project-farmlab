@@ -44,6 +44,12 @@ class VetsController extends Controller
     {
         auth()->user()->practice->addVet();
 
+        session()->flash('message', [
+            'title' => 'Success!',
+            'text'  => "New vet added to the team.",
+            'type'  => 'success'
+        ]);
+
         return redirect(route('vets.index'));
     }
 
