@@ -113,7 +113,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->create([
             'name'        => request('admin_name'),
             'email'       => request('email'),
-            'password'    => bcrypt(request('password')),
+            'password'    => Hash::make(request('password')),
             'type'        => User::PRACTICE_ADMIN,
             'status'      => User::NOT_VERIFIED,
             'practice_id' => $practice->id

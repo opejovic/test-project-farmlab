@@ -59,7 +59,7 @@ class Practice extends Model
     public function results()
     {
         return $this->hasMany(LabResult::class, 'practice_id');
-    }    
+    }
 
     /**
      * Returns the results for the practice without the global scope from the LabResult model.
