@@ -9,10 +9,10 @@
         // autoProcessQueue: false,
         // autoQueue: false,
         init: function() {
-        this.on("success", function(file) {  
+        this.on("success", function(file) {
             swal({
                 title: "Success!",
-                text: "Uploaded Sucessfully",
+                text: "Uploaded Successfully",
                 icon: "success",
                 type: "success",
                 button: "Dismiss.",

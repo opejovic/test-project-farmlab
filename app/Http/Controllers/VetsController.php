@@ -44,11 +44,7 @@ class VetsController extends Controller
     {
         auth()->user()->practice->addVet();
 
-        session()->flash('message', [
-            'title' => 'Success!',
-            'text'  => "New vet added to the team.",
-            'type'  => 'success'
-        ]);
+        flash('New vet added to the team.');
 
         return redirect(route('vets.index'));
     }
@@ -110,11 +106,7 @@ class VetsController extends Controller
     {
         User::findOrFail($id)->delete();
 
-        session()->flash('message', [
-            'title' => 'Success!',
-            'text'  => 'Vet successfully removed.',
-            'type'  => 'success'
-        ]);
+        flash('Vet successfully removed.');
 
         return redirect('vets');
     }

@@ -24,28 +24,6 @@ class LabResultsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\LabResult $result
@@ -55,18 +33,6 @@ class LabResultsController extends Controller
     public function show(LabResult $labresult)
     {
         return view('labresults.show', compact('labresult'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\LabResult $labresult
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LabResult $labresult)
-    {
-        //
     }
 
     /**
@@ -81,11 +47,7 @@ class LabResultsController extends Controller
     {
         auth()->user()->processResult(request('vet_comment'), request('vet_indicator'));
 
-        session()->flash('message', [
-            'title' => 'Success!',
-            'text'  => 'Labresult proccessed successfully.',
-            'type'  => 'success'
-        ]);
+        flash('Labresult proccessed successfully.');
 
         return back();
     }

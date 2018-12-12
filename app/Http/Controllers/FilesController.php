@@ -35,12 +35,6 @@ class FilesController extends Controller
         
         $file->upload();
 
-        session()->flash('message', [
-            'title' => 'Success!',
-            'text'  => 'File successfully uploaded.',
-            'type'  => 'success'
-        ]);
-
         return back();
     }
 }

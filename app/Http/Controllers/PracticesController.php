@@ -42,11 +42,7 @@ class PracticesController extends Controller
     {
         auth()->user()->addPractice();
         
-        session()->flash('message', [
-            'title' => 'Success!',
-            'text'  => 'New Practice team added successfully.',
-            'type'  => 'success'
-        ]);        
+        flash('New Practice team added successfully.');
 
         return redirect(route('practice.index'));
     }
@@ -61,6 +57,7 @@ class PracticesController extends Controller
     public function show(Practice $practice)
     {
         $vets = $practice->vets;
+        
         return view('practice.show', compact('practice', 'vets'));
     }
 

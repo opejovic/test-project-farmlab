@@ -42,11 +42,7 @@ class LabMembersController extends Controller
     {
         auth()->user()->addFarmLabMember();
 
-        session()->flash('message', [
-            'title' => 'Success!',
-            'text'  => "New member added to the team.",
-            'type'  => 'success'
-        ]);
+        flash('New member added to the team.');
 
         return redirect(route('members.index'));
     }
@@ -98,11 +94,7 @@ class LabMembersController extends Controller
     {
         User::findOrFail($id)->delete();
 
-        session()->flash('message', [
-            'title' => 'Done.',
-            'text'  => 'Lab member successfully deleted.',
-            'type'  => 'success'
-        ]);
+        flash('Lab member successfully removed.');
 
         return redirect(route('members.index'));
     }

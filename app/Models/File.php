@@ -28,9 +28,9 @@ class File extends Model
     }
 
     /**
-     * Check if the file exists in the database
+     * Check if the file exists in the storage.
      *
-     * @param   $fileName [requested files name]
+     * @param   $fileName
      *
      * @return bool
      */
@@ -40,9 +40,9 @@ class File extends Model
     }
 
     /**
-     * Check if the file exists in the database
+     * Check if the file exists in the database.
      *
-     * @param   $fileName [requested files name]
+     * @param   $fileName
      *
      * @return bool
      */
