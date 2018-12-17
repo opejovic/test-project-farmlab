@@ -9,6 +9,8 @@ use App\Listeners\FlashFileUploadedSuccess;
 use App\Listeners\FlashMemberSuccessfullyAdded;
 use App\Listeners\SendResultCreatedNotification;
 use App\Listeners\SendWelcomeEmail;
+use App\Listeners\VerifyEmail;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -24,7 +26,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         UserCreated::class => [
             SendWelcomeEmail::class,
-            SendEmailVerificationNotification::class,
+        ],
+
+        PasswordReset::class => [
+            VerifyEmail::class,
         ],
 
         LabResultCreated::class => [
