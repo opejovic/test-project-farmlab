@@ -119,12 +119,12 @@ class User extends Authenticatable
      * Vets processes the result via form/modal.
      *
      */
-    public function processResult($comment, $indicator)
+    public function processResult($labresultId, $comment, $indicator)
     {
-        $this->results()->update([
+        $this->results()->whereId($labresultId)->update([
                 'vet_comment'   => $comment,
                 'vet_indicator' => $indicator,
-                'status'        => LabResult::PROCESSED
+                'processed_at'  => $this->freshTimestamp(),
             ]);
     }
 
