@@ -5,12 +5,11 @@ namespace App\Models;
 use App\Events\UserCreated;
 use App\Mail\Welcome;
 use App\Models\LabResult;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable;
     
@@ -18,8 +17,6 @@ class User extends Authenticatable implements MustVerifyEmail
     const FARM_LAB_MEMBER   = 'FARM_LAB_TEAM_MEMBER';
     const PRACTICE_ADMIN    = 'PRACTICE_ADMIN';
     const VET               = 'PRACTICE_VET';
-    const VERIFIED          = 'VERIFIED';
-    const NOT_VERIFIED      = 'NOT_VERIFIED';
 
     /**
      * The attributes that are not mass assignable.
@@ -95,7 +92,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'email'    => request('email'),
             'password' => Hash::make(request('password')),
             'type'     => User::FARM_LAB_MEMBER,
-            'status'   => User::NOT_VERIFIED
         ]);
     }
 
@@ -115,7 +111,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'email'       => request('email'),
             'password'    => Hash::make(request('password')),
             'type'        => User::PRACTICE_ADMIN,
-            'status'      => User::NOT_VERIFIED,
             'practice_id' => $practice->id
         ]);
     }

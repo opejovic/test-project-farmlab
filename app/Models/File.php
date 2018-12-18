@@ -30,7 +30,7 @@ class File extends Model
     /**
      * Check if the file exists in the storage.
      *
-     * @param   $fileName
+     * @param $fileName
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class File extends Model
     /**
      * Check if the file exists in the database.
      *
-     * @param   $fileName
+     * @param $fileName
      *
      * @return bool
      */
@@ -54,7 +54,7 @@ class File extends Model
     /**
      * Check if the file exists in the storage or database.
      *
-     * @param   $fileName [requested files name]
+     * @param $fileName [requested files name]
      *
      * @return bool
      */

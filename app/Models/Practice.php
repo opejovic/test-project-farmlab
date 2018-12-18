@@ -46,7 +46,6 @@ class Practice extends Model
             'email'       => request('email'),
             'password'    => Hash::make(request('password')),
             'type'        => User::VET,
-            'status'      => User::NOT_VERIFIED,
         ]);
     }
 
