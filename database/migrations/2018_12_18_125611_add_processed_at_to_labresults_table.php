@@ -1,4 +1,3 @@
-            $table->timestamp('email_verified_at')->nullable();
 <?php
 
 use Illuminate\Support\Facades\Schema;
