@@ -13,7 +13,7 @@ class DropStatusFromLabresultsTable extends Migration
      */
     public function up()
     {
-        Schema::table('labresults', function (Blueprint $table) {
+        Schema::table('lab_results', function (Blueprint $table) {
             $table->dropColumn('status');
         });
     }
