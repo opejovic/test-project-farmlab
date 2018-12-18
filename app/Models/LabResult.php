@@ -115,8 +115,9 @@ class LabResult extends Model
      */
     public function fetchByStatus()
     {
-        return $this->results()->unprocessed()->get()->isEmpty() ? 
-            $this->results()->processed()->get() : $this->results()->unprocessed()->get();
+        $unprocessedResults = $this->results()->unprocessed()->get();
+
+        return $unprocessedResults->isEmpty() ? $this->results()->processed()->get() : $unprocessedResults;
     }
 
     /**
@@ -202,6 +203,6 @@ class LabResult extends Model
      */
     public function getStatusAttribute()
     {
-        return $this->isProcessed() ? 'Processed' : 'Unprocessed';
+        return $this->isProcessed() ? LabResult::PROCESSED : LabResult::UNPROCESSED;
     }
 }

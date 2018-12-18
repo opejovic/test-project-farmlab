@@ -16,7 +16,7 @@
             </ol>
         </div>
         <div class="col-lg-2">
-    @if ($labresult->unprocessed > 0)
+    @if ($labresult->count_unprocessed > 0)
         <h5>You have {{ $labresult->count_unprocessed }} unprocessed results</h5>
     @else
         <h5>You have {{ $labresult->whereNotNull('processed_at')->count() }} processed results</h5>

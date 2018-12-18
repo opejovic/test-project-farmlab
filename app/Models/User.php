@@ -121,7 +121,7 @@ class User extends Authenticatable
      */
     public function processResult($labresultId, $comment, $indicator)
     {
-        $this->results()->whereId($labresultId)->update([
+        $this->results()->find($labresultId)->update([
                 'vet_comment'   => $comment,
                 'vet_indicator' => $indicator,
                 'processed_at'  => $this->freshTimestamp(),
