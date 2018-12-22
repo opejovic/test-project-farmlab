@@ -108,7 +108,7 @@ class Practice extends Model
      */
     public function scopeName($query, $practice_id)
     {
-        return $query->whereId($practice_id)->first()->name;
+        return $query->find($practice_id)->name;
     }
 
     /**

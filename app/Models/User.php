@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Events\UserCreated;
-use App\Mail\Welcome;
-use App\Models\LabResult;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -96,7 +94,7 @@ class User extends Authenticatable
     }
 
     /**
-     * FARM_LAB_MEMBER can create new Practice, and practice admin is created in that process. You cant create one
+     * FARM_LAB_MEMBER can create a new Practice, and practice admin is created in that process. You cant create one
      * without the other.
      */
     public function addPractice()
@@ -157,7 +155,7 @@ class User extends Authenticatable
     /**
      * Returns the practices created this month by the authenticated user.
      *
-     * @return Integer
+     * @return integer
      */
     public function getCreatedPracticesThisMonthAttribute()
     {
@@ -169,7 +167,7 @@ class User extends Authenticatable
     /**
      * Counts all created practices by the authenticated user.
      *
-     * @return void
+     * @return integer
      */
     public function getCountCreatedPracticesAttribute()
     {
