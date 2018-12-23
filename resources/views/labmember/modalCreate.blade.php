@@ -40,27 +40,6 @@
                 </div>
             </div>
 
-            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} row">
-                <label for="password" class="col-sm-4 col-form-label text-md-right">Password</label>
-                <div class="col-md-8">
-                    <input name="password" type="password" class="form-control" id="password" required>
-                    @if ($errors->has('password'))
-                        <label class="control-label text-md-left">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </label>
-                    @endif
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="password_confirmation" class="col-sm-4 col-form-label text-md-right">Password
-                    confirmation</label>
-                <div class="col-md-8">
-                    <input name="password_confirmation" type="password" class="form-control"
-                           id="password_confirmation" required>
-                </div>
-            </div>
-        
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Dismiss</button>

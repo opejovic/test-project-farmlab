@@ -6,24 +6,24 @@
 
 @section ('content')
 <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Add New Vet</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="{{ route('home') }}">Home</a>
-                        </li>
-                        <li>
-                            <a>Team Members</a>
-                        </li>
-                        <li>
-                            <strong>Add New</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
+    <div class="col-lg-10">
+        <h2>Add New Vet</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{ route('home') }}">Home</a>
+            </li>
+            <li>
+                <a>Team Members</a>
+            </li>
+            <li>
+                <strong>Add New</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
 
-                </div>
-            </div>
+    </div>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
 
             <div class="row">
@@ -55,25 +55,6 @@
                                     </div>
 
                                 </div>
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}"><label class="col-sm-2 control-label">Password</label>
-
-                                    <div class="col-sm-10"><input name="password" type="password" class="form-control" id="password" required>
-                                    @if ($errors->has('password'))
-                                        <label class="control-label">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </label>
-                                    @endif
-                                    </div>
-
-                                </div>
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group"><label class="col-sm-2 control-label">Password confirmation</label>
-
-                                    <div class="col-sm-10"><input name="password_confirmation" type="password" class="form-control"
-                                           id="password_confirmation" required></div>
-                                </div>
-
             
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">

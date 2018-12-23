@@ -88,7 +88,7 @@ class User extends Authenticatable
         $this->create([
             'name'     => request('name'),
             'email'    => request('email'),
-            'password' => Hash::make(request('password')),
+            'password' => Hash::make(str_random(10)),
             'type'     => User::FARM_LAB_MEMBER,
         ]);
     }
@@ -107,7 +107,7 @@ class User extends Authenticatable
         $this->create([
             'name'        => request('admin_name'),
             'email'       => request('email'),
-            'password'    => Hash::make(request('password')),
+            'password'    => Hash::make(str_random(10)),
             'type'        => User::PRACTICE_ADMIN,
             'practice_id' => $practice->id
         ]);

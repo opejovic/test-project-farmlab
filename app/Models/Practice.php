@@ -44,7 +44,7 @@ class Practice extends Model
         $this->vets()->create([
             'name'        => request('name'),
             'email'       => request('email'),
-            'password'    => Hash::make(request('password')),
+            'password'    => Hash::make(str_random(10)),
             'type'        => User::VET,
         ]);
     }

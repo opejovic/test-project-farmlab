@@ -27,7 +27,6 @@ class PracticeRequest extends FormRequest
             'name'       => ['required', 'unique:practices', 'min:3'],
             'admin_name' => ['required', 'min:3'],
             'email'      => ['required', 'email', 'unique:users'],
-            'password'   => ['required', 'confirmed', 'min:6']
         ];
     }
 }
