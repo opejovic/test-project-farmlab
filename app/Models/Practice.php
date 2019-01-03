@@ -71,14 +71,13 @@ class Practice extends Model
     }
 
     /**
-     * Returns all vets of the practice of the authenticated user.
+     * Returns all vets for the practice of the authenticated user.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function allVets()
     {
-        return $this->whereId(auth()->user()->practice_id)
-                    ->firstOrFail()
+        return $this->findOrFail(auth()->user()->practice_id)
                     ->vets()
                     ->whereType(User::VET)
                     ->paginate(12);
