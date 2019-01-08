@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-sm-4 text-right">
                                     <div class="font-bold">LABRESULTS</div>
-                                     {{ count($practice->noScopeResults) }}<i class="fa fa-level-up text-navy"></i>
+                                     {{ count($practice->results) }}<i class="fa fa-level-up text-navy"></i>
                                 </div>
                             </div>
 

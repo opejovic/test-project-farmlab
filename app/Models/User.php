@@ -47,7 +47,7 @@ class User extends Authenticatable
      */
     public function results()
     {
-        return $this->hasMany(LabResult::class, 'vet_id');
+        return $this->hasMany(LabResult::class, 'vet_id')->withoutGlobalScopes();
     }
 
     /**
@@ -221,16 +221,21 @@ class User extends Authenticatable
      *
      * @return integer
      */
+    public function processedResultsPercentage()
+    {
+        return number_format(
+            ($this->results()->processed()->count() / $this->results()->count()) * 100
+        );        
+    }
+
+    /**
+     * Returns the percentage of processed results for the vet, if there are any, otherwise returns 0.
+     *
+     * @return integer
+     */
     public function getProcessedResultsPercentageAttribute()
     {   
-        if ($this->results()->withoutGlobalScopes()->count() > 0) {
-            return number_format(
-                ($this->results()->withoutGlobalScopes()->processed()->count() / 
-                 $this->results()->withoutGlobalScopes()->count()) 
-                 * 100
-            );
-        }
-        return '0';
+        return $this->results()->count() > 0 ? $this->processedResultsPercentage() : 0;
     }
 
     /**

@@ -63,7 +63,7 @@
                                             </div>
                                             <small>Proccesed results percentage is 
                                                 <strong>{{ $practice->processedResultsPercentage }}%</strong>. 
-                                                Total number of results is <strong>{{ count($practice->noScopeResults) }}</strong>.
+                                                Total number of results is <strong>{{ count($practice->results) }}</strong>.
                                             </small>
                                         </dd>
                                     </dl>

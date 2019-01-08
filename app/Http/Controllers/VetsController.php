@@ -62,8 +62,8 @@ class VetsController extends Controller
             auth()->user()->isOfType(User::ADMIN, User::FARM_LAB_MEMBER), 403
         );
 
-        $results = $vet->results()->withoutGlobalScopes()->get();
-        $processedResults = $vet->results()->withoutGlobalScopes()->processed()->get();
+        $results = $vet->results()->get();
+        $processedResults = $vet->results()->processed()->get();
 
         return view('vets.show', compact('vet', 'results', 'processedResults'));
     }

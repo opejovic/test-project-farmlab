@@ -57,17 +57,7 @@ class Practice extends Model
      */
     public function results()
     {
-        return $this->hasMany(LabResult::class, 'practice_id');
-    }
-
-    /**
-     * Returns the results for the practice without the global scope from the LabResult model.
-     * 
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function noScopeResults()
-    {
-        return $this->results()->withoutGlobalScopes();
+        return $this->hasMany(LabResult::class, 'practice_id')->withoutGlobalScopes();
     }
 
     /**
@@ -92,7 +82,7 @@ class Practice extends Model
     {
         return $query->oldest()
                      ->with('vets')
-                     ->with('noScopeResults')
+                     ->with('results')
                      ->with('admin');
     }
 
@@ -128,7 +118,7 @@ class Practice extends Model
     public function processedResultsPercentage()
     {
         return number_format(
-            ($this->noScopeResults()->processed()->count() / $this->noScopeResults()->count()) * 100
+            ($this->results()->processed()->count() / $this->results()->count()) * 100
         );
     }
 
@@ -139,7 +129,7 @@ class Practice extends Model
      */
     public function getProcessedResultsPercentageAttribute()
     {
-        return $this->noScopeResults()->count() > 0 ? $this->processedResultsPercentage() : 0;
+        return $this->results()->count() > 0 ? $this->processedResultsPercentage() : 0;
     }
     
     /**
