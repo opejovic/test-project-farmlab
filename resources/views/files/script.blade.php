@@ -3,11 +3,8 @@
         paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 2, // MB
         dictDefaultMessage: "<strong>Drop files here or click to upload. </strong></br> (Only CSV files can be uploaded.)",
-        // parallelUploads: 5,
-        // chunking: true,
-        // acceptedFiles: '.csv',
-        // autoProcessQueue: false,
-        // autoQueue: false,
+        addRemoveLinks: true,
+        dictRemoveFile: "Clear",
         init: function() {
         this.on("success", function(file) {
             swal({

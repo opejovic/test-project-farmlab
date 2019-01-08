@@ -43,9 +43,9 @@ class LabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(ProcessLabResultRequest $request)
+    public function update(ProcessLabResultRequest $request, Labresult $labresult)
     {
-        auth()->user()->processResult(request('vet_comment'), request('vet_indicator'));
+        auth()->user()->processResult($labresult->id, request('vet_comment'), request('vet_indicator'));
 
         flash('Labresult proccessed successfully.');
 

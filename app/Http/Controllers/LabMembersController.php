@@ -17,9 +17,7 @@ class LabMembersController extends Controller
      */
     public function index()
     {
-        $members = User::labMembers()->paginate(12);
-        
-        return view('labmember.index', compact('members'));
+        return view('labmember.index', ['members' => User::labMembers()->paginate(12)]);
     }
 
     /**

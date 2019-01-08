@@ -36,7 +36,7 @@ class File extends Model
      */
     private function existsInStorage($fileName)
     {
-        return Storage::exists("labresults/{$fileName}") ? true : false;
+        return Storage::exists("labresults/{$fileName}");
     }
 
     /**

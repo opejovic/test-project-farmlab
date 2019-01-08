@@ -15,17 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Passing $farmers variable to vets.dropdown view.  
-
-        \View::composer('vets.dropdown', function ($view) {
-            if (auth()->check()) {
-            $view->with('farmers', 
-                \App\Models\LabResult::select('farmer_name')
-                                ->orderBy('farmer_name', 'asc')
-                                ->distinct()
-                                ->get());
-            }
-        });
+        //
     }
 
     /**

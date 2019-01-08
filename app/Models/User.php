@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Events\UserCreated;
-use App\Mail\Welcome;
-use App\Models\LabResult;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -90,13 +88,13 @@ class User extends Authenticatable
         $this->create([
             'name'     => request('name'),
             'email'    => request('email'),
-            'password' => Hash::make(request('password')),
+            'password' => Hash::make(str_random(10)),
             'type'     => User::FARM_LAB_MEMBER,
         ]);
     }
 
     /**
-     * FARM_LAB_MEMBER can create new Practice, and practice admin is created in that process. You cant create one
+     * FARM_LAB_MEMBER can create a new Practice, and practice admin is created in that process. You cant create one
      * without the other.
      */
     public function addPractice()
@@ -109,7 +107,7 @@ class User extends Authenticatable
         $this->create([
             'name'        => request('admin_name'),
             'email'       => request('email'),
-            'password'    => Hash::make(request('password')),
+            'password'    => Hash::make(str_random(10)),
             'type'        => User::PRACTICE_ADMIN,
             'practice_id' => $practice->id
         ]);
@@ -119,12 +117,12 @@ class User extends Authenticatable
      * Vets processes the result via form/modal.
      *
      */
-    public function processResult($comment, $indicator)
+    public function processResult($labresultId, $comment, $indicator)
     {
-        $this->results()->update([
+        $this->results()->find($labresultId)->update([
                 'vet_comment'   => $comment,
                 'vet_indicator' => $indicator,
-                'status'        => LabResult::PROCESSED
+                'processed_at'  => $this->freshTimestamp(),
             ]);
     }
 
@@ -157,7 +155,7 @@ class User extends Authenticatable
     /**
      * Returns the practices created this month by the authenticated user.
      *
-     * @return Integer
+     * @return integer
      */
     public function getCreatedPracticesThisMonthAttribute()
     {
@@ -169,7 +167,7 @@ class User extends Authenticatable
     /**
      * Counts all created practices by the authenticated user.
      *
-     * @return void
+     * @return integer
      */
     public function getCountCreatedPracticesAttribute()
     {

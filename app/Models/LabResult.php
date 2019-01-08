@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Mail;
 
 class LabResult extends Model
 {
-    const PROCESSED     = 'PROCESSED';
-    const UNPROCESSED   = 'UNPROCESSED';
+    const PROCESSED   = 'Processed';
+    const UNPROCESSED = 'Unprocessed';
 
     /**
      * The attributes that are not mass assignable.
@@ -74,12 +74,9 @@ class LabResult extends Model
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function scopeResults($query, $status = LabResult::UNPROCESSED)
+    public function scopeResults($query)
     {
-        return $query->where('status', $status)
-                     ->where('vet_id', auth()->id())
-                     ->oldest('id')
-                     ->get();
+        return $query->where('vet_id', auth()->id())->oldest('id');
     }
 
     /**
@@ -93,7 +90,21 @@ class LabResult extends Model
      */
     public function scopeProcessed($query)
     {
-        return $query->where('status', LabResult::PROCESSED);
+        return $query->whereNotNull('processed_at');
+    }
+    
+    /**
+     * Query scope
+     *
+     * Returns all unprocessed results.
+     *
+     * @param $query
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function scopeUnprocessed($query)
+    {
+        return $query->whereNull('processed_at');
     }
 
     /**
@@ -104,7 +115,10 @@ class LabResult extends Model
      */
     public function fetchByStatus()
     {
-        return $this->results()->isEmpty() ? $this->results(LabResult::PROCESSED) : $this->results();
+        $unprocessedResults = $this->results()->unprocessed()->get();
+
+        return $unprocessedResults->isEmpty() ? 
+            $this->results()->processed()->get() : $unprocessedResults;
     }
 
     /**
@@ -124,7 +138,7 @@ class LabResult extends Model
      */
     public function isProcessed()
     {
-        return ($this->status === LabResult::PROCESSED) ? true : false;
+        return ($this->processed_at !== null) ? true : false;
     }
 
     /**
@@ -178,8 +192,18 @@ class LabResult extends Model
      *
      * @return integer
      */
-    public function getUnprocessedAttribute()
+    public function getCountUnprocessedAttribute()
     {
-        return $this->results()->count();
+        return $this->results()->unprocessed()->count();
+    }
+
+    /**
+     * Returns the status of the labresult - processed or unprocessed.
+     *
+     * @return string
+     */
+    public function getStatusAttribute()
+    {
+        return $this->isProcessed() ? LabResult::PROCESSED : LabResult::UNPROCESSED;
     }
 }

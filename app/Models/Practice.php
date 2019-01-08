@@ -44,7 +44,7 @@ class Practice extends Model
         $this->vets()->create([
             'name'        => request('name'),
             'email'       => request('email'),
-            'password'    => Hash::make(request('password')),
+            'password'    => Hash::make(str_random(10)),
             'type'        => User::VET,
         ]);
     }
@@ -71,14 +71,13 @@ class Practice extends Model
     }
 
     /**
-     * Returns all vets of the practice of the authenticated user.
+     * Returns all vets for the practice of the authenticated user.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function allVets()
     {
-        return $this->whereId(auth()->user()->practice_id)
-                    ->firstOrFail()
+        return $this->findOrFail(auth()->user()->practice_id)
                     ->vets()
                     ->whereType(User::VET)
                     ->paginate(12);
@@ -108,7 +107,7 @@ class Practice extends Model
      */
     public function scopeName($query, $practice_id)
     {
-        return $query->whereId($practice_id)->first()->name;
+        return $query->find($practice_id)->name;
     }
 
     /**

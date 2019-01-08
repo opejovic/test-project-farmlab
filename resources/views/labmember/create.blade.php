@@ -53,27 +53,7 @@
                                         </label>
                                     @endif
                                     </div>
-
                                 </div>
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}"><label class="col-sm-2 control-label">Password</label>
-
-                                    <div class="col-sm-10"><input name="password" type="password" class="form-control" id="password" required>
-                                    @if ($errors->has('password'))
-                                        <label class="control-label">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </label>
-                                    @endif
-                                    </div>
-
-                                </div>
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group"><label class="col-sm-2 control-label">Password confirmation</label>
-
-                                    <div class="col-sm-10"><input name="password_confirmation" type="password" class="form-control"
-                                           id="password_confirmation" required></div>
-                                </div>
-
             
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
