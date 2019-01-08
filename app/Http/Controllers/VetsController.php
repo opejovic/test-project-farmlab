@@ -17,9 +17,7 @@ class VetsController extends Controller
      */
     public function index(Practice $practice)
     {
-        $vets = $practice->allVets();
-
-        return view('vets.index', compact('vets'));
+        return view('vets.index', ['vets' => $practice->allVets()]);
     }
 
     /**

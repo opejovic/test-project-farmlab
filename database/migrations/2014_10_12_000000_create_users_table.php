@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('type');
-            $table->integer('practice_id')->nullable(); // farmlab and admin dont have practice
-            $table->string('status'); // Processed / Not processed (by default, ali ne stavljati boolean)
+            $table->integer('practice_id')->nullable();
+            $table->string('status');
             $table->rememberToken();
             $table->timestamps();
         });
