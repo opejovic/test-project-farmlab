@@ -73,7 +73,6 @@ class Practice extends Model
                     ->paginate(12);
     }
 
-
     /**
      * Query scope - returns all practices and eager loads vets, results, and admins.
      *

@@ -48,7 +48,7 @@ class File extends Model
      */
     private function existsInDb($fileName)
     {
-        return $this->whereName($fileName)->first() !== null ? true : false;
+        return $this->whereName($fileName)->first() !== null;
     }
     
     /**
@@ -88,7 +88,7 @@ class File extends Model
         $file = request('file');
         $fileName = $file->getClientOriginalName();
 
-        abort_if($this->fileExists($fileName), 400, 'The file already exists in our database records.');
+        abort_if($this->fileExists($fileName), 400, "The file already exists in our database records.");
 
         $this->saveFile($fileName, Storage::putFileAs('labresults', $file, $fileName));
 

@@ -117,8 +117,7 @@ class LabResult extends Model
     {
         $unprocessedResults = $this->results()->unprocessed()->get();
 
-        return $unprocessedResults->isEmpty() ? 
-            $this->results()->processed()->get() : $unprocessedResults;
+        return $unprocessedResults->isEmpty() ? $this->results()->processed()->get() : $unprocessedResults;
     }
 
     /**

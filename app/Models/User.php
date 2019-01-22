@@ -117,9 +117,9 @@ class User extends Authenticatable
      * Vets processes the result via form/modal.
      *
      */
-    public function processResult($labresultId, $comment, $indicator)
+    public function processResult($labresult, $comment, $indicator)
     {
-        $this->results()->find($labresultId)->update([
+        $this->results()->find($labresult->id)->update([
                 'vet_comment'   => $comment,
                 'vet_indicator' => $indicator,
                 'processed_at'  => $this->freshTimestamp(),
@@ -137,9 +137,10 @@ class User extends Authenticatable
     }
 
     /**
-     *
      * If the authenticated user is of type1 or type2 return true.
-     * Using this helper function for middleware MustBeFarmlabMember, MustBePracticeMember, MustBePracticeAdmin classes.
+     * 
+     * Using this helper function for middleware MustBeFarmlabMember, 
+     * MustBePracticeMember, MustBePracticeAdmin classes.
      *
      * @param      $type1 (Constant - User type)
      * @param null $type2 (Constant - User type)
@@ -148,8 +149,7 @@ class User extends Authenticatable
      */
     public function isOfType($type1, $type2 = null)
     {
-        $user = auth()->user();
-        return ($user->type === $type1 || $user->type === $type2) ? true : false;
+        return (auth()->user()->type === $type1 || auth()->user()->type === $type2) ? true : false;
     }
 
     /**
