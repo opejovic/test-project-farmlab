@@ -15,7 +15,7 @@
                     <a href="{{ route('home') }}">Home</a>
                 </li>
                 <li>
-                    <strong><a href="{{ route('practice.index') }}">Practices</a></strong>
+                    <strong><a href="{{ route('practices.index') }}">Practices</a></strong>
                 </li>
             </ol>
         </div>
@@ -32,7 +32,7 @@
             @foreach ($practices as $practice)
                 <div class="col-lg-4">
                     <div class="ibox">
-                <a href="{{ route('practice.show', $practice->id) }}" class="text-navy">
+                <a href="{{ route('practices.show', $practice->id) }}" class="text-navy">
                         <div class="ibox-title bg-primary text-center">
                             <i class="fa fa-ambulance fa-lg"></i>
                             <span><strong>{{ $practice->name }}</strong></span>

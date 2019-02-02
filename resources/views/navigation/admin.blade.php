@@ -39,17 +39,17 @@
         </ul>
     </li>             
     
-    <li class="{{ isActiveRoute('practice.index') }} 
-               {{ isActiveRoute('practice.create') }} 
-               {{ isActiveRoute('practice.show') }} 
+    <li class="{{ isActiveroute('practices.index') }} 
+               {{ isActiveroute('practices.create') }} 
+               {{ isActiveroute('practices.show') }} 
                {{ isActiveRoute('vets.show') }}">
         <a href="index.html"><i class="fa fa-ambulance"></i> <span class="nav-label">{{ __('Vets') }}</span> <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
-            <li class="{{ isActiveRoute('practice.index') }} {{ isActiveRoute('practice.show') }}">
-                <a href="{{ route('practice.index') }}">{{ __('Practices') }}</a>
+            <li class="{{ isActiveroute('practices.index') }} {{ isActiveroute('practices.show') }}">
+                <a href="{{ route('practices.index') }}">{{ __('Practices') }}</a>
             </li>
-            <li class="{{ isActiveRoute('practice.create') }}">
-                <a href="{{ route('practice.create') }}">{{ __('Add new') }}</a>
+            <li class="{{ isActiveroute('practices.create') }}">
+                <a href="{{ route('practices.create') }}">{{ __('Add new') }}</a>
             </li>
         </ul>
     </li>            

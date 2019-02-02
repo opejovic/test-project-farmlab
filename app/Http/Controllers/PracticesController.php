@@ -44,7 +44,7 @@ class PracticesController extends Controller
         
         flash('New Practice team added successfully.');
 
-        return redirect(route('practice.index'));
+        return redirect(route('practices.index'));
     }
 
     /**
