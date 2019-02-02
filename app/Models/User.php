@@ -183,7 +183,7 @@ class User extends Authenticatable
      */
     public function getCountAllTeamMembersAttribute()
     {
-        return $this->labMembers->count();
+        return $this->labMembers()->count();
     }
 
     /**
