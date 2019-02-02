@@ -31,7 +31,7 @@
                     <div class="ibox float-e-margins">
 
                         <div class="ibox-content">
-                            <form method="POST" action="{{ route('vets.store') }}" class="form-horizontal">
+                            <form method="POST" action="{{ route('vets.store', $practice->id) }}" class="form-horizontal">
                                 @csrf
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}"><label class="col-sm-2 control-label">Name</label>
 

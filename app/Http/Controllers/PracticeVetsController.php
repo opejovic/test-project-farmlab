@@ -8,7 +8,7 @@ use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class VetsController extends Controller
+class PracticeVetsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,11 @@ class VetsController extends Controller
      */
     public function index(Practice $practice)
     {
-        return view('vets.index', ['vets' => $practice->allVets()]);
+
+        return view('vets.index', [
+            'practice' => $practice,
+            'vets' => $practice->allVets(),
+        ]);
     }
 
     /**
@@ -25,9 +29,9 @@ class VetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Practice $practice)
     {
-        return view('vets.create');
+        return view('vets.create', ['practice' => $practice]);
     }
 
 
@@ -38,13 +42,13 @@ class VetsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(VetRequest $request)
+    public function store(VetRequest $request, Practice $practice)
     {
-        auth()->user()->practice->addVet();
+        $practice->addVet(request('name'), request('email'));
 
         flash('New vet added to the team.');
 
-        return redirect(route('vets.index'));
+        return redirect(route('vets.index', $practice->id));
     }
 
     /**
@@ -54,7 +58,7 @@ class VetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(User $vet)
+    public function show(Practice $practice, User $vet)
     {
         // temporary - create new middleware class for this
         abort_unless(
@@ -65,7 +69,7 @@ class VetsController extends Controller
         $results = $vet->results()->get();
         $processedResults = $vet->results()->processed()->get();
 
-        return view('vets.show', compact('vet', 'results', 'processedResults'));
+        return view('vets.show', compact('vet', 'results', 'processedResults', 'practice'));
     }
 
     /**
@@ -100,12 +104,12 @@ class VetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Practice $practice, User $vet)
     {
-        User::findOrFail($id)->delete();
+        User::findOrFail($vet->id)->delete();
 
         flash('Vet successfully removed.');
 
-        return redirect('vets');
+        return redirect(route('vets.index', $practice->id));
     }
 }

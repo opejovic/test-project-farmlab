@@ -13,7 +13,7 @@
                             <a href="{{ route('home') }}">Home</a>
                         </li>
                         <li>
-                            <a href="{{ route('vets.index') }}">Team members</a>
+                            <a href="{{ route('vets.index', $practice->id) }}">Team members</a>
                         </li>
                         <li class="active">
                             <strong>{{ $vet->name }}</strong>
@@ -48,7 +48,7 @@
                             </div>
 
                             @if (auth()->id() !== $vet->id)
-                               <form action="{{ route('vets.destroy', $vet->id) }}" method="POST" id="form">
+                               <form action="{{ route('vets.destroy', [$practice->id, $vet->id]) }}" method="POST" id="form">
                                    @csrf
                                    @method('DELETE')
 

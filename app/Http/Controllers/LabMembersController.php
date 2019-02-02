@@ -90,6 +90,8 @@ class LabMembersController extends Controller
      */
     public function destroy($id)
     {
+        abort_if(User::find($id)->isAdmin(), 403);
+
         User::findOrFail($id)->delete();
 
         flash('Lab member successfully removed.');

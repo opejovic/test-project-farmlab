@@ -39,11 +39,11 @@ class Practice extends Model
      * PRACTICE_ADMIN can add new vet to their practice.
      *
      */
-    public function addVet()
+    public function addVet($name, $email)
     {
         $this->vets()->create([
-            'name'        => request('name'),
-            'email'       => request('email'),
+            'name'        => $name,
+            'email'       => $email,
             'password'    => Hash::make(str_random(10)),
             'type'        => User::VET,
         ]);
@@ -67,10 +67,7 @@ class Practice extends Model
      */
     public function allVets()
     {
-        return $this->findOrFail(auth()->user()->practice_id)
-                    ->vets()
-                    ->whereType(User::VET)
-                    ->paginate(12);
+        return $this->vets()->whereType(User::VET)->paginate(12);
     }
 
     /**

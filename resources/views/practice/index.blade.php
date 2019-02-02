@@ -41,7 +41,7 @@
                         <div class="ibox-content">
                             <div class="team-members text-center">
                                 @foreach ($practice->admin as $admin)
-                                    <a href="{{ route('vets.show', $admin->id) }}">
+                                    <a href="{{ route('vets.show', [$practice->id, $admin->id]) }}">
                                         <span class="badge">Admin</span>
                                     <img alt="member" class="img-circle" src="images/profiles/{{ $admin->id }}.jpg" 
                                         onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';"> 

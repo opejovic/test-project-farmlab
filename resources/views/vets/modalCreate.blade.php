@@ -13,7 +13,7 @@
                 <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
             </div>
             <div class="modal-body">
-            <form role="form" method="POST" action="{{ route('vets.store') }}" id="form">
+            <form role="form" method="POST" action="{{ route('vets.store', auth()->user()->practice_id) }}" id="form">
             @csrf
 
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }} row">
