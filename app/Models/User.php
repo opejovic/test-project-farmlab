@@ -183,7 +183,7 @@ class User extends Authenticatable
      */
     public function getCountAllTeamMembersAttribute()
     {
-        return $this->labMembers()->count();
+        return $this->labMembers->count();
     }
 
     /**
@@ -214,7 +214,7 @@ class User extends Authenticatable
     public function processedResultsPercentage()
     {
         return number_format(
-            ($this->results()->processed()->count() / $this->results()->count()) * 100
+            ($this->results()->processed()->count() / $this->results->count()) * 100
         );        
     }
 
@@ -225,7 +225,7 @@ class User extends Authenticatable
      */
     public function getProcessedResultsPercentageAttribute()
     {   
-        return $this->results()->count() > 0 ? $this->processedResultsPercentage() : 0;
+        return $this->results->count() > 0 ? $this->processedResultsPercentage() : 0;
     }
 
     /**

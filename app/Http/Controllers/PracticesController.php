@@ -16,7 +16,7 @@ class PracticesController extends Controller
      */
     public function index()
     {
-        $practices = Practice::fetchAll()->paginate(9);
+        $practices = Practice::fetchAll()->paginate(12);
 
         return view('practice.index', compact('practices'));
     }

@@ -177,16 +177,6 @@ class LabResult extends Model
     }
 
     /**
-     * Returns the labresults practice name
-     *
-     * @return void
-     */
-    public function getPracticeNameAttribute()
-    {
-        return $this->practice->name;
-    }
-
-    /**
      * Returns the number of the unproccesed results.
      *
      * @return integer

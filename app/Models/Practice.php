@@ -76,10 +76,10 @@ class Practice extends Model
      */
     public function scopeFetchAll($query)
     {
-        return $query->oldest()
-                     ->with('vets')
+        return $query->with('vets')
                      ->with('results')
-                     ->with('admin');
+                     ->with('admin')
+                     ->oldest();
     }
 
     /**
@@ -114,7 +114,7 @@ class Practice extends Model
     public function processedResultsPercentage()
     {
         return number_format(
-            ($this->results()->processed()->count() / $this->results()->count()) * 100
+            ($this->results()->processed()->count() / $this->results->count()) * 100
         );
     }
 
@@ -125,7 +125,7 @@ class Practice extends Model
      */
     public function getProcessedResultsPercentageAttribute()
     {
-        return $this->results()->count() > 0 ? $this->processedResultsPercentage() : 0;
+        return $this->results->count() > 0 ? $this->processedResultsPercentage() : 0;
     }
     
     /**
