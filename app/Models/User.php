@@ -51,16 +51,6 @@ class User extends Authenticatable
     }
 
     /**
-     * A Vet belongs to a Practice.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function practice()
-    {
-        return $this->belongsTo(Practice::class);
-    }
-
-    /**
      * Lab team member can create many practices.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
