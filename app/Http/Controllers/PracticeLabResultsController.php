@@ -17,11 +17,13 @@ class PracticeLabResultsController extends Controller
      */
     public function index(Practice $practice)
     {
-        $allResults = $practice->results()->get();
+        // Temporary
+        abort_unless($practice->id === auth()->user()->practice_id, 403);
 
-        $resultsByStatus = LabResult::fetchByStatus();
-        
-        return view('labresults.index', compact('allResults', 'resultsByStatus', 'practice'));
+        return view('labresults.index', [
+            'labResults' => $practice->results()->get(), 
+            'practice'   => $practice
+        ]);
     }
 
     /**
@@ -33,7 +35,13 @@ class PracticeLabResultsController extends Controller
      */
     public function show(Practice $practice, LabResult $labresult)
     {
-        return view('labresults.show', compact('labresult', 'practice'));
+        // Temporary - use policies
+        abort_unless($practice->id === auth()->user()->practice_id, 403);
+
+        return view('labresults.show', [
+            'practice' => $practice,
+            'labresult' => $labresult
+        ]);
     }
 
     /**
@@ -46,6 +54,8 @@ class PracticeLabResultsController extends Controller
      */
     public function update(ProcessLabResultRequest $request, Practice $practice, Labresult $labresult)
     {
+        abort_unless($practice->id === auth()->user()->practice_id, 403);
+
         auth()->user()->processResult($labresult, request('vet_comment'), request('vet_indicator'));
 
         flash('Labresult proccessed successfully.');

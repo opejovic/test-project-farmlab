@@ -10,7 +10,6 @@ use App\Models\User;
 class HomeController extends Controller
 {
     /**
-     * Display a listing of the resource. 
      * Return a home view, depending on the users type.
      *
      * @return \Illuminate\Http\Response
@@ -19,7 +18,7 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
-        if (! auth()->check()) {
+        if (auth()->guest()) {
             return view('auth.login');
 
         } elseif ($user->type === User::ADMIN) {
@@ -33,7 +32,7 @@ class HomeController extends Controller
             return view('home.practice', compact('user'));
 
         } elseif ($user->type === User::VET) {
-            $resultsByStatus = $labresult->fetchByStatus(); // tmp
+            $resultsByStatus = LabResult::ownedByAuth()->get(); // tmp
             return view('home.vet', compact('resultsByStatus', 'user', 'labresult'));
         }
     }

@@ -68,7 +68,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($allResults as $result)
+                            @foreach ($labResults as $result)
                             <tr>
                                 <td>{{ $result->id }}</td>
                                 <td>{{ $result->herd_number}}</td>

@@ -29,22 +29,6 @@ class LabResult extends Model
     ];
     
     /**
-     * The "booting" method of the model.
-     * Applies an anonymous global scope for the model. All queries will return
-     * results for the practice of the authenticated user.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope('practice_id', function (Builder $builder) {
-            $builder->where('practice_id', auth()->user()->practice_id);
-        });
-    }
-
-    /**
      * Lab result belongs to a vet.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -76,7 +60,7 @@ class LabResult extends Model
      */
     public function scopeOwnedByAuth($query)
     {
-        return $query->where('vet_id', auth()->id())->oldest('id');
+        return $query->where('vet_id', auth()->id())->orderBy('processed_at', 'asc');
     }
 
     /**
@@ -105,22 +89,6 @@ class LabResult extends Model
     public function scopeUnprocessed($query)
     {
         return $query->whereNull('processed_at');
-    }
-
-    /**
-     * Returns results based on their status (by default, returns Unprocessed (if there are any, 
-     * else returns processed results))
-     * for the auth user.
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public static function fetchByStatus()
-    {
-        $unprocessedResults = self::ownedByAuth()->unprocessed()->get();
-
-        return $unprocessedResults->isEmpty() ? 
-               self::ownedByAuth()->processed()->get() : 
-               $unprocessedResults;
     }
 
     /**
@@ -176,7 +144,7 @@ class LabResult extends Model
      */
     public function getCountUnprocessedAttribute()
     {
-        return $this->results()->unprocessed()->count();
+        return $this->ownedByAuth()->unprocessed()->count();
     }
 
     /**

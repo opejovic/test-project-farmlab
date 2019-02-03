@@ -17,6 +17,7 @@ class PracticeVetsController extends Controller
      */
     public function index(Practice $practice)
     {
+        abort_unless($practice->id === auth()->user()->practice_id, 403);
 
         return view('vets.index', [
             'practice' => $practice,
@@ -31,6 +32,8 @@ class PracticeVetsController extends Controller
      */
     public function create(Practice $practice)
     {
+        abort_unless($practice->id === auth()->user()->practice_id, 403);
+
         return view('vets.create', ['practice' => $practice]);
     }
 
@@ -44,6 +47,8 @@ class PracticeVetsController extends Controller
      */
     public function store(VetRequest $request, Practice $practice)
     {
+        abort_unless($practice->id === auth()->user()->practice_id, 403);
+        
         $practice->addVet(request('name'), request('email'));
 
         flash('New vet added to the team.');
@@ -106,6 +111,8 @@ class PracticeVetsController extends Controller
      */
     public function destroy(Practice $practice, User $vet)
     {
+        abort_unless($practice->id === auth()->user()->practice_id, 403);
+
         User::findOrFail($vet->id)->delete();
 
         flash('Vet successfully removed.');

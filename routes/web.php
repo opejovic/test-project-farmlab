@@ -14,7 +14,7 @@ Route::middleware(['auth'])->group(function ()
     Route::resource('files',      				 		'FilesController')->middleware('farmlab');
     Route::resource('practices',  				 		'PracticesController')->middleware('farmlab');
 	Route::resource('practices/{practice}/vets', 		'PracticeVetsController')->middleware('practice.admin');
-    Route::resource('/practices/{practice}/labresults',	'PracticeLabResultsController')->middleware('practice');
+    Route::resource('practices/{practice}/labresults',	'PracticeLabResultsController')->middleware('practice');
 
     // tmp - without this farmlab members cant view vets.
     Route::get('/practices/{practice}/vets/{vet}', 		'PracticeVetsController@show')->name('vets.show');

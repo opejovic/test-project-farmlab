@@ -53,10 +53,10 @@ class LabMembersController extends Controller
      */
     public function show($id)
     {
-        $member = User::labMembers()->findOrFail($id);
-        $practicesCreated = $member->createdPractices()->count();
-
-        return view('labmember.show', compact('member', 'practicesCreated'));
+        return view('labmember.show', [
+            'member' => User::labMembers()->findOrFail($id), 
+            'practicesCreated' => $member->createdPractices()->count(),
+        ]);
     }
 
     /**
