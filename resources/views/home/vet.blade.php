@@ -68,7 +68,7 @@
                                 <td>{{ $result->test_name}}</td>
                                 <td>{{ $result->farmer_name}}</td>
                                 <td>
-                                <a href="{{ route('labresults.show', $result->id) }}">
+                                <a href="{{ route('labresults.show', [auth()->user()->practice_id, $result->id]) }}">
                                     <span class="label label-{{ $result->isProcessed() ? 'primary' : 'warning' }}">
                                         {{ $result->status }}
                                     </span>

@@ -67,14 +67,14 @@ class LabResult extends Model
     /**
      * Query scope
      *
-     * Returns all results for the auth user.
+     * Returns all lab results owned by user.
      *
      * @param        $query
      * @param string $status
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function scopeResults($query)
+    public function scopeOwnedByAuth($query)
     {
         return $query->where('vet_id', auth()->id())->oldest('id');
     }
@@ -113,11 +113,11 @@ class LabResult extends Model
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function fetchByStatus()
+    public static function fetchByStatus()
     {
-        $unprocessedResults = $this->results()->unprocessed()->get();
+        $unprocessedResults = self::ownedByAuth()->unprocessed()->get();
 
-        return $unprocessedResults->isEmpty() ? $this->results()->processed()->get() : $unprocessedResults;
+        return $unprocessedResults->isEmpty() ? self::ownedByAuth()->processed()->get() : $unprocessedResults;
     }
 
     /**

@@ -57,7 +57,7 @@ class Practice extends Model
      */
     public function results()
     {
-        return $this->hasMany(LabResult::class, 'practice_id')->withoutGlobalScopes();
+        return $this->hasMany(LabResult::class, 'practice_id')->with('vet')->withoutGlobalScopes();
     }
 
     /**

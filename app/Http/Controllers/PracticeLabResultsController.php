@@ -4,23 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProcessLabResultRequest;
 use App\Models\LabResult;
+use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LabResultsController extends Controller
+class PracticeLabResultsController extends Controller
 {
     /**
-     * Displays the results. If there are no unprocessed results,
+     * Displays the results. If there are no unprocessed results, displays processed.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(LabResult $labresult)
+    public function index(Practice $practice)
     {
-        $allResults = $labresult->fetchAll();
+        $allResults = $practice->results()->get();
 
-        $resultsByStatus = $labresult->fetchByStatus();
+        $resultsByStatus = LabResult::fetchByStatus();
         
-        return view('labresults.index', compact('allResults', 'resultsByStatus'));
+        return view('labresults.index', compact('allResults', 'resultsByStatus', 'practice'));
     }
 
     /**
@@ -30,9 +31,9 @@ class LabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(LabResult $labresult)
+    public function show(Practice $practice, LabResult $labresult)
     {
-        return view('labresults.show', compact('labresult'));
+        return view('labresults.show', compact('labresult', 'practice'));
     }
 
     /**
@@ -43,7 +44,7 @@ class LabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(ProcessLabResultRequest $request, Labresult $labresult)
+    public function update(ProcessLabResultRequest $request, Practice $practice, Labresult $labresult)
     {
         auth()->user()->processResult($labresult, request('vet_comment'), request('vet_indicator'));
 
@@ -59,7 +60,7 @@ class LabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LabResult $labresult)
+    public function destroy(Practice $practice, LabResult $labresult)
     {
         //
     }

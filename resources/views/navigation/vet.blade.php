@@ -27,6 +27,6 @@
 
 <li class="{{ isActiveRoute('labresults.index') }} 
            {{ isActiveRoute('labresults.show') }}">
-    <a href="{{ route('labresults.index') }}"><i class="fa fa-th"></i> 
+    <a href="{{ route('labresults.index', auth()->user()->practice_id) }}"><i class="fa fa-th"></i> 
         <span class="nav-label">{{ __('All Results') }}</span></a>
 </li>

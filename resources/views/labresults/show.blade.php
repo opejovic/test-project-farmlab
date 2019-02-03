@@ -14,7 +14,7 @@
                             <a href="{{ route('home') }}">Home</a>
                         </li>
                         <li>
-                            <a href="{{ route('labresults.show', $labresult->id) }}">
+                            <a href="{{ route('labresults.show', [$practice->id, $labresult->id]) }}">
                                 <strong>Lab result # {{ $labresult->id }}</strong>
                             </a>
                         </li>
@@ -42,7 +42,7 @@
                                 <div class="col-sm-6">
                                     <h5>Practice:</h5>
                                     <address>
-                                        <strong>{{ $labresult->practice->name }}</strong><br>
+                                        <strong>{{ $practice->name }}</strong><br>
                                         106 Jorg Avenu, 600/10<br>
                                         Chicago, VT 32456<br>
                                         <abbr title="Phone">P:</abbr> (123) 601-4590
