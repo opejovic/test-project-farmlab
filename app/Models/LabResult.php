@@ -138,13 +138,23 @@ class LabResult extends Model
     }
 
     /**
-     * Returns the number of the unproccesed results.
+     * Returns the number of the unproccesed results owned by auth user.
      *
      * @return integer
      */
     public function getCountUnprocessedAttribute()
     {
         return $this->ownedByAuth()->unprocessed()->count();
+    }
+
+    /**
+     * Returns the number of the processed results owned by auth user.
+     *
+     * @return integer
+     */
+    public function getCountProcessedAttribute()
+    {
+        return $this->ownedByAuth()->processed()->count();
     }
 
     /**

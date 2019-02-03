@@ -15,14 +15,7 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2">
-            {{-- @endif --}}
-            {{-- @if ($result->count_unprocessed > 0) --}}
-                {{-- <h5>You have {{ $result->count_unprocessed }} unprocessed results</h5> --}}
-            {{-- @else --}}
-                {{-- <h5>You have {{ $result->processed()->count() }} processed results</h5> --}}
-            {{-- @endif --}}
-        </div>
+       
     </div>
         <div class="wrapper wrapper-content animated fadeInRight text-center">
             <div class="row">
@@ -90,8 +83,32 @@
                     </div>
                 </div>
             </div>
-            </div>
+
+             <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Results status</h4>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <h1 class="no-margins">{{ $labresult->count_unprocessed }}</h1>
+                                <div class="font-bold text-warning"><small>Unprocessed results</small></div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <h1 class="no-margins"></h1>
+                                <h1 class="no-margins">{{ $labresult->count_processed }}</h1>
+                                <div class="font-bold text-navy"><small>Processed results</small></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>            
         </div>
+    </div>
 
 
 @endsection
