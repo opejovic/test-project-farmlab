@@ -108,7 +108,8 @@ class LabResult extends Model
     }
 
     /**
-     * Returns results based on their status (by default, returns Unprocessed (if there are any))
+     * Returns results based on their status (by default, returns Unprocessed (if there are any, 
+     * else returns processed results))
      * for the auth user.
      *
      * @return Illuminate\Database\Eloquent\Collection
@@ -117,17 +118,9 @@ class LabResult extends Model
     {
         $unprocessedResults = self::ownedByAuth()->unprocessed()->get();
 
-        return $unprocessedResults->isEmpty() ? self::ownedByAuth()->processed()->get() : $unprocessedResults;
-    }
-
-    /**
-     * Returns all results for the practice  of the authenticated vet.
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function fetchAll()
-    {
-        return $this->with('vet')->with('practice')->oldest('id')->get();
+        return $unprocessedResults->isEmpty() ? 
+               self::ownedByAuth()->processed()->get() : 
+               $unprocessedResults;
     }
 
     /**
