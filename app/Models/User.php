@@ -89,9 +89,9 @@ class User extends Authenticatable
      */
     public function addPractice()
     {
-        $practice = $this->practice()->create([
+        $practice = Practice::create([
             'name'        => request('name'),
-            'created_by'  => auth()->id()
+            'created_by'  => $this->id
         ]);
 
         $this->create([
