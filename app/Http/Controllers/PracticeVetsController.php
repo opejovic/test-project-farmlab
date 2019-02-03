@@ -71,10 +71,12 @@ class PracticeVetsController extends Controller
             auth()->user()->isOfType(User::ADMIN, User::FARM_LAB_MEMBER), 403
         );
 
-        $results = $vet->results()->get();
-        $processedResults = $vet->results()->processed()->get();
-
-        return view('vets.show', compact('vet', 'results', 'processedResults', 'practice'));
+        return view('vets.show', [
+            'practice' => $practice,
+            'vet' => $vet, 
+            'results' => $vet->results()->get(), 
+            'processedResults' => $vet->results()->processed()->get(), 
+        ]);
     }
 
     /**

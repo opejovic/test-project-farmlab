@@ -56,9 +56,10 @@ class PracticesController extends Controller
      */
     public function show(Practice $practice)
     {
-        $vets = $practice->vets;
-        
-        return view('practice.show', compact('practice', 'vets'));
+        return view('practice.show', [
+            'practice' => $practice, 
+            'vets' => $practice->vets,
+        ]);
     }
 
     /**
