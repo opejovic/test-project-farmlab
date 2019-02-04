@@ -48,7 +48,7 @@ class User extends Authenticatable
      */
     public function results()
     {
-        return $this->hasMany(LabResult::class, 'vet_id')->withoutGlobalScopes();
+        return $this->hasMany(LabResult::class, 'vet_id');
     }
 
     /**
