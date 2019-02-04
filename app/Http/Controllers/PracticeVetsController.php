@@ -67,7 +67,7 @@ class PracticeVetsController extends Controller
     {
         // temporary - create new middleware class for this
         abort_unless(
-            auth()->user()->practice_id == $vet->practice_id || 
+            auth()->user()->practice_id == $practice->id || 
             auth()->user()->isOfType(User::ADMIN, User::FARM_LAB_MEMBER), 403
         );
 
