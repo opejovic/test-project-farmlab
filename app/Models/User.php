@@ -162,7 +162,7 @@ class User extends Authenticatable
      */
     public function getCountCreatedPracticesAttribute()
     {
-        return $this->createdPractices()->count();
+        return $this->createdPractices->count();
     }
 
     /**
