@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\LabResultCreated;
 use App\Mail\NewResultNotification;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
@@ -46,6 +47,21 @@ class LabResult extends Model
     public function practice()
     {
         return $this->belongsTo(Practice::class);
+    }
+
+
+    /**
+     * Vets processes the result via form/modal.
+     *
+     */
+    public function process($comment, $indicator)
+    {
+        $this->update([
+            'vet_id'        => auth()->id(),
+            'vet_comment'   => $comment,
+            'vet_indicator' => $indicator,
+            'processed_at'  => Carbon::now(),
+        ]);        
     }
 
     /**

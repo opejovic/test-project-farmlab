@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Events\UserCreated;
-use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -102,19 +101,6 @@ class User extends Authenticatable
             'type'        => User::PRACTICE_ADMIN,
             'practice_id' => $practice->id
         ]);
-    }
-
-    /**
-     * Vets processes the result via form/modal.
-     *
-     */
-    public function processResult($labresult, $comment, $indicator)
-    {
-        $this->results()->find($labresult->id)->update([
-                'vet_comment'   => $comment,
-                'vet_indicator' => $indicator,
-                'processed_at'  => Carbon::now(),
-            ]);
     }
 
     /**

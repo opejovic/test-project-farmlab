@@ -55,10 +55,10 @@ class PracticeLabResultsController extends Controller
     public function update(ProcessLabResultRequest $request, Practice $practice, Labresult $labresult)
     {
         abort_unless($practice->id === auth()->user()->practice_id && 
-                     $labresult->practice_id === auth()->user()->practice_id, 
+                     $labresult->vet_id === auth()->id(), 
                 403);
 
-        auth()->user()->processResult($labresult, request('vet_comment'), request('vet_indicator'));
+        $labresult->process(request('vet_comment'), request('vet_indicator'));
 
         flash('Labresult proccessed successfully.');
 
