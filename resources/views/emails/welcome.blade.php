@@ -10,7 +10,7 @@ Your username is: {{ $newUser->email }}
 @endcomponent
 
 @component('mail::panel', ['url' => ''])
-    In order to use the application, you need to choose your password.
+    In order to use the application, you need to choose your password. This link will be valid for only 60 minutes. After that, you will have to request a new password reset on the homepage.
 @endcomponent
 
 Thanks,<br>

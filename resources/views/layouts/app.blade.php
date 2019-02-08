@@ -9,9 +9,16 @@
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
 
 </head>
-<body>
-  <!-- Wrapper-->
+<body class=" {{ auth()->guest() ? 'gray-bg' : '' }}">
+
+    @if(auth()->guest())
+        <!-- Log in view -->
+        @yield('content')
+
+    @else
+    <!-- Wrapper-->
     <div id="wrapper">
+        
         <!-- Navigation -->
         @include ('layouts.navigation')
 
@@ -23,6 +30,7 @@
 
             <!-- Main view  -->
             @yield('content')
+            
             <!-- Footer -->
             @include('layouts.footer')
 
@@ -31,8 +39,7 @@
 
     </div>
     <!-- End wrapper-->
-
-
+    @endif
 
     <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
     @include('layouts.flash')
