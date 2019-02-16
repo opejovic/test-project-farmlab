@@ -180,6 +180,6 @@ class LabResult extends Model
      */
     public function getStatusAttribute()
     {
-        return $this->isProcessed() ? LabResult::PROCESSED : LabResult::UNPROCESSED;
+        return $this->isProcessed() ? self::PROCESSED : self::UNPROCESSED;
     }
 }

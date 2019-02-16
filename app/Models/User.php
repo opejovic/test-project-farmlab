@@ -88,7 +88,7 @@ class User extends Authenticatable
             'name'     => request('name'),
             'email'    => request('email'),
             'password' => Hash::make(str_random(10)),
-            'type'     => User::FARM_LAB_MEMBER,
+            'type'     => self::FARM_LAB_MEMBER,
         ]);
     }
 
@@ -107,7 +107,7 @@ class User extends Authenticatable
             'name'        => request('admin_name'),
             'email'       => request('email'),
             'password'    => Hash::make(str_random(10)),
-            'type'        => User::PRACTICE_ADMIN,
+            'type'        => self::PRACTICE_ADMIN,
             'practice_id' => $practice->id
         ]);
     }
@@ -119,7 +119,7 @@ class User extends Authenticatable
      */
     public function scopeLabMembers($query)
     {
-        return $query->whereType(User::FARM_LAB_MEMBER);
+        return $query->whereType(self::FARM_LAB_MEMBER);
     }
 
     /**

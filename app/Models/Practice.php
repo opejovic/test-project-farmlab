@@ -86,14 +86,14 @@ class Practice extends Model
      * Query scope - using this function for the LabResult@parseAndSave method.
      *
      * @param $query
-     * @param $practice_id from CSV file column practice_id.
+     * @param $id from CSV file column practice_id.
      *                returns the name of the practice.
      *
      * @return mixed
      */
-    public function scopeName($query, $practice_id)
+    public function scopeName($query, $id)
     {
-        return $query->find($practice_id)->name;
+        return $query->find($id)->name;
     }
 
     /**
