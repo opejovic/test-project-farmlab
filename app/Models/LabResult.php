@@ -132,7 +132,7 @@ class LabResult extends Model
 
         while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-            $labresult =  $this->create([
+            $this->create([
                 'herd_number'     => $column[0],
                 'date_of_arrival' => $column[1],
                 'date_of_test'    => $column[2],

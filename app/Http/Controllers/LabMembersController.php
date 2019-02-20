@@ -33,7 +33,7 @@ class LabMembersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\LabMemberRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(LabMemberRequest $request)
@@ -92,9 +92,7 @@ class LabMembersController extends Controller
      */
     public function destroy($id)
     {
-        abort_if(User::find($id)->isAdmin(), 403);
-
-        User::findOrFail($id)->delete();
+        User::labMembers()->findOrFail($id)->delete();
 
         flash('Lab member successfully removed.');
 
