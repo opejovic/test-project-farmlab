@@ -92,7 +92,7 @@ class File extends Model
 
         $this->saveFile($fileName, Storage::putFileAs('labresults', $file, $fileName));
 
-        (new LabResult)->parseAndSave($file);
+        LabResult::parse($file);
     }
 
     /**

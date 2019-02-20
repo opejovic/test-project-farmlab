@@ -119,9 +119,9 @@ class LabResult extends Model
 
     /**
      * @param File $file
-     *  Parse the result from the request()->file, and save it to DB.
+     *  Parse the result from the csv file, and save it to DB.
      */
-    public function parseAndSave($file)
+    public static function parse($file)
     {
         $handle = fopen($file, 'r');
         fgetcsv($handle);         // Adding this line will skip the reading of the 
@@ -132,7 +132,7 @@ class LabResult extends Model
 
         while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-            $this->create([
+            self::create([
                 'herd_number'     => $column[0],
                 'date_of_arrival' => $column[1],
                 'date_of_test'    => $column[2],

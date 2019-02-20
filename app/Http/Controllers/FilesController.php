@@ -30,7 +30,7 @@ class FilesController extends Controller
     public function store(ValidateCsv $request, File $file)
     {
         abort_unless($request->fileValidated(), 400, 'Something is wrong with your csv file.');
-        
+
         $file->upload();
 
         return back();
