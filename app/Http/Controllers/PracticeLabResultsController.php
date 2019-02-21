@@ -35,12 +35,14 @@ class PracticeLabResultsController extends Controller
      */
     public function show(Practice $practice, $hashid)
     {
+        $labresult = LabResult::findByHashid($hashid);
+        
         // Temporary - use policies
-        abort_unless($practice->id === auth()->user()->practice_id, 403);
+        abort_unless($labresult->practice_id === auth()->user()->practice_id, 404);
 
         return view('labresults.show', [
             'practice' => $practice,
-            'labresult' => LabResult::findByHashid($hashid),
+            'labresult' => $labresult,
         ]);
     }
 
