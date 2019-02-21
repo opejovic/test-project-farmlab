@@ -2,14 +2,10 @@
 
 namespace App\Providers;
 
-use App\Events\FileUploaded;
 use App\Events\LabResultCreated;
 use App\Events\UserCreated;
-use App\Listeners\FlashFileUploadedSuccess;
-use App\Listeners\FlashMemberSuccessfullyAdded;
 use App\Listeners\SendResultCreatedNotification;
 use App\Listeners\SendWelcomeEmail;
-use App\Listeners\UpdateLabResultsHashid;
 use App\Listeners\VerifyEmail;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
