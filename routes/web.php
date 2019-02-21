@@ -1,5 +1,6 @@
 <?php
 
+
 Auth::routes();
 
 // Without this route, it throws a MethodNotAllowed exception when user types logout in the url

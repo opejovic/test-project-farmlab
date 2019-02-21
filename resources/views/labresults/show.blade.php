@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section ('pageTitle')
-    Result # {{ $labresult->id }}
+    Result # {{ $labresult->hash_id }}
 @endsection
 
 @section ('content')
@@ -14,8 +14,11 @@
                             <a href="{{ route('home') }}">Home</a>
                         </li>
                         <li>
-                            <a href="{{ route('labresults.show', [$practice->id, $labresult->id]) }}">
-                                <strong>Lab result # {{ $labresult->id }}</strong>
+                            <a href="{{ route('labresults.index', $practice->id) }}">Lab results</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('labresults.show', [$practice->id, $labresult->hash_id]) }}">
+                                <strong>{{ $labresult->hash_id }}</strong>
                             </a>
                         </li>
                     </ol>
@@ -50,8 +53,8 @@
                                 </div>
 
                                 <div class="col-sm-6 text-right">
-                                    <h2>Result No.</h2>
-                                    <h2 class="text-navy">{{ $labresult->id }}</h2>
+                                    <h2>Result Code</h2>
+                                    <h2 class="text-navy">{{ $labresult->hash_id }}</h2>
                                     <span>Farmer:</span>
                                     <address>
                                         <strong>{{ $labresult->farmer_name }}</strong><br>

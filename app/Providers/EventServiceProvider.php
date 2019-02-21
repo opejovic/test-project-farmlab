@@ -9,6 +9,7 @@ use App\Listeners\FlashFileUploadedSuccess;
 use App\Listeners\FlashMemberSuccessfullyAdded;
 use App\Listeners\SendResultCreatedNotification;
 use App\Listeners\SendWelcomeEmail;
+use App\Listeners\UpdateLabResultsHashid;
 use App\Listeners\VerifyEmail;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
@@ -34,7 +35,7 @@ class EventServiceProvider extends ServiceProvider
 
         LabResultCreated::class => [
             SendResultCreatedNotification::class,
-        ],
+        ],        
     ];
 
     /**

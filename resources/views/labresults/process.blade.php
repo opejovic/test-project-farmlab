@@ -3,7 +3,7 @@
         <div class="card-header">Process the result</div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('labresults.update', [$practice->id, $labresult->id]) }}"
+            <form method="POST" action="{{ route('labresults.update', [$practice->id, $labresult->hash_id]) }}"
                   aria-label="update">
                 @method('PATCH')
                 @csrf

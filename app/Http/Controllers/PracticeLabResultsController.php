@@ -33,14 +33,14 @@ class PracticeLabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Practice $practice, LabResult $labresult)
+    public function show(Practice $practice, $hashid)
     {
         // Temporary - use policies
         abort_unless($practice->id === auth()->user()->practice_id, 403);
 
         return view('labresults.show', [
             'practice' => $practice,
-            'labresult' => $labresult
+            'labresult' => LabResult::findByHashid($hashid),
         ]);
     }
 
@@ -52,8 +52,10 @@ class PracticeLabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(ProcessLabResultRequest $request, Practice $practice, Labresult $labresult)
+    public function update(ProcessLabResultRequest $request, Practice $practice, $hashid)
     {
+        $labresult = LabResult::findByHashid($hashid);
+
         abort_unless($practice->id === auth()->user()->practice_id && 
                      $labresult->vet_id === auth()->id(), 
                 403);

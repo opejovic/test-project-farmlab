@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\FileUploaded;
+use App\Models\LabResult;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -92,7 +93,7 @@ class File extends Model
 
         $this->saveFile($fileName, Storage::putFileAs('labresults', $file, $fileName));
 
-        LabResult::parse($file);
+        (new LabResult)->parse($file);
     }
 
     /**
