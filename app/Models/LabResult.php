@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\LabResultCreated;
+use App\Facades\LabResultHashid;
 use App\Mail\NewResultNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -108,6 +109,18 @@ class LabResult extends Model
     }
 
     /**
+     * Returns the lab results by its hash id.
+     *
+     * @param $hashid
+     *
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public static function findByHashid($hashid)
+    {
+        return self::where('hash_id', $hashid)->firstOrFail();
+    }
+
+    /**
      * Check it the Lab result is proccessed.
      *
      * @return boolean
@@ -132,7 +145,7 @@ class LabResult extends Model
 
         while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-            self::create([
+            $labresult = self::create([
                 'herd_number'     => $column[0],
                 'date_of_arrival' => $column[1],
                 'date_of_test'    => $column[2],
@@ -147,10 +160,13 @@ class LabResult extends Model
                 'vet_indicator'   => $column[11],
                 'practice_id'     => $column[12],
                 'practice_name'   => Practice::name($column[12]),
-                'vet_id'          => $column[13]
+                'vet_id'          => $column[13],
             ]);
-        }
+
+            $labresult->update(['hash_id' => LabResultHashid::generateFor($labresult)]);
+         }
         fclose($handle);
+        
     }
 
     /**

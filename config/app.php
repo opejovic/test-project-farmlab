@@ -212,5 +212,6 @@ return [
         'auth.password.tokens' => Illuminate\Auth\Passwords\TokenRepositoryInterface::class,
 
     ],
-
+    
+    'labresult_id_salt' => env('LABRESULT_ID_SALT'),
 ];

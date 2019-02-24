@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Helpers\LabResultHashidGenerator;
+use App\Helpers\LabResultIdGenerator;
 use DB;
-use Log;
 use Illuminate\Support\ServiceProvider;
+use Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(LabResultHashidGenerator::class, function () {
+            return new LabResultHashidGenerator(config('app.labresult_id_salt'));
+        });
+
+        $this->app->bind(LabResultIdGenerator::class, LabResultHashidGenerator::class);
+
         require_once __DIR__ . '/../Http/Helpers/Navigation.php';
+
     }
 }

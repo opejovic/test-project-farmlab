@@ -1,12 +1,12 @@
 @component('mail::message')
 # Hello, {{ $vet->name }}
 
-New result for the farmer {{ $labresult->farmer_name }} has just been uploaded.
+New lab result for the farmer {{ $labresult->farmer_name }} has just been uploaded.
 
 Check it out.
 
-@component('mail::button', ['url' => "http://127.0.0.1:8000/practices/{$vet->practice_id}/labresults/{$labresult->id}"])
-    Labresult number {{ $labresult->id }}
+@component('mail::button', ['url' => "http://127.0.0.1:8000/practices/{$vet->practice_id}/labresults/{$labresult->hash_id}"])
+    {{ $labresult->hash_id }}
 @endcomponent
 
 @component('mail::panel', ['url' => ''])

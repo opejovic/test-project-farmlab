@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\FileUploaded;
+use App\Models\LabResult;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;

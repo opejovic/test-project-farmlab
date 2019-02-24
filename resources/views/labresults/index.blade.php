@@ -55,6 +55,7 @@
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Hash id</th>
                                 <th>Herd</th>
                                 <th>Date Of Test</th>
                                 <th>Animal ID</th>
@@ -71,6 +72,7 @@
                             @foreach ($labResults as $result)
                             <tr>
                                 <td>{{ $result->id }}</td>
+                                <td>{{ $result->hash_id }}</td>
                                 <td>{{ $result->herd_number}}</td>
                                 <td>{{ $result->date_of_test}}</td>
                                 <td>{{ $result->animal_id}}</td>
@@ -81,7 +83,7 @@
                                 <td>{{ $result->practice_name}}</td>
                                 <td>{{ $result->vet->name }}</td>
                                 <td>
-                                <a href="{{ route('labresults.show', [$practice->id, $result->id]) }}">
+                                <a href="{{ route('labresults.show', [$practice->id, $result->hash_id]) }}">
                                     <span class="label label-{{ $result->isProcessed() ? 'primary' : 'warning' }}">
                                         {{ $result->status }}
                                     </span>
@@ -91,6 +93,7 @@
                             @endforeach
                             <tfoot>
                                 <th>#</th>
+                                <th>Hash id</th>
                                 <th>Herd</th>
                                 <th>Date Of Test</th>
                                 <th>Animal ID</th>
