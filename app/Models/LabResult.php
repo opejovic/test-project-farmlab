@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Mail;
 
 class LabResult extends Model
 {
+    /**
+     * Lab result status.
+     *
+     * @var string
+     */
     const PROCESSED   = 'Processed';
     const UNPROCESSED = 'Unprocessed';
 
@@ -49,7 +54,6 @@ class LabResult extends Model
     {
         return $this->belongsTo(Practice::class);
     }
-
 
     /**
      * Vets processes the result via form/modal.
@@ -166,7 +170,6 @@ class LabResult extends Model
             $labresult->update(['hash_id' => LabResultHashid::generateFor($labresult)]);
          }
         fclose($handle);
-        
     }
 
     /**

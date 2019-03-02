@@ -10,7 +10,12 @@ use Illuminate\Support\Facades\Hash;
 class User extends Authenticatable
 {
     use Notifiable;
-    
+   
+    /**
+     * User types.
+     *
+     * @var string
+     */ 
     const ADMIN             = 'ADMIN';
     const FARM_LAB_MEMBER   = 'FARM_LAB_TEAM_MEMBER';
     const PRACTICE_ADMIN    = 'PRACTICE_ADMIN';
@@ -57,6 +62,16 @@ class User extends Authenticatable
     public function results()
     {
         return $this->hasMany(LabResult::class, 'vet_id');
+    }
+
+    /**
+     * User belongs to Practice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function practice()
+    {
+        return $this->belongsTo(Practice::class);
     }
 
     /**

@@ -13,7 +13,7 @@
                 <a href="{{ route('home') }}">Home</a>
             </li>
             <li>
-                <a>Team Members</a>
+                <a href="{{ route('vets.index', $practice->id) }}">Team Members</a>
             </li>
             <li>
                 <strong>Add New</strong>

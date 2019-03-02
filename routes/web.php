@@ -7,8 +7,8 @@ Auth::routes();
 // if the user is already signed in.
 Route::get('/logout', 'Auth\LoginController@getLogout');
 
-Route::middleware(['auth'])->group(function ()
-{
+Route::middleware(['auth'])->group(function () {
+	
 	Route::get('/home',       	  				 		'HomeController@index');
 	Route::get('/',       		  				 		'HomeController@index')->name('home');
     Route::resource('members',    				 		'LabMembersController')->middleware('farmlab.admin');

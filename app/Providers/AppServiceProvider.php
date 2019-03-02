@@ -32,8 +32,5 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(LabResultIdGenerator::class, LabResultHashidGenerator::class);
-
-        require_once __DIR__ . '/../Http/Helpers/Navigation.php';
-
     }
 }

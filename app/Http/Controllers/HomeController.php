@@ -28,7 +28,6 @@ class HomeController extends Controller
             return view('home.labmember', compact('user'));
 
         } elseif ($user->type === User::PRACTICE_ADMIN) {
-            
             return view('home.practice', compact('user'));
 
         } elseif ($user->type === User::VET) {

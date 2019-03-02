@@ -60,7 +60,7 @@ class PracticeLabResultsController extends Controller
 
         abort_unless($practice->id === auth()->user()->practice_id && 
                      $labresult->vet_id === auth()->id(), 
-                403);
+                     403);
 
         $labresult->process(request('vet_comment'), request('vet_indicator'));
 
