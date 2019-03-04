@@ -108,7 +108,7 @@ class User extends Authenticatable
     }
 
     /**
-     * FARM_LAB_MEMBER can create a new Practice, and practice admin is created in that process. You cant create one
+     * Farm lab team member can add a new practice, and practice admin is created in that process. One can't be created
      * without the other.
      */
     public function addPractice()
@@ -204,7 +204,7 @@ class User extends Authenticatable
      */
     public function getIsVerifiedAttribute()
     {
-        return $this->email_verified_at !== null ? true : false;
+        return $this->email_verified_at !== null;
     }
 
     /**

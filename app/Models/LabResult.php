@@ -131,7 +131,7 @@ class LabResult extends Model
      */
     public function isProcessed()
     {
-        return ($this->processed_at !== null) ? true : false;
+        return $this->processed_at !== null;
     }
 
     /**

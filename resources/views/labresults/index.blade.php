@@ -69,9 +69,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($labResults as $result)
+                            @foreach ($labResults as $index => $result)
                             <tr>
-                                <td>{{ $result->id }}</td>
+                                <td>{{ $index+1 }}</td>
                                 <td>{{ $result->hash_id }}</td>
                                 <td>{{ $result->herd_number}}</td>
                                 <td>{{ $result->date_of_test}}</td>
@@ -114,7 +114,6 @@
             </div>
         </div>
 
-
 @endsection
 
 @section('scripts')
@@ -144,8 +143,6 @@
                 ]
 
             });
-
         });
-
     </script>
 @endsection

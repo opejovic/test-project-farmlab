@@ -36,7 +36,7 @@ class PracticeLabResultsController extends Controller
     public function show(Practice $practice, $hashid)
     {
         $labresult = LabResult::findByHashid($hashid);
-        
+
         // Temporary - use policies
         abort_unless($labresult->practice_id === auth()->user()->practice_id, 404);
 
