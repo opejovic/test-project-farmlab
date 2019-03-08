@@ -1,11 +1,17 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 Auth::routes();
-
-// Without this route, it throws a MethodNotAllowed exception when user types logout in the url
-// if the user is already signed in.
-Route::get('/logout', 'Auth\LoginController@getLogout');
 
 Route::middleware(['auth'])->group(function () {
 	
