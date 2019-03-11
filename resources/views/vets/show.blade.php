@@ -12,9 +12,18 @@
                         <li>
                             <a href="{{ route('home') }}">Home</a>
                         </li>
-                        <li>
-                            <a href="{{ route('vets.index', $practice->id) }}">Team members</a>
-                        </li>
+
+                        @if (\Auth::user()->isOfType(App\Models\User::ADMIN))
+                            <li><a href="{{ route('practices.index') }}">Practices</a></li>
+                            <li>
+                                <a href="{{ route('practices.show', $vet->practice_id) }}">
+                                    {{ $vet->practice->name }}
+                                </a>
+                            </li>
+                        @else
+                            <li><a href="{{ route('vets.index') }}">Team members</a></li>
+                        @endif
+
                         <li class="active">
                             <strong>{{ $vet->name }}</strong>
                         </li>
@@ -48,7 +57,7 @@
                             </div>
 
                             @if (auth()->id() !== $vet->id)
-                               <form action="{{ route('vets.destroy', [$practice->id, $vet->id]) }}" method="POST" id="form">
+                               <form action="{{ route('vets.destroy', $vet->id) }}" method="POST" id="form">
                                    @csrf
                                    @method('DELETE')
 

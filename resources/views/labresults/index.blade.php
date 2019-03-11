@@ -15,7 +15,7 @@
                 </li>
                 <li>
                     <strong>
-                        <a href="{{ route('labresults.index', $practice->id) }}">Lab Results</a>
+                        <a href="{{ route('labresults.index') }}">Lab Results</a>
                     </strong>
                 </li>
             </ol>
@@ -83,7 +83,7 @@
                                 <td>{{ $result->practice_name}}</td>
                                 <td>{{ $result->vet->name }}</td>
                                 <td>
-                                <a href="{{ route('labresults.show', [$practice->id, $result->hash_id]) }}">
+                                <a href="{{ route('labresults.show', $result->hash_id) }}">
                                     <span class="label label-{{ $result->isProcessed() ? 'primary' : 'warning' }}">
                                         {{ $result->status }}
                                     </span>

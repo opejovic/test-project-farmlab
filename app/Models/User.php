@@ -71,7 +71,7 @@ class User extends Authenticatable
      */
     public function practice()
     {
-        return $this->belongsTo(Practice::class);
+        return $this->belongsTo(Practice::class, 'practice_id');
     }
 
     /**
@@ -150,7 +150,7 @@ class User extends Authenticatable
      */
     public function isOfType($type1, $type2 = null)
     {
-        return (auth()->user()->type === $type1 || auth()->user()->type === $type2) ? true : false;
+        return auth()->user()->type === $type1 || auth()->user()->type === $type2;
     }
 
     /**

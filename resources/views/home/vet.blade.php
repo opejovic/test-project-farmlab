@@ -56,7 +56,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($resultsByStatus as $result)
+                            @foreach ($results as $result)
                             <tr>
                                 <td>{{ $result->id }}</td>
                                 <td>{{ $result->hash_id }}</td>
@@ -64,7 +64,7 @@
                                 <td>{{ $result->test_name}}</td>
                                 <td>{{ $result->farmer_name}}</td>
                                 <td>
-                                <a href="{{ route('labresults.show', [auth()->user()->practice_id, $result->hash_id]) }}">
+                                <a href="{{ route('labresults.show', $result->hash_id) }}">
                                     <span class="label label-{{ $result->isProcessed() ? 'primary' : 'warning' }}">
                                         {{ $result->status }}
                                     </span>
@@ -96,12 +96,12 @@
 
                         <div class="row">
                             <div class="col-md-6 text-center">
-                                <h1 class="no-margins">{{ $labresult->count_unprocessed }}</h1>
+                                <h1 class="no-margins">{{ $results->reject->isProcessed()->count() }}</h1>
                                 <div class="font-bold text-warning"><small>Unprocessed results</small></div>
                             </div>
                             <div class="col-md-6 text-center">
                                 <h1 class="no-margins"></h1>
-                                <h1 class="no-margins">{{ $labresult->count_processed }}</h1>
+                                <h1 class="no-margins">{{ $results->filter->isProcessed()->count() }}</h1>
                                 <div class="font-bold text-navy"><small>Processed results</small></div>
                             </div>
                         </div>
