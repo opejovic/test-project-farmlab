@@ -91,7 +91,7 @@
                                     <div class="feed-activity-list">
                                         @foreach ($vets as $vet)
                                         <div class="feed-element">
-                                            <a href="{{ route('vets.show', [$practice->id, $vet->id]) }}" class="pull-left">
+                                            <a href="{{ route('vets.show', $vet->id) }}" class="pull-left">
                                                 <img alt="image" class="img-circle" src="/images/profiles/{{ $vet->id }}.jpg" 
                                                      onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">
                                             </a>

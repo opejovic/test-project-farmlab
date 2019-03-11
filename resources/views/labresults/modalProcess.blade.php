@@ -13,7 +13,7 @@ Process the result
             </div>
             <div class="modal-body">
             <form method="POST" 
-                  action="{{ route('labresults.update', [$practice->id, $labresult->hash_id]) }}" 
+                  action="{{ route('labresults.update', $labresult->hash_id) }}" 
                   aria-label="update" id="myForm">
                   @method('PATCH')
                   @csrf

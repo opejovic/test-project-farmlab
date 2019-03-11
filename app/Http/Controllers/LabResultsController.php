@@ -9,16 +9,16 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PracticeLabResultsController extends Controller
+class LabResultsController extends Controller
 {
     /**
      * Displays the results. If there are no unprocessed results, displays processed.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Practice $practice)
+    public function index()
     {
-        abort_unless($practice->is(Auth::user()->practice), 403);
+        $practice = Auth::user()->practice;
 
         return view('labresults.index', [
             'labResults' => $practice->results, 
@@ -33,13 +33,13 @@ class PracticeLabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Practice $practice, $hashid)
+    public function show($hashid)
     {
-        abort_unless($practice->is(Auth::user()->practice), 404);
+        $practice = Auth::user()->practice;
 
         return view('labresults.show', [
-            'practice' => $practice,
             'labresult' => $practice->results()->findByHashid($hashid),
+            'practice'  => $practice,
         ]);
     }
 
@@ -51,7 +51,7 @@ class PracticeLabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(ProcessLabResultRequest $request, Practice $practice, $hashid)
+    public function update(ProcessLabResultRequest $request, $hashid)
     {
         $labresult = Auth::user()->results()->findByHashid($hashid);
 
@@ -69,7 +69,7 @@ class PracticeLabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Practice $practice, LabResult $labresult)
+    public function destroy(LabResult $labresult)
     {
         //
     }

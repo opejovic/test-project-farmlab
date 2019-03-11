@@ -1,5 +1,5 @@
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="{{ route('vets.show', [auth()->user()->practice_id, auth()->id()]) }}">{{ __('Profile') }}</a></li>
+                        <li><a href="{{ route('vets.show', auth()->id()) }}">{{ __('Profile') }}</a></li>
                         <li><a href="#">{{ __('Contact') }}</a></li>
                         <li><a href="#">{{ __('Mailbox') }}</a></li>
                         <li class="divider"></li>
@@ -27,11 +27,11 @@
 <li class="{{ isActiveRoute('vets.index') }} {{ isActiveRoute('vets.create') }} {{ isActiveRoute('vets.show') }}">
     <a href="index.html"><i class="fa fa-ambulance"></i> <span class="nav-label">Vets</span> <span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
-        <li class="{{ isActiveRoute('vets.index') }} {{ isActiveRoute('vets.show') }}"><a href="{{ route('vets.index', auth()->user()->practice_id) }}">Show all</a></li>
-        <li class="{{ isActiveRoute('vets.create') }}"><a href="{{ route('vets.create', auth()->user()->practice_id) }}">Add new</a></li>
+        <li class="{{ isActiveRoute('vets.index') }} {{ isActiveRoute('vets.show') }}"><a href="{{ route('vets.index') }}">Show all</a></li>
+        <li class="{{ isActiveRoute('vets.create') }}"><a href="{{ route('vets.create') }}">Add new</a></li>
     </ul>
 </li>            
 
 <li class="{{ isActiveRoute('labresults.index') }} {{ isActiveRoute('labresults.show') }}">
-    <a href="{{ route('labresults.index', auth()->user()->practice_id) }}"><i class="fa fa-th"></i> <span class="nav-label">Results</span></a>
+    <a href="{{ route('labresults.index') }}"><i class="fa fa-th"></i> <span class="nav-label">Results</span></a>
 </li>
