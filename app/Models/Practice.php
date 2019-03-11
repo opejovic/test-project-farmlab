@@ -57,7 +57,7 @@ class Practice extends Model
      */
     public function results()
     {
-        return $this->hasMany(LabResult::class, 'practice_id')->with('vet');
+        return $this->hasMany(LabResult::class)->with('vet');
     }
 
     /**
@@ -112,7 +112,7 @@ class Practice extends Model
     public function processedResultsPercentage()
     {
         return number_format(
-            ($this->results()->processed()->count() / $this->results->count()) * 100
+            ($this->results->filter->isProcessed()->count() / $this->results->count()) * 100
         );
     }
 
@@ -132,7 +132,7 @@ class Practice extends Model
      */
     public function getCreatorNameAttribute()
     {
-        return ($this->creator !== null) ? $this->creator->name : 'Not Available';
+        return $this->creator !== null ? $this->creator->name : 'Not Available';
     }
 
     /**

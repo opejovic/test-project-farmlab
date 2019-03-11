@@ -12,9 +12,14 @@
                         <li>
                             <a href="{{ route('home') }}">Home</a>
                         </li>
-                        <li>
-                            <a href="{{ route('vets.index', $practice->id) }}">Team members</a>
-                        </li>
+
+                        @if (\Auth::user()->isOfType(App\Models\User::ADMIN))
+                            <li><a href="{{ route('practices.index') }}">Practices</a></li>
+                            <li><a href="{{ route('practices.show', $practice->id) }}">{{ $practice->name }}</a></li>
+                        @else
+                            <li><a href="{{ route('vets.index', $practice->id) }}">Team members</a></li>
+                        @endif
+
                         <li class="active">
                             <strong>{{ $vet->name }}</strong>
                         </li>

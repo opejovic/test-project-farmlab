@@ -7,6 +7,7 @@ use App\Models\LabResult;
 use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PracticeLabResultsController extends Controller
 {
@@ -17,11 +18,10 @@ class PracticeLabResultsController extends Controller
      */
     public function index(Practice $practice)
     {
-        // Temporary
-        abort_unless($practice->id === auth()->user()->practice_id, 403);
+        abort_unless($practice->is(Auth::user()->practice), 403);
 
         return view('labresults.index', [
-            'labResults' => $practice->results()->get(), 
+            'labResults' => $practice->results, 
             'practice'   => $practice
         ]);
     }
@@ -35,14 +35,11 @@ class PracticeLabResultsController extends Controller
      */
     public function show(Practice $practice, $hashid)
     {
-        $labresult = LabResult::findByHashid($hashid);
-
-        // Temporary - use policies
-        abort_unless($labresult->practice_id === auth()->user()->practice_id, 404);
+        abort_unless($practice->is(Auth::user()->practice), 404);
 
         return view('labresults.show', [
             'practice' => $practice,
-            'labresult' => $labresult,
+            'labresult' => $practice->results()->findByHashid($hashid),
         ]);
     }
 
@@ -56,11 +53,7 @@ class PracticeLabResultsController extends Controller
      */
     public function update(ProcessLabResultRequest $request, Practice $practice, $hashid)
     {
-        $labresult = LabResult::findByHashid($hashid);
-
-        abort_unless($practice->id === auth()->user()->practice_id && 
-                     $labresult->vet_id === auth()->id(), 
-                     403);
+        $labresult = Auth::user()->results()->findByHashid($hashid);
 
         $labresult->process(request('vet_comment'), request('vet_indicator'));
 

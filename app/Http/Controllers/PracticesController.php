@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PracticeRequest;
 use App\Models\Practice;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\PracticeRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PracticesController extends Controller
 {
@@ -40,7 +40,7 @@ class PracticesController extends Controller
      */
     public function store(PracticeRequest $request)
     {
-        auth()->user()->addPractice();
+        Auth::user()->addPractice();
         
         flash('New Practice team added successfully.');
 

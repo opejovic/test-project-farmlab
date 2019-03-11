@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\VetRequest;
-use App\Models\LabResult;
 use App\Models\Practice;
 use App\Models\User;
+use App\Models\LabResult;
+use App\Http\Requests\VetRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PracticeVetsController extends Controller
 {
@@ -17,7 +18,7 @@ class PracticeVetsController extends Controller
      */
     public function index(Practice $practice)
     {
-        abort_unless($practice->id === auth()->user()->practice_id, 403);
+        abort_unless($practice->is(Auth::user()->practice), 404);
 
         return view('vets.index', [
             'practice' => $practice,
@@ -32,7 +33,7 @@ class PracticeVetsController extends Controller
      */
     public function create(Practice $practice)
     {
-        abort_unless($practice->id === auth()->user()->practice_id, 403);
+        abort_unless($practice->is(Auth::user()->practice), 404);
 
         return view('vets.create', ['practice' => $practice]);
     }
@@ -47,7 +48,7 @@ class PracticeVetsController extends Controller
      */
     public function store(VetRequest $request, Practice $practice)
     {
-        abort_unless($practice->id === auth()->user()->practice_id, 403);
+        abort_unless($practice->is(Auth::user()->practice), 403);
         
         $practice->addVet(request('name'), request('email'));
 
@@ -64,18 +65,16 @@ class PracticeVetsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Practice $practice, User $vet)
-    {
-        // temporary - create new middleware class for this
-        abort_unless(
-            auth()->user()->practice_id == $practice->id || 
-            auth()->user()->isOfType(User::ADMIN, User::FARM_LAB_MEMBER), 403
-        );
+    { 
+        abort_unless($practice->is(Auth::user()->practice) || 
+                     Auth::user()->isOfType(User::ADMIN), 
+                     404);
 
         return view('vets.show', [
-            'practice' => $practice,
-            'vet' => $vet, 
-            'results' => $vet->results()->get(), 
-            'processedResults' => $vet->results()->processed()->get(), 
+            'practice'         => $practice,
+            'vet'              => $vet, 
+            'results'          => $vet->results, 
+            'processedResults' => $vet->results->filter->processed(), 
         ]);
     }
 
@@ -113,12 +112,12 @@ class PracticeVetsController extends Controller
      */
     public function destroy(Practice $practice, User $vet)
     {
-        abort_unless($practice->id === auth()->user()->practice_id, 403);
+        abort_unless($practice->is(Auth::user()->practice), 403);
 
-        User::findOrFail($vet->id)->delete();
+        $vet->delete();
 
         flash('Vet successfully removed.');
 
-        return redirect(route('vets.index', $practice->id));
+        return redirect(route('vets.index', $practice));
     }
 }

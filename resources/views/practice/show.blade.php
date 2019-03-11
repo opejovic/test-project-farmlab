@@ -11,10 +11,13 @@
                     <h2>Practice detail</h2>
                     <ol class="breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="{{ route('home') }}">Home</a>
+                        </li>                        
+                        <li>
+                            <a href="{{ route('practices.index') }}">Practices</a>
                         </li>
                         <li class="active">
-                            <strong>Practice detail</strong>
+                            <strong>{{ $practice->name }}</strong>
                         </li>
                     </ol>
                 </div>
