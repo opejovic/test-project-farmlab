@@ -10,10 +10,10 @@
         <h2>Create New Practice</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="index.html">Home</a>
+                <a href="{{ route('home') }}">Home</a>
             </li>
             <li>
-                <a>Practices</a>
+                <a href="{{ route('practices.index') }}">Practices</a>
             </li>
             <li>
                 <strong>Create New Practice</strong>

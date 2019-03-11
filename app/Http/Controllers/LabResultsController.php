@@ -7,21 +7,21 @@ use App\Models\LabResult;
 use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class PracticeLabResultsController extends Controller
+class LabResultsController extends Controller
 {
     /**
      * Displays the results. If there are no unprocessed results, displays processed.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Practice $practice)
+    public function index()
     {
-        // Temporary
-        abort_unless($practice->id === auth()->user()->practice_id, 403);
+        $practice = Auth::user()->practice;
 
         return view('labresults.index', [
-            'labResults' => $practice->results()->get(), 
+            'labResults' => $practice->results, 
             'practice'   => $practice
         ]);
     }
@@ -33,16 +33,13 @@ class PracticeLabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Practice $practice, $hashid)
+    public function show($hashid)
     {
-        $labresult = LabResult::findByHashid($hashid);
-        
-        // Temporary - use policies
-        abort_unless($labresult->practice_id === auth()->user()->practice_id, 404);
+        $practice = Auth::user()->practice;
 
         return view('labresults.show', [
-            'practice' => $practice,
-            'labresult' => $labresult,
+            'labresult' => $practice->results()->findByHashid($hashid),
+            'practice'  => $practice,
         ]);
     }
 
@@ -54,13 +51,9 @@ class PracticeLabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(ProcessLabResultRequest $request, Practice $practice, $hashid)
+    public function update(ProcessLabResultRequest $request, $hashid)
     {
-        $labresult = LabResult::findByHashid($hashid);
-
-        abort_unless($practice->id === auth()->user()->practice_id && 
-                     $labresult->vet_id === auth()->id(), 
-                     403);
+        $labresult = Auth::user()->results()->findByHashid($hashid);
 
         $labresult->process(request('vet_comment'), request('vet_indicator'));
 
@@ -76,7 +69,7 @@ class PracticeLabResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Practice $practice, LabResult $labresult)
+    public function destroy(LabResult $labresult)
     {
         //
     }

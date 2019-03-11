@@ -15,7 +15,7 @@
                 </li>
                 <li>
                     <strong>
-                        <a href="{{ route('labresults.index', $practice->id) }}">Lab Results</a>
+                        <a href="{{ route('labresults.index') }}">Lab Results</a>
                     </strong>
                 </li>
             </ol>
@@ -69,9 +69,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($labResults as $result)
+                            @foreach ($labResults as $index => $result)
                             <tr>
-                                <td>{{ $result->id }}</td>
+                                <td>{{ $index+1 }}</td>
                                 <td>{{ $result->hash_id }}</td>
                                 <td>{{ $result->herd_number}}</td>
                                 <td>{{ $result->date_of_test}}</td>
@@ -83,7 +83,7 @@
                                 <td>{{ $result->practice_name}}</td>
                                 <td>{{ $result->vet->name }}</td>
                                 <td>
-                                <a href="{{ route('labresults.show', [$practice->id, $result->hash_id]) }}">
+                                <a href="{{ route('labresults.show', $result->hash_id) }}">
                                     <span class="label label-{{ $result->isProcessed() ? 'primary' : 'warning' }}">
                                         {{ $result->status }}
                                     </span>
@@ -114,7 +114,6 @@
             </div>
         </div>
 
-
 @endsection
 
 @section('scripts')
@@ -144,8 +143,6 @@
                 ]
 
             });
-
         });
-
     </script>
 @endsection

@@ -65,7 +65,7 @@
                             <div class="row  m-t-sm">
                                 <div class="col-sm-4">
                                     <div class="font-bold">VETS</div>
-                                    {{ count($practice->vets) }}
+                                    {{ $practice->vets->count() }}
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="font-bold">RANKING</div>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-sm-4 text-right">
                                     <div class="font-bold">LABRESULTS</div>
-                                     {{ count($practice->results) }}<i class="fa fa-level-up text-navy"></i>
+                                     {{ $practice->results->count() }}<i class="fa fa-level-up text-navy"></i>
                                 </div>
                             </div>
 

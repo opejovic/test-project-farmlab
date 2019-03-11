@@ -31,8 +31,8 @@ class HomeController extends Controller
             return view('home.practice', compact('user'));
 
         } elseif ($user->type === User::VET) {
-            $resultsByStatus = LabResult::ownedByAuth()->get(); // tmp
-            return view('home.vet', compact('resultsByStatus', 'user', 'labresult'));
+            $results = \Auth::user()->results;
+            return view('home.vet', compact('results', 'user'));
         }
     }
 }

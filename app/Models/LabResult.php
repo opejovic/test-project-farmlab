@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\LabResultCreated;
 use App\Facades\LabResultHashid;
 use App\Mail\NewResultNotification;
+use App\Models\Practice;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -72,21 +73,6 @@ class LabResult extends Model
     /**
      * Query scope
      *
-     * Returns all lab results owned by user.
-     *
-     * @param        $query
-     * @param string $status
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function scopeOwnedByAuth($query)
-    {
-        return $query->where('vet_id', auth()->id())->orderBy('processed_at', 'asc');
-    }
-
-    /**
-     * Query scope
-     *
      * Returns all processed results.
      *
      * @param $query
@@ -97,20 +83,6 @@ class LabResult extends Model
     {
         return $query->whereNotNull('processed_at');
     }
-    
-    /**
-     * Query scope
-     *
-     * Returns all unprocessed results.
-     *
-     * @param $query
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function scopeUnprocessed($query)
-    {
-        return $query->whereNull('processed_at');
-    }
 
     /**
      * Returns the lab results by its hash id.
@@ -119,9 +91,9 @@ class LabResult extends Model
      *
      * @return Illuminate\Database\Eloquent\Model
      */
-    public static function findByHashid($hashid)
+    public function scopeFindByHashid($query, $hashid)
     {
-        return self::where('hash_id', $hashid)->firstOrFail();
+        return $query->where('hash_id', $hashid)->firstOrFail();
     }
 
     /**
@@ -131,7 +103,7 @@ class LabResult extends Model
      */
     public function isProcessed()
     {
-        return ($this->processed_at !== null) ? true : false;
+        return $this->processed_at !== null;
     }
 
     /**
@@ -170,26 +142,6 @@ class LabResult extends Model
             $labresult->update(['hash_id' => LabResultHashid::generateFor($labresult)]);
          }
         fclose($handle);
-    }
-
-    /**
-     * Returns the number of the unproccesed results owned by auth user.
-     *
-     * @return integer
-     */
-    public function getCountUnprocessedAttribute()
-    {
-        return $this->ownedByAuth()->unprocessed()->count();
-    }
-
-    /**
-     * Returns the number of the processed results owned by auth user.
-     *
-     * @return integer
-     */
-    public function getCountProcessedAttribute()
-    {
-        return $this->ownedByAuth()->processed()->count();
     }
 
     /**

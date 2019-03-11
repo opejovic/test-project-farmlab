@@ -1,5 +1,5 @@
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="{{ route('vets.show', [auth()->user()->id, auth()->id()]) }}">{{ __('Profile') }}</a></li>
+                        <li><a href="{{ route('vets.show', auth()->id()) }}">{{ __('Profile') }}</a></li>
                         <li><a href="#">{{ __('Contact') }}</a></li>
                         <li><a href="#">{{ __('Mailbox') }}</a></li>
                         <li class="divider"></li>
@@ -27,6 +27,6 @@
 
 <li class="{{ isActiveRoute('labresults.index') }} 
            {{ isActiveRoute('labresults.show') }}">
-    <a href="{{ route('labresults.index', auth()->user()->practice_id) }}"><i class="fa fa-th"></i> 
+    <a href="{{ route('labresults.index') }}"><i class="fa fa-th"></i> 
         <span class="nav-label">{{ __('All Results') }}</span></a>
 </li>
