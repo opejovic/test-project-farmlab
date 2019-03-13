@@ -56,9 +56,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($results as $result)
+                            @foreach ($results as $index => $result)
                             <tr>
-                                <td>{{ $result->id }}</td>
+                                <td>{{ $index+1 }}</td>
                                 <td>{{ $result->hash_id }}</td>
                                 <td>{{ $result->date_of_test}}</td>
                                 <td>{{ $result->test_name}}</td>

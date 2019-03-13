@@ -35,14 +35,7 @@ class LabResultsController extends Controller
      */
     public function show($hashid)
     {
-<<<<<<< HEAD:app/Http/Controllers/PracticeLabResultsController.php
-        $labresult = LabResult::findByHashid($hashid);
-
-        // Temporary - use policies
-        abort_unless($labresult->practice_id === auth()->user()->practice_id, 404);
-=======
         $practice = Auth::user()->practice;
->>>>>>> 0d996f9d46a0e712ae15a3d187784fddb24469e2:app/Http/Controllers/LabResultsController.php
 
         return view('labresults.show', [
             'labresult' => $practice->results()->findByHashid($hashid),

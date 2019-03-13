@@ -10,10 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-<<<<<<< HEAD
 
-=======
->>>>>>> 0d996f9d46a0e712ae15a3d187784fddb24469e2
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
