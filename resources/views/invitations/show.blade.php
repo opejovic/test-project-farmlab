@@ -15,12 +15,25 @@
         <div>
             <br>
         </div>
-            <h3>Please verify your email address and choose your password.</h3>
+            <h3>Please choose your email address and password.</h3>
         <div>
 
         <form method="POST" class="m-t" role="form" action="{{ route('auth.verify') }}">
             @csrf
             <input type="hidden" name="invitation_code" value="{{ $invitation->code }}">
+            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required placeholder="Email Address">
+
+                @if ($errors->has('email'))
+                    <span class="control-label">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+            </div>
+
+            <div class="form-group">
+                <input id="email-confirm" type="email" class="form-control" name="email_confirmation" required placeholder="Confirm Email">
+            </div>
 
             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <input id="password" type="password" class="form-control" name="password" required placeholder="Password">

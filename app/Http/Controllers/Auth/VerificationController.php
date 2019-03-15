@@ -7,6 +7,7 @@ use App\Models\Invitation;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class VerificationController extends Controller
 {
@@ -21,13 +22,19 @@ class VerificationController extends Controller
         
         abort_if($invitation->hasBeenUsed(), 404);
 
+        $user = User::whereEmail($invitation->email)->first();
+        
         request()->validate([
+            'email' => [
+                'required', 
+                'confirmed', 
+                 Rule::unique('users')->ignore($user->id)
+             ],
             'password'  => ['required', 'confirmed'],
         ]);
 
-        $user = User::whereEmail($invitation->email)->first();
-        
         $user->update([
+            'email' => request('email'),
             'password'  => Hash::make(request('password')),
             'email_verified_at' => $user->freshTimestamp(),
         ]);

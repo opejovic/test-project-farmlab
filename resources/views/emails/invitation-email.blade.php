@@ -5,10 +5,10 @@ You are invited to join FarmLab.
 
 Your username is: {{ $invitation->email }}.
 
-Please create your password at the link below.
+Please verify your credentials at the link below.
 
 @component('mail::button', ['url' => "http://127.0.0.1:8000/invitations/{$invitation->code}"])
-    Create your password
+    Verify
 @endcomponent
 
 @component('mail::panel', ['url' => ''])

@@ -13,8 +13,8 @@ class InvitationsController extends Controller
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */
-   public function show($code)
-   {
+    public function show($code)
+    {
    		$invitation = Invitation::findByCode($code);
 
    		abort_if($invitation->hasBeenUsed(), 404);
@@ -22,5 +22,5 @@ class InvitationsController extends Controller
     	return view('invitations.show', [
     		'invitation' => $invitation,
     	]);
-   }
+    }
 }
