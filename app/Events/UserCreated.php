@@ -12,8 +12,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class UserCreated
 {
-
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     public $user;
 
     /**
