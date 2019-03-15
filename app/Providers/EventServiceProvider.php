@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\LabResultCreated;
 use App\Events\UserCreated;
+use App\Listeners\SendInvitationEmail;
 use App\Listeners\SendResultCreatedNotification;
 use App\Listeners\SendWelcomeEmail;
 use App\Listeners\VerifyEmail;
@@ -22,11 +23,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         UserCreated::class => [
-            SendWelcomeEmail::class,
-        ],
-
-        PasswordReset::class => [
-            VerifyEmail::class,
+            SendInvitationEmail::class,
         ],
 
         LabResultCreated::class => [

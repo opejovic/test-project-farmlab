@@ -13,6 +13,9 @@
 
 Auth::routes();
 
+Route::get('invitations/{code}', 'InvitationsController@show')->name('invitations.show');
+Route::post('verify', 'Auth\VerificationController@verify')->name('auth.verify');
+
 Route::middleware(['auth'])->group(function () {
 	Route::get('/',					'HomeController@index')->name('home');
     Route::resource('members',		'LabMembersController')->middleware('farmlab.admin');

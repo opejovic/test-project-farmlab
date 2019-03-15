@@ -3,12 +3,15 @@
 namespace App\Listeners;
 
 use App\Events\UserCreated;
+use App\Facades\InvitationCode;
 use App\Mail\Welcome;
+use App\Models\Invitation;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendWelcomeEmail
+class SendInvitationEmail
 {
     /**
      * Create the event listener.
@@ -28,7 +31,13 @@ class SendWelcomeEmail
      */
     public function handle(UserCreated $event)
     {
-        $token = app('auth.password.broker')->createToken($event->user);
-        Mail::to(request('email'))->queue(new Welcome($event->user, $token));
+        if ($event->user->type === User::ADMIN) {
+            return false;
+        }
+
+        Invitation::create([
+            'email' => $event->user->email,
+            'code'  => InvitationCode::generate()
+        ])->send();
     }
 }

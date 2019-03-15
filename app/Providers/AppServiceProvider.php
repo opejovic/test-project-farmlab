@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Helpers\InvitationCodeGenerator;
 use App\Helpers\LabResultHashidGenerator;
 use App\Helpers\LabResultIdGenerator;
+use App\Helpers\RandomCodeGenerator;
 use DB;
 use Illuminate\Support\ServiceProvider;
 use Log;
@@ -29,8 +31,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(LabResultHashidGenerator::class, function () {
             return new LabResultHashidGenerator(config('app.labresult_id_salt'));
-        });
+        });        
 
         $this->app->bind(LabResultIdGenerator::class, LabResultHashidGenerator::class);
+        $this->app->bind(InvitationCodeGenerator::class, RandomCodeGenerator::class);
     }
 }

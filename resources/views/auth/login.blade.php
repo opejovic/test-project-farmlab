@@ -15,7 +15,7 @@
         <p> Excepteur sint occaecat cupidatat non
         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
-        <p>Login in. To start browsing.</p>
+        <p>Login, to start browsing.</p>
         <form method="POST" class="m-t" role="form" action="{{ route('login') }}">
             @csrf
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

@@ -7,21 +7,19 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Welcome extends Mailable
+class InvitationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $newUser;
-    public $token;
+    public $invitation;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($newUser, $token)
+    public function __construct($invitation)
     {
-        $this->newUser = $newUser;
-        $this->token = $token;
+        $this->invitation = $invitation;
     }
 
     /**
@@ -31,7 +29,7 @@ class Welcome extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.welcome');
+        return $this->markdown('emails.invitation-email')
+                    ->subject("You're invited to join FarmLab");
     }
 }
-

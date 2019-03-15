@@ -12,8 +12,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class LabResultCreated
 {
-
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     public $labresult;
 
     /**

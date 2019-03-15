@@ -28,7 +28,7 @@ class AddCreatedByToPracticesTable extends Migration
     {
         Schema::table('practices', function (Blueprint $table) {
             $table->dropForeign(['created_by']);
-            $table->dropColumn('created)');
+            $table->dropColumn('created_by');
         });
     }
 }

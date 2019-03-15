@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\InvitationCode;
 use App\Http\Requests\LabMemberRequest;
 use App\Models\File;
+use App\Models\Invitation;
 use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
