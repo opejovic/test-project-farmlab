@@ -34,7 +34,7 @@
             <div class="col-lg-3">
                 <div class="contact-box center-version">
 
-                <a href="{{ route('members.show', $member->id) }}">
+                <a href="{{ route('members.show', $member->hash_id) }}">
 
                     <img alt="image" class="img-circle" src="images/profiles/{{ $member->id }}.jpg" 
                         onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">

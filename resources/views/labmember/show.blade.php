@@ -20,15 +20,17 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-1">
+            @if($member->id !== auth()->id())
+            <div class="col-lg-1">
 
-                <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
-                    @csrf
-                    @method('DELETE')
+                    <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
+                        @csrf
+                        @method('DELETE')
 
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
-                </form>
-        </div>
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
+                    </form>
+            </div>
+            @endif
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 

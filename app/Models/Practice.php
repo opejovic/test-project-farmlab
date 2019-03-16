@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Facades\UserHashid;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -41,12 +42,14 @@ class Practice extends Model
      */
     public function addVet($name, $email)
     {
-        $this->vets()->create([
+        $vet = $this->vets()->create([
             'name'        => $name,
             'email'       => $email,
             'password'    => Hash::make(str_random(10)),
             'type'        => User::VET,
         ]);
+
+        $vet->update(['hash_id' => UserHashId::generateFor($vet)]);
     }
 
     /**

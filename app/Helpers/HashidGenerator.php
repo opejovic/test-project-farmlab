@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-class LabResultHashidGenerator implements LabResultIdGenerator
+class HashidGenerator implements LabResultIdGenerator, UserIdGenerator
 {
     private $hashids;
     
@@ -19,14 +19,14 @@ class LabResultHashidGenerator implements LabResultIdGenerator
 	}
 	
 	/**
-     * Encode lab result id to generate a hash.
+     * Encode model id to generate a hash.
      *
-     * @param $labResult
+     * @param $model (User, Practice, LabResult)
      *
      * @return string
      */
-	public function generateFor($labResult)
+	public function generateFor($model)
 	{
-		return $this->hashids->encode($labResult->id);
+		return $this->hashids->encode($model->id);
 	}
 }

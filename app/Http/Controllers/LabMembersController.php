@@ -53,9 +53,9 @@ class LabMembersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($hashid)
     {
-        $member = User::labMembers()->findOrFail($id);
+        $member = User::findByHashid($hashid);
 
         return view('labmember.show', [
             'member' =>  $member, 
