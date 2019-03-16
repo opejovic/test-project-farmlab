@@ -20,7 +20,7 @@
                 </li>
             </ol>
         </div>
-            @if(! $member->id == auth()->id())
+            @if($member->id !== auth()->id())
             <div class="col-lg-1">
 
                     <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">

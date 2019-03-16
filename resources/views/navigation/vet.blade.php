@@ -1,5 +1,5 @@
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="{{ route('vets.show', auth()->id()) }}">{{ __('Profile') }}</a></li>
+                        <li><a href="{{ route('vets.show', auth()->user()->hash_id) }}">{{ __('Profile') }}</a></li>
                         <li><a href="#">{{ __('Contact') }}</a></li>
                         <li><a href="#">{{ __('Mailbox') }}</a></li>
                         <li class="divider"></li>
