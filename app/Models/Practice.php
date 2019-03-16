@@ -17,6 +17,16 @@ class Practice extends Model
     protected $guarded = [];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'hash_id';
+    }
+
+    /**
      * Practice can have many vets.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -35,6 +45,27 @@ class Practice extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    /**
+     * Practice admin is created as part of the practice creation process. When Practice is created,
+     * addAdmin method is triggered.
+     *
+     * @return void
+     */
+    public function addAdmin()
+    {
+        $admin = $this->vets()->create([
+            'name'        => request('admin_name'),
+            'email'       => request('email'),
+            'password'    => Hash::make(str_random(10)),
+            'type'        => User::PRACTICE_ADMIN,
+        ]);
+
+        $admin->update([
+            'hash_id' => UserHashid::generateFor($admin)
+        ]); 
+    }
+
 
     /**
      * PRACTICE_ADMIN can add new vet to their practice.

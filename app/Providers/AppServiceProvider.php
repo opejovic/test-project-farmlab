@@ -6,6 +6,7 @@ use App\Helpers\HashidGenerator;
 use App\Helpers\InvitationCodeGenerator;
 use App\Helpers\LabResultHashidGenerator;
 use App\Helpers\LabResultIdGenerator;
+use App\Helpers\PracticeIdGenerator;
 use App\Helpers\RandomCodeGenerator;
 use App\Helpers\UserIdGenerator;
 use DB;
@@ -39,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(UserIdGenerator::class, function () {
             return new HashidGenerator(config('app.user_id_salt'));
+        });
+
+        $this->app->bind(PracticeIdGenerator::class, function () {
+            return new HashidGenerator(config('app.practice_id_salt'));
         });        
     }
 }

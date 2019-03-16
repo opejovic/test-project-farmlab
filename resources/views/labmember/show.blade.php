@@ -104,7 +104,7 @@
                     <div class="ibox-content">
                         <h3>Practices created</h3>
                         <ul class="list-unstyled file-list">
-                            @foreach ($member->createdPractices as $practice)
+                            @foreach ($member->practices as $practice)
                                 <li><a href=""><i class="fa fa-ambulance"></i> {{ $practice->name }}</a></li>
                             @endforeach
                         </ul>

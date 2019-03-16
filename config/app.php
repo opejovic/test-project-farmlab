@@ -215,4 +215,5 @@ return [
     
     'labresult_id_salt' => env('LABRESULT_ID_SALT'),
     'user_id_salt'      => env('USER_ID_SALT'),
+    'practice_id_salt'  => env('PRACTICE_ID_SALT'),
 ];
