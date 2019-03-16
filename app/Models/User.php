@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\UserCreated;
+use App\Facades\UserHashid;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -95,16 +96,29 @@ class User extends Authenticatable
     }
 
     /**
+     * Finds the user by its hashid.
+     *
+     * @return void
+     * @author 
+     */
+    public static function findByHashid($hashid)
+    {
+        return self::where('hash_id', $hashid)->firstOrFail();
+    }
+
+    /**
      * User FARM_LAB_ADMIN can add a FARM_LAB_MEMBER
      */
     public function addFarmLabMember()
     {
-        $this->create([
+        $labMember = $this->create([
             'name'     => request('name'),
             'email'    => request('email'),
             'password' => Hash::make(str_random(10)),
             'type'     => self::FARM_LAB_MEMBER,
         ]);
+
+        $labMember->update(['hash_id' => UserHashid::generateFor($labMember)]);
     }
 
     /**
@@ -118,13 +132,15 @@ class User extends Authenticatable
             'created_by'  => $this->id
         ]);
 
-        $this->create([
+        $practiceAdmin = $this->create([
             'name'        => request('admin_name'),
             'email'       => request('email'),
             'password'    => Hash::make(str_random(10)),
             'type'        => self::PRACTICE_ADMIN,
-            'practice_id' => $practice->id
+            'practice_id' => $practice->id,
         ]);
+
+        $practiceAdmin->update(['hash_id' => UserHashid::generateFor($practiceAdmin)]);
     }
 
     /**
