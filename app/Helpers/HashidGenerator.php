@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-class HashidGenerator implements LabResultIdGenerator, UserIdGenerator
+class HashidGenerator implements LabResultIdGenerator, UserIdGenerator, PracticeIdGenerator
 {
     private $hashids;
     

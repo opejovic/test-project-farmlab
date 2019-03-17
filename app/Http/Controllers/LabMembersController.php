@@ -59,7 +59,7 @@ class LabMembersController extends Controller
 
         return view('labmember.show', [
             'member' =>  $member, 
-            'practicesCreated' => $member->createdPractices->count(),
+            'practicesCreated' => $member->practices->count(),
         ]);
     }
 

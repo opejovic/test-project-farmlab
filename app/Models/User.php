@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\UserCreated;
+use App\Facades\PracticeHashid;
 use App\Facades\UserHashid;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -80,7 +81,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function createdPractices()
+    public function practices()
     {
         return $this->hasMany(Practice::class, 'created_by');
     }    
@@ -127,20 +128,13 @@ class User extends Authenticatable
      */
     public function addPractice()
     {
-        $practice = Practice::create([
-            'name'        => request('name'),
-            'created_by'  => $this->id
+        $practice = $this->practices()->create([
+            'name' => request('name'),
         ]);
 
-        $practiceAdmin = $this->create([
-            'name'        => request('admin_name'),
-            'email'       => request('email'),
-            'password'    => Hash::make(str_random(10)),
-            'type'        => self::PRACTICE_ADMIN,
-            'practice_id' => $practice->id,
-        ]);
+        $practice->update(['hash_id' => PracticeHashid::generateFor($practice)]);
 
-        $practiceAdmin->update(['hash_id' => UserHashid::generateFor($practiceAdmin)]);
+        $practice->addAdmin();
     }
 
     /**
@@ -176,7 +170,7 @@ class User extends Authenticatable
      */
     public function getCreatedPracticesThisMonthAttribute()
     {
-        return $this->createdPractices()
+        return $this->practices()
             ->where('created_at', '>=', now()->startOfMonth())
             ->count();
     }
@@ -188,7 +182,7 @@ class User extends Authenticatable
      */
     public function getCountCreatedPracticesAttribute()
     {
-        return $this->createdPractices->count();
+        return $this->practices->count();
     }
 
     /**
