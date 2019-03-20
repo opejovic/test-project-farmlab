@@ -158,9 +158,9 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isOfType($type1, $type2 = null)
+    public function isOfType($typeA, $typeB = null)
     {
-        return auth()->user()->type === $type1 || auth()->user()->type === $type2;
+        return collect([$typeA, $typeB])->contains(auth()->user()->type);
     }
 
     /**

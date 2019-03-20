@@ -63,7 +63,7 @@ class Practice extends Model
 
         $admin->update([
             'hash_id' => UserHashid::generateFor($admin)
-        ]); 
+        ]);
     }
 
 
