@@ -16,7 +16,7 @@
                         @if (\Auth::user()->isOfType(App\Models\User::ADMIN))
                             <li><a href="{{ route('practices.index') }}">Practices</a></li>
                             <li>
-                                <a href="{{ route('practices.show', $vet->practice_id) }}">
+                                <a href="{{ route('practices.show', $vet->practice->hash_id) }}">
                                     {{ $vet->practice->name }}
                                 </a>
                             </li>

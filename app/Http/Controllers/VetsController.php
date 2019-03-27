@@ -65,7 +65,7 @@ class VetsController extends Controller
     public function show($hashid)
     {  
         $vet = User::findByHashid($hashid);
-        
+
         abort_unless(Auth::user()->practice_id == $vet->practice_id || 
                      Auth::user()->isOfType(User::ADMIN), 
                      404);

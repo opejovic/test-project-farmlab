@@ -6,7 +6,6 @@ use App\Events\LabResultCreated;
 use App\Facades\LabResultHashid;
 use App\Mail\NewResultNotification;
 use App\Models\Practice;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
@@ -66,8 +65,8 @@ class LabResult extends Model
             'vet_id'        => auth()->id(),
             'vet_comment'   => $comment,
             'vet_indicator' => $indicator,
-            'processed_at'  => Carbon::now(),
-        ]);        
+            'processed_at'  => $this->freshTimestamp(),
+        ]);
     }
 
     /**
