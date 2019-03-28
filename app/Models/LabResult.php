@@ -9,6 +9,7 @@ use App\Models\Practice;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class LabResult extends Model
 {
@@ -106,41 +107,19 @@ class LabResult extends Model
     }
 
     /**
-     * @param File $file
-     *  Parse the result from the csv file, and save it to DB.
+     *  Create a lab result using the results from the parsed csv file.
+     *  
+     *  @param CsvParser $parsedResults
      */
-    public static function parse($file)
+    public static function generateFrom($parsedResults)
     {
-        $handle = fopen($file, 'r');
-        fgetcsv($handle);         // Adding this line will skip the reading of the 
-        // first line from the csv file and the reading process will begin 
-        // from the second line onwards. 
-        // ((fgetcsv parses the first line (header) and returns an array 
-        // with those columns. Implicitly, the file pointer is now on the 2nd row.))
-
-        while (($column = fgetcsv($handle, 1000, ",")) !== FALSE) {
-
-            $labresult = self::create([
-                'herd_number'     => $column[0],
-                'date_of_arrival' => $column[1],
-                'date_of_test'    => $column[2],
-                'animal_id'       => $column[3],
-                'lab_code'        => $column[4],
-                'test_name'       => $column[5],
-                'type_of_samples' => $column[6],
-                'reading'         => $column[7],
-                'interpretation'  => $column[8],
-                'farmer_name'     => $column[9],
-                'vet_comment'     => $column[10],
-                'vet_indicator'   => $column[11],
-                'practice_id'     => $column[12],
-                'practice_name'   => Practice::name($column[12]),
-                'vet_id'          => $column[13],
+        $parsedResults->each(function ($result) {
+            $labresult = self::create($result);
+            $labresult->update([
+                'practice_name' => Practice::name($result['practice_id']),
+                'hash_id' => LabResultHashid::generateFor($labresult),
             ]);
-
-            $labresult->update(['hash_id' => LabResultHashid::generateFor($labresult)]);
-         }
-        fclose($handle);
+        });
     }
 
     /**
