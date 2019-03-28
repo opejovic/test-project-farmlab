@@ -4,12 +4,9 @@ namespace App\Models;
 
 use App\Events\LabResultCreated;
 use App\Facades\LabResultHashid;
-use App\Mail\NewResultNotification;
 use App\Models\Practice;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class LabResult extends Model
 {
@@ -114,11 +111,14 @@ class LabResult extends Model
     public static function generateFrom($parsedResults)
     {
         $parsedResults->each(function ($result) {
+            
             $labresult = self::create($result);
+            
             $labresult->update([
                 'practice_name' => Practice::name($result['practice_id']),
-                'hash_id' => LabResultHashid::generateFor($labresult),
+                'hash_id'       => LabResultHashid::generateFor($labresult),
             ]);
+
         });
     }
 
