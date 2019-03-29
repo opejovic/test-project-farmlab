@@ -30,10 +30,11 @@ class CsvParser
 	}    
 
 	/**
-	 * Combines the first line (header, eg. 'herd_number') of the lines collection 
-	 * and the rest of the lines (results, eg. '555555') into an associative array.
-	 * Eg. ['herd_number' => 555555]; 
-	 *
+	 * Maps the first array of the collection as keys (eg. 'herd_number', 'lab_code') 
+	 * and the rest of the collections arrays as values (results, eg. '555555', '123456') into an associative array.
+	 * Eg. ['herd_number' => 555555,
+	 *      'lab_code'    => 123456,];
+	 *	    
 	 * @return array
 	 */
     private function toAssocArray()
