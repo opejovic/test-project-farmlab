@@ -110,15 +110,14 @@ class LabResult extends Model
      */
     public static function generateFrom($parsedResults)
     {
-        $parsedResults->each(function ($result) {
-            
-            $labresult = self::create($result);
-            
-            $labresult->update([
-                'practice_name' => Practice::name($result['practice_id']),
-                'hash_id'       => LabResultHashid::generateFor($labresult),
-            ]);
-
+        $parsedResults->chunk(5)->each(function ($chunk) {
+            $chunk->each(function ($result) {
+                $labresult = self::create($result);
+                $labresult->update([
+                    'practice_name' => Practice::name($result['practice_id']),
+                    'hash_id'       => LabResultHashid::generateFor($labresult),
+                ]);
+            });
         });
     }
 
