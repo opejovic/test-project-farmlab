@@ -15,33 +15,33 @@ class CsvParser
      */
 	private function __construct($file)
 	{
-		$this->file = Storage::get("labresults/{$file->getClientOriginalName()}");
+		$this->file = trim(Storage::get("labresults/{$file->getClientOriginalName()}"));
 	}
 
 	/**
 	 * Simply returns new instance of CsvParser passing in the file, 
-	 * and then calling the arrangeData method.
+	 * and then calls the toAssocArray method.
 	 *
-	 * @var $file 
+	 * @var $file
 	 */
 	public static function parse($file)
 	{
-		return (new self($file))->arrangeData();
+		return (new self($file))->toAssocArray();
 	}    
 
 	/**
-	 * Combines the first line of the lines collection (making it the keys of the array) 
-	 * and the rest of the lines (making them values of the array).
+	 * Combines the first line (header, eg. 'herd_number') of the lines collection 
+	 * and the rest of the lines (results, eg. '555555') into an associative array.
 	 * Eg. ['herd_number' => 555555]; 
 	 *
 	 * @return array
 	 */
-    private function arrangeData()
+    private function toAssocArray()
     {
         $lines = $this->toCollection();
 
-        return $lines->slice(1, -1)->map(function ($result) use ($lines) {
-            return array_combine($lines->first()->all(), $result->all());
+        return $lines->slice(1)->map(function ($result) use ($lines) {
+            return $lines->first()->combine($result)->all();
         });
     }
 	
@@ -52,9 +52,8 @@ class CsvParser
 	 */
     private function toCollection()
     {
-        return collect(explode("\n", $this->file))
-            ->map(function ($line) {
-                return collect(explode(',', $line));
-            });
+        return collect(explode("\n", $this->file))->map(function ($line) {
+            return collect(explode(',', $line));
+        });
     }
 }
