@@ -80,7 +80,7 @@ class File extends Model
 
     /**
      * Upload the file from the request to storage (if its not a duplicate),
-     * and then trigger the LabResult generateFrom method which needs parsed file.
+     * and then trigger the LabResult createFrom method which needs parsed file.
      *
      * @return void
      */
