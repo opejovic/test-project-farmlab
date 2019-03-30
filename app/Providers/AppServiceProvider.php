@@ -9,7 +9,9 @@ use App\Helpers\LabResultIdGenerator;
 use App\Helpers\PracticeIdGenerator;
 use App\Helpers\RandomCodeGenerator;
 use App\Helpers\UserIdGenerator;
+use App\Models\Practice;
 use DB;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Log;
 
@@ -22,7 +24,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Collection::macro('mergePracticeName', function () {
+            return $this->map(function ($result) {
+                return $result->merge([
+                    'practice_name' => Practice::name($result['practice_id'])
+                ])->all();
+            });
+        });
     }
 
     /**

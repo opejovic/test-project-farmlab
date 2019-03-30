@@ -31,10 +31,13 @@ class CsvParser
 
 	/**
 	 * Maps the first array of the collection as keys (eg. 'herd_number', 'lab_code') 
-	 * and the rest of the collections arrays as values (results, eg. '555555', '123456') into an associative array.
-	 * Eg. ['herd_number' => 555555,
-	 *      'lab_code'    => 123456,];
+	 * and the rest of the collections arrays as values (results, eg. '555555', '123456') 
+	 * into an associative array.
+	 * Eg. ['herd_number' => 555555, 'lab_code' => 123456 ... ];
 	 *	    
+	 * After that merges the array with the practice name 
+	 * using mergePracticeName collection macro.
+	 * 
 	 * @return array
 	 */
     private function toAssocArray()
@@ -42,8 +45,8 @@ class CsvParser
         $lines = $this->toCollection();
 
         return $lines->slice(1)->map(function ($result) use ($lines) {
-            return $lines->first()->combine($result)->all();
-        });
+            return $lines->first()->combine($result);
+        })->mergePracticeName();
     }
 	
 	/**

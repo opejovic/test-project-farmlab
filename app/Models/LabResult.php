@@ -54,6 +54,21 @@ class LabResult extends Model
     }
 
     /**
+     *  Create lab result using the results from the parsed csv file.
+     *
+     *  @param CsvParser $parsedResults
+     */
+    public static function createFrom($parsedResults)
+    {
+        $parsedResults->chunk(5)->each(function ($chunk) {
+            $chunk->each(function ($result) {
+                $labresult = self::create($result);
+                $labresult->update(['hash_id' => LabResultHashid::generateFor($labresult)]);
+            });
+        });
+    }
+
+    /**
      * Vets processes the result via form/modal.
      *
      */
@@ -103,23 +118,6 @@ class LabResult extends Model
         return $this->processed_at !== null;
     }
 
-    /**
-     *  Create a lab result using the results from the parsed csv file.
-     *  
-     *  @param CsvParser $parsedResults
-     */
-    public static function generateFrom($parsedResults)
-    {
-        $parsedResults->chunk(5)->each(function ($chunk) {
-            $chunk->each(function ($result) {
-                $labresult = self::create($result);
-                $labresult->update([
-                    'practice_name' => Practice::name($result['practice_id']),
-                    'hash_id'       => LabResultHashid::generateFor($labresult),
-                ]);
-            });
-        });
-    }
 
     /**
      * Returns the status of the labresult - processed or unprocessed.
