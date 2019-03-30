@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Events\LabResultCreated;
 use App\Facades\LabResultHashid;
-use App\Models\Practice;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
