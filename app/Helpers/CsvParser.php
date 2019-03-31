@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Practice;
 use Illuminate\Support\Facades\Storage;
 
 class CsvParser
@@ -36,7 +37,7 @@ class CsvParser
 	 * Eg. ['herd_number' => 555555, 'lab_code' => 123456 ... ];
 	 *	    
 	 * After that merges the array with the practice name 
-	 * using mergePracticeName collection macro.
+	 * using mergePracticeName method.
 	 * 
 	 * @return array
 	 */
@@ -46,7 +47,7 @@ class CsvParser
 
         return $lines->slice(1)->map(function ($result) use ($lines) {
             return $lines->first()->combine($result);
-        })->mergePracticeName();
+        })->pipe([$this, 'mergePracticeName']);
     }
 	
 	/**
@@ -58,6 +59,20 @@ class CsvParser
     {
         return collect(explode("\n", $this->file))->map(function ($line) {
             return collect(explode(',', $line));
+        });
+    }
+
+    /**
+     * Adds the practice_name (key, value pair) to the array based on the practice_id field.
+     *
+     * @return array
+     */
+    public function mergePracticeName($results)
+    {
+        return $results->map(function ($result) {
+            return $result->merge([
+                'practice_name' => Practice::name($result['practice_id'])
+            ])->all();
         });
     }
 }
