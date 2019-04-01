@@ -10,6 +10,7 @@ use App\Helpers\PracticeIdGenerator;
 use App\Helpers\RandomCodeGenerator;
 use App\Helpers\UserIdGenerator;
 use DB;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Log;
 

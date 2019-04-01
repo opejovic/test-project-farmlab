@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use App\Events\FileUploaded;
+use App\Helpers\CsvParser;
 use App\Models\LabResult;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-
 
 class File extends Model
 {
@@ -81,8 +80,9 @@ class File extends Model
 
     /**
      * Upload the file from the request to storage (if its not a duplicate),
-     * and then trigger the LabResult parseAndSave method.
+     * and then trigger the LabResult createFrom method which needs parsed file.
      *
+     * @return void
      */
     public function upload()
     {
@@ -93,12 +93,13 @@ class File extends Model
 
         $this->saveFile($fileName, Storage::putFileAs('labresults', $file, $fileName));
 
-        LabResult::parse($file);
+        LabResult::createFrom(CsvParser::parse($file));
     }
 
     /**
-     * Retruns the name of the files uploader.
+     * Returns the name of the files uploader.
      *
+     * @return string
      */
     public function getUploaderNameAttribute()
     {
@@ -108,6 +109,7 @@ class File extends Model
     /**
      * Returns the time of the file upload.
      *
+     * @return string
      */
     public function getUploadedAtAttribute()
     {
@@ -117,7 +119,7 @@ class File extends Model
     /**
      * Returns the number of the uploaded files for the current month.
      *
-     * @return Integer
+     * @return integer
      */
     public function getUploadedThisMonthAttribute()
     {
@@ -128,7 +130,7 @@ class File extends Model
     /**
      * Returns the number of the all uploaded files.
      *
-     * @return Integer
+     * @return integer
      */
     public function getCountAllAttribute()
     {

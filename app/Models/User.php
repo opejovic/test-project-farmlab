@@ -148,13 +148,13 @@ class User extends Authenticatable
     }
 
     /**
-     * If the authenticated user is of type1 or type2 return true.
+     * If the authenticated user is of provided type return true.
      * 
      * Using this helper function for middleware MustBeFarmlabMember, 
      * MustBePracticeMember, MustBePracticeAdmin classes.
      *
-     * @param      $type1 (Constant - User type)
-     * @param null $type2 (Constant - User type)
+     * @param      $typeA (Constant - User type)
+     * @param null $typeB (Constant - User type)
      *
      * @return bool
      */
