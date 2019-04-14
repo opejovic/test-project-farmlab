@@ -23,6 +23,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('practices',	'PracticesController')->middleware('farmlab');
 	Route::resource('vets', 		'VetsController')->middleware('practice.admin');
     Route::resource('labresults',	'LabResultsController')->middleware('practice');
+
+    // Work in progress
+    Route::get('vets/{vet}', 'VetsController@show')->name('vets.show')->middleware('practice');
 });
 
 

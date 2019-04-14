@@ -20,7 +20,7 @@
     <div id="wrapper">
         
         <!-- Navigation -->
-        @include ('layouts.navigation')
+        @include ('layouts.navigation', ['user' => auth()->user()])
 
         <!-- Page wraper -->
         <div id="page-wrapper" class="gray-bg">
