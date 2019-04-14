@@ -17,7 +17,7 @@
                 </a>
             </li>
             
-            @else
+        @else
             <li>
                 <a href="{{ route('logout') }}" 
                     onclick="event.preventDefault();
