@@ -18,6 +18,7 @@ class ViewingInvitationTest extends TestCase
 	    $invitation = factory(Invitation::class)->create([
 	    	'user_id' => null,
 	    	'code' => 'TESTCODE1234',
+	    	'email' => 'john@example.com',
 	    ]);
 
 	    $response = $this->get('/invitations/TESTCODE1234');
@@ -33,6 +34,7 @@ class ViewingInvitationTest extends TestCase
 	    $invitation = factory(Invitation::class)->create([
 	    	'user_id' => 1,
 	    	'code' => 'TESTCODE1234',
+	    	'email' => 'john@example.com',
 	    ]);
 
 	    $response = $this->get('/invitations/TESTCODE1234');

@@ -1,5 +1,7 @@
 <?php
 
+use App\Facades\UserHashid;
+use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 
 /*
@@ -13,6 +15,13 @@ use Illuminate\Foundation\Inspiring;
 |
 */
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->describe('Display an inspiring quote');
+Artisan::command('invite-admin {name} {email}', function ($name, $email) {
+	$admin = User::create([
+		'name' => $name,
+		'email' => $email,
+		'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+		'type' => User::ADMIN,
+	]);
+
+	$admin->update(['hash_id' => UserHashid::generateFor($admin)]);
+})->describe('Create an FarmLab Administrator. Name and email are required.');

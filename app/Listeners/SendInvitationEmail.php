@@ -31,10 +31,6 @@ class SendInvitationEmail
      */
     public function handle(UserCreated $event)
     {
-        if ($event->user->type === User::ADMIN) {
-            return false;
-        }
-
         Invitation::create([
             'email' => $event->user->email,
             'code'  => InvitationCode::generate()

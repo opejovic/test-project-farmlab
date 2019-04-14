@@ -32,8 +32,8 @@ class InviteUsersTest extends TestCase
             'type'     => User::FARM_LAB_MEMBER,
 	    ]);
 
-	    $this->assertEquals(1, Invitation::count());
-	    $invitation = Invitation::first();
+	    $this->assertEquals(2, Invitation::count());
+	    $invitation = Invitation::where('email', 'john@example.com')->first();
 	    $this->assertEquals('john@example.com', $invitation->email);
 	    $this->assertEquals('TESTCODE1234', $invitation->code);
 	    Mail::assertQueued(InvitationEmail::class, function($mail) use ($invitation) {
