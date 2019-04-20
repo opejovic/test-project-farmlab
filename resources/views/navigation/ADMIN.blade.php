@@ -10,10 +10,6 @@
     @endslot
 @endcomponent
 
-<li class="{{ isActiveRoute('home')}}">
-    <a href="{{ route('home') }}"><i class="fa fa-th-large"></i> <span class="nav-label">{{ __('Home') }}</span></a>
-</li>
-
 <li class="{{ isActiveRoute('members.index') }} 
            {{ isActiveRoute('members.create') }} 
            {{ isActiveRoute('members.show') }}">
