@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Events\FileUploaded;
 use App\Helpers\CsvParser;
 use App\Models\LabResult;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +19,7 @@ class File extends Model
     /**
      * A File has an uploader.
      *
-     * @return App\Models\User::class
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo ::class
      */
     public function uploader()
     {

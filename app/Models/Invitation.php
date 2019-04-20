@@ -19,6 +19,7 @@ class Invitation extends Model
     /**
      * Finds the invitation by its code.
      *
+     * @param $code
      * @return Illuminate\Database\Eloquent\Model
      */
     public static function findByCode($code)
