@@ -14,7 +14,7 @@
                     </span>
                 </a>
 
-            @include("navigation.{$user->type}")
+            @include('navigation.' . strtolower($user->type))
         </ul>
 
     </div>
