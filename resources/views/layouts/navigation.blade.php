@@ -16,6 +16,5 @@
 
             @include('navigation.' . strtolower($user->type))
         </ul>
-
     </div>
 </nav>
