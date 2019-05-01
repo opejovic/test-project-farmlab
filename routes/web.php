@@ -21,7 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('members',		'LabMembersController')->middleware('farmlab.admin');
     Route::resource('files',		'FilesController')->middleware('farmlab');
     Route::resource('practices',	'PracticesController')->middleware('farmlab');
-	Route::resource('vets', 		'VetsController')->middleware('practice.admin');
+	Route::resource('vets', 		'VetsController');
     Route::resource('labresults',	'LabResultsController')->middleware('practice');
 });
 

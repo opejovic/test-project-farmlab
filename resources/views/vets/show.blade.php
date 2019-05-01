@@ -56,7 +56,7 @@
                                 </small>
                             </div>
 
-                            @if (auth()->id() !== $vet->id)
+                            @can('delete', $vet)
                                <form action="{{ route('vets.destroy', $vet->id) }}" method="POST" id="form">
                                    @csrf
                                    @method('DELETE')
@@ -65,7 +65,7 @@
                                         Delete
                                     </button>
                                </form>
-                           @endif
+                            @endcan
 
                         </div>
                     </div>
