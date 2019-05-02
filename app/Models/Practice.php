@@ -4,11 +4,14 @@ namespace App\Models;
 
 use App\Facades\UserHashid;
 use App\Models\User;
+use App\Traits\HandlesLabResults;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
 class Practice extends Model
 {
+    use HandlesLabResults;
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -138,28 +141,6 @@ class Practice extends Model
         return $this->vets()->whereType(User::PRACTICE_ADMIN);
     }
 
-    /**
-     * Returns the percentage of processed results for the practice.
-     *
-     * @return integer
-     */
-    public function processedResultsPercentage()
-    {
-        return number_format(
-            ($this->results->filter->isProcessed()->count() / $this->results->count()) * 100
-        );
-    }
-
-    /**
-     * Returns the percentage of processed results for the practice, if there are any, else returns zero.
-     *
-     * @return integer
-     */
-    public function getProcessedResultsPercentageAttribute()
-    {
-        return $this->results->count() > 0 ? $this->processedResultsPercentage() : 0;
-    }
-    
     /**
      * Returns the name of the practice creator.
      *

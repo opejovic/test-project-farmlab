@@ -5,13 +5,14 @@ namespace App\Models;
 use App\Events\UserCreated;
 use App\Facades\PracticeHashid;
 use App\Facades\UserHashid;
+use App\Traits\HandlesLabResults;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HandlesLabResults;
    
     /**
      * User types.
@@ -225,28 +226,6 @@ class User extends Authenticatable
     public function getUploadedFilesAttribute()
     {
         return $this->files->count();
-    }
-
-    /**
-     * Returns the percentage of processed results for the vet.
-     *
-     * @return integer
-     */
-    public function processedResultsPercentage()
-    {
-        return number_format(
-            ($this->results()->processed()->count() / $this->results->count()) * 100
-        );        
-    }
-
-    /**
-     * Returns the percentage of processed results for the vet, if there are any, otherwise returns 0.
-     *
-     * @return integer
-     */
-    public function getProcessedResultsPercentageAttribute()
-    {   
-        return $this->results->count() > 0 ? $this->processedResultsPercentage() : 0;
     }
 
     /**
