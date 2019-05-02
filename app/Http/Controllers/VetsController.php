@@ -66,9 +66,7 @@ class VetsController extends Controller
     {  
         $vet = User::findByHashid($hashid);
 
-        abort_unless(Auth::user()->practice_id == $vet->practice_id || 
-                     Auth::user()->isOfType(User::ADMIN), 
-                     404);
+        $this->authorize('view', $vet);
 
         return view('vets.show', [
             'vet'              => $vet, 
@@ -112,7 +110,7 @@ class VetsController extends Controller
      */
     public function destroy(User $vet)
     {
-        abort_unless(Auth::user()->practice_id == $vet->practice_id, 403);
+        $this->authorize('delete', $vet);
 
         $vet->delete();
 
