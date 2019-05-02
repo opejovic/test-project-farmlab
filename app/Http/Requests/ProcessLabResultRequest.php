@@ -23,9 +23,11 @@ class ProcessLabResultRequest extends FormRequest
      */
     public function rules()
     {
+        $keyHeldDown = 'not_regex:/(.)\\1{4,}/';
+
         return [
-            'vet_comment' => ['required', 'min:10', 'max:255'],
-            'vet_indicator' => ['required', 'min:10', 'max:255']
+            'vet_comment' => ['required', 'min:10', 'max:255', $keyHeldDown],
+            'vet_indicator' => ['required', 'min:10', 'max:255', $keyHeldDown]
         ];
     }
 }

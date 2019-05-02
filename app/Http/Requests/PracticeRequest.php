@@ -23,10 +23,12 @@ class PracticeRequest extends FormRequest
      */
     public function rules()
     {
+        $keyHeldDown = 'not_regex:/(.)\\1{4,}/';
+
         return [
-            'name'       => ['required', 'unique:practices', 'min:3'],
-            'admin_name' => ['required', 'min:3'],
-            'email'      => ['required', 'email', 'unique:users'],
+            'name'       => ['required', 'unique:practices', 'min:3', $keyHeldDown],
+            'admin_name' => ['required', 'min:3', $keyHeldDown],
+            'email'      => ['required', 'email', 'unique:users', $keyHeldDown],
         ];
     }
 }

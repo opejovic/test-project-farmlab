@@ -23,9 +23,11 @@ class LabMemberRequest extends FormRequest
      */
     public function rules()
     {
+        $keyHeldDown = 'not_regex:/(.)\\1{4,}/';
+
         return [
-            'name'     => ['required'],
-            'email'    => ['required', 'email', 'unique:users'],
+            'name'     => ['required', $keyHeldDown],
+            'email'    => ['required', 'email', 'unique:users', $keyHeldDown]
         ];
     }
 }
