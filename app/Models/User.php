@@ -124,8 +124,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Farm lab team member can add a new practice, and practice admin is created in that process. One can't be created
-     * without the other.
+     * Farm lab team member can add a new practice, 
+     * and practice admin is created in that process. 
+     * One can't be created without the other.
+     *
      */
     public function addPractice()
     {
