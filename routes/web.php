@@ -23,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('practices',	'PracticesController')->middleware('farmlab');
 	Route::resource('vets', 		'VetsController');
     Route::resource('labresults',	'LabResultsController')->middleware('practice');
+	
+	Route::post('/users/{user}/avatars', 'UserAvatarController@store');
 });
-
 
