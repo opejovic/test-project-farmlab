@@ -20,8 +20,8 @@
                 </li>
             </ol>
         </div>
-            @if($member->id !== auth()->id())
-            <div class="col-lg-1">
+            @can('seeDelete', $member)
+                <div class="col-lg-1">
 
                     <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
                         @csrf
@@ -29,8 +29,8 @@
 
                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
                     </form>
-            </div>
-            @endif
+                </div>
+            @endcan
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 
@@ -39,11 +39,25 @@
             <div class="col-md-6">
 
                 <div class="profile-image">
-                    <img alt="image" class="img-circle circle-border m-b-md" src="/images/profiles/{{ $member->id }}.jpg" 
-                    onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">
+                    <img alt="image" 
+                        class="img-circle circle-border m-b-md" 
+                        src="/storage/{{ $member->avatar() }}">
+
+                    @can('update', $member)
+                        <form method="POST" 
+                            action="{{ route('avatar', $member) }}" 
+                            enctype="multipart/form-data">
+                        @csrf 
+                            <div class="form-group">
+                                <input type="file" id="avatar" name="avatar">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-xs">Upload avatar</button>
+                        </form>
+                    @endcan
                 </div>
+                        @include('layouts.errors')
                 <div class="profile-info">
-                    <div class="">
+                    <div>
                         <div>
                             <h2 class="no-margins">
                                 {{ $member->name }}
@@ -105,7 +119,7 @@
                         <h3>Practices created</h3>
                         <ul class="list-unstyled file-list">
                             @foreach ($member->practices as $practice)
-                                <li><a href=""><i class="fa fa-ambulance"></i> {{ $practice->name }}</a></li>
+                                <li><a href="{{ route('practices.show', $practice) }}"><i class="fa fa-ambulance"></i> {{ $practice->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>

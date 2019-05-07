@@ -239,4 +239,15 @@ class User extends Authenticatable
     {
         return ucwords(strtolower(str_replace('_', ' ', auth()->user()->type)));
     }
+
+    /**
+     * summary
+     *
+     * @return void
+     * @author 
+     */
+    public function avatar()
+    {
+        return $this->avatar_path ?: 'avatars/default.jpg';
+    }
 }

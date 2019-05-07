@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Models\User' => 'App\Policies\VetPolicy',
+        'App\Models\User' => 'App\Policies\UserPolicy',
     ];
 
     /**
@@ -26,8 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        \Gate::before(function ($user) {
-            if ($user->type === User::ADMIN) return true;
-        });
+        // \Gate::before(function ($user) {
+        //     if ($user->type === User::ADMIN) return true;
+        // });
     }
 }

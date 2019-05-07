@@ -19,7 +19,7 @@ class UserAvatarController extends Controller
     		'avatar' => [
     			'required', 
     			'image', 
-        		Rule::dimensions()->maxWidth(500)->maxHeight(500),
+        		// Rule::dimensions()->maxWidth(500)->maxHeight(500),
     		]
     	]); 
 

@@ -40,8 +40,19 @@
                 <div class="col-md-6">
 
                     <div class="profile-image">
-                        <img alt="image" class="img-circle circle-border m-b-md" src="images/profiles/{{ $vet->id }}.jpg" 
-                        onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">
+                        <img alt="image" class="img-circle circle-border m-b-md" src="/storage/{{ $vet->avatar() }}">
+
+                        @can('update', $vet)
+                            <form method="POST" 
+                                action="{{ route('avatar', $vet) }}" 
+                                enctype="multipart/form-data">
+                            @csrf 
+                                <div class="form-group">
+                                    <input type="file" id="avatar" name="avatar">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-xs">Upload avatar</button>
+                            </form>
+                        @endcan
                     </div>
                     <div class="profile-info">
                         <div class="">
