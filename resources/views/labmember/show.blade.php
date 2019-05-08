@@ -20,17 +20,6 @@
                 </li>
             </ol>
         </div>
-            @can('seeDelete', $member)
-                <div class="col-lg-1">
-
-                    <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
-                    </form>
-                </div>
-            @endcan
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 
@@ -55,7 +44,7 @@
                         </form>
                     @endcan
                 </div>
-                        @include('layouts.errors')
+                    @include('layouts.errors')
                 <div class="profile-info">
                     <div>
                         <div>
@@ -70,6 +59,14 @@
                                 have suffered alteration in some form Ipsum available.
                             </small>
                         </div>
+                            @can('seeDelete', $member)
+                                <form action="{{ route('members.destroy', $member->id) }}" method="POST" id="form">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
+                                </form>
+                            @endcan
                     </div>
                 </div>
             </div>

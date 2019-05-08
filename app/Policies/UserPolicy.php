@@ -18,6 +18,8 @@ class UserPolicy
      */
     public function view(User $user, User $signedInUser)
     {
+        if ($signedInUser->isOfType(User::FARM_LAB_MEMBER)) return true;
+
         if ($user->practice_id == $signedInUser->practice_id) {
             return true;
         }

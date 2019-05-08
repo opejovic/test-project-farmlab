@@ -26,8 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // \Gate::before(function ($user) {
-        //     if ($user->type === User::ADMIN) return true;
-        // });
+        \Gate::after(function ($user) {
+            if ($user->type === User::ADMIN) return true;
+        });
     }
 }

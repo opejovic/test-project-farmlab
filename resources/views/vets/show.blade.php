@@ -13,7 +13,7 @@
                             <a href="{{ route('home') }}">Home</a>
                         </li>
 
-                        @if (\Auth::user()->isOfType(App\Models\User::ADMIN))
+                        @if (\Auth::user()->isOfType(App\Models\User::ADMIN, App\Models\User::FARM_LAB_MEMBER))
                             <li><a href="{{ route('practices.index') }}">Practices</a></li>
                             <li>
                                 <a href="{{ route('practices.show', $vet->practice->hash_id) }}">
@@ -72,7 +72,7 @@
                                    @csrf
                                    @method('DELETE')
 
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger btn-xs">
                                         Delete
                                     </button>
                                </form>
