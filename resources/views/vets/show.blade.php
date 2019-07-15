@@ -13,7 +13,7 @@
                             <a href="{{ route('home') }}">Home</a>
                         </li>
 
-                        @if (\Auth::user()->isOfType(App\Models\User::ADMIN))
+                        @if (\Auth::user()->isOfType(App\Models\User::ADMIN, App\Models\User::FARM_LAB_MEMBER))
                             <li><a href="{{ route('practices.index') }}">Practices</a></li>
                             <li>
                                 <a href="{{ route('practices.show', $vet->practice->hash_id) }}">
@@ -40,8 +40,19 @@
                 <div class="col-md-6">
 
                     <div class="profile-image">
-                        <img alt="image" class="img-circle circle-border m-b-md" src="images/profiles/{{ $vet->id }}.jpg" 
-                        onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">
+                        <img alt="image" class="img-circle circle-border m-b-md" src="/storage/{{ $vet->avatar() }}">
+
+                        @can('update', $vet)
+                            <form method="POST" 
+                                action="{{ route('avatar', $vet) }}" 
+                                enctype="multipart/form-data">
+                            @csrf 
+                                <div class="form-group">
+                                    <input type="file" id="avatar" name="avatar">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-xs">Upload avatar</button>
+                            </form>
+                        @endcan
                     </div>
                     <div class="profile-info">
                         <div class="">
@@ -61,7 +72,7 @@
                                    @csrf
                                    @method('DELETE')
 
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger btn-xs">
                                         Delete
                                     </button>
                                </form>

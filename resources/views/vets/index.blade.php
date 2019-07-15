@@ -35,8 +35,7 @@
 
                 <a href="{{ route('vets.show', $vet->hash_id) }}">
 
-                    <img alt="image" class="img-circle" src="images/profiles/{{ $vet->id }}.jpg" 
-                        onerror="if (this.src != '/images/error.jpg') this.src = '/images/error.jpg';">
+                    <img alt="image" class="img-circle" src="/storage/{{ $vet->avatar() }}">
 
                     <h3 class="m-b-xs"><strong>{{ $vet->name }}</strong></h3>
 

@@ -18,11 +18,12 @@ Route::post('verify', 'Auth\VerificationController@verify')->name('auth.verify')
 
 Route::middleware(['auth'])->group(function () {
 	Route::get('/',					'HomeController@index')->name('home');
-    Route::resource('members',		'LabMembersController')->middleware('farmlab.admin');
+    Route::resource('members',		'LabMembersController')->middleware('farmlab');
     Route::resource('files',		'FilesController')->middleware('farmlab');
     Route::resource('practices',	'PracticesController')->middleware('farmlab');
 	Route::resource('vets', 		'VetsController');
     Route::resource('labresults',	'LabResultsController')->middleware('practice');
+	
+	Route::post('/users/{user}/avatars', 'UserAvatarController@store')->name('avatar');
 });
-
 

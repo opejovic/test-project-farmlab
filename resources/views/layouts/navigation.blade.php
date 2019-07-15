@@ -3,8 +3,7 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <img alt="image" class="img-circle" src="/images/{{ auth()->id() }}.jpg" 
-                        onerror="if (this.src != '/images/errorSmall.jpg') this.src = '/images/errorSmall.jpg';">  
+                    <img alt="image" class="img-circle" src="/storage/{{ auth()->user()->avatar() }}" height="38" width="38">  
                              
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
