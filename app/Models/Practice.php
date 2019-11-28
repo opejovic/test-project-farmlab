@@ -73,6 +73,8 @@ class Practice extends Model
     /**
      * PRACTICE_ADMIN can add new vet to their practice.
      *
+     * @param $name
+     * @param $email
      */
     public function addVet($name, $email)
     {
@@ -87,9 +89,9 @@ class Practice extends Model
     }
 
     /**
-     * Returns the results for the practice of the authenticated user. 
+     * Returns the results for the practice of the authenticated user.
      * Global scope from LabResult model is not applied.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function results()
@@ -158,7 +160,7 @@ class Practice extends Model
     public function getCreatedThisMonthAttribute()
     {
         return $this->where('created_at', '>=', now()->startOfMonth())->count();
-    }    
+    }
 
     /**
      * Returns the total number of created practices.

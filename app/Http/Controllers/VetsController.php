@@ -14,7 +14,7 @@ class VetsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -29,7 +29,7 @@ class VetsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -47,7 +47,7 @@ class VetsController extends Controller
     public function store(VetRequest $request)
     {
         $practice = Auth::user()->practice;
-        
+
         $practice->addVet(request('name'), request('email'));
 
         flash('New vet added to the team.');
@@ -58,21 +58,21 @@ class VetsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param User $vet
-     *
-     * @return \Illuminate\Http\Response
+     * @param $hashid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($hashid)
-    {  
+    {
         $vet = User::findByHashid($hashid);
 
         $this->authorize('view', $vet);
 
         return view('vets.show', [
-            'vet'              => $vet, 
+            'vet'              => $vet,
             'practice'         => $vet->practice,
-            'results'          => $vet->results, 
-            'processedResults' => $vet->results->filter->isProcessed(), 
+            'results'          => $vet->results,
+            'processedResults' => $vet->results->filter->isProcessed(),
         ]);
     }
 
@@ -106,7 +106,7 @@ class VetsController extends Controller
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(User $vet)
     {

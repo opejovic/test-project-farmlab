@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 /**
  * Helper function for flashing messages. By default it's a success
  * flash message, but can be changed to display warning or danger messages.
- * 
- * @param $message string
- * @param $title default 'Success!'
- * @param $type default 'success', can be 'warning' and 'danger'
+ *
+ * @param  string $message
+ * @param  string $title   default 'Success!'
+ * @param  string $type    default 'success', can be 'warning' and 'danger'
  */
 function flash($message, $title = 'Success!', $type = 'success')
 {
@@ -18,11 +18,12 @@ function flash($message, $title = 'Success!', $type = 'success')
 }
 
 /**
- * Helper function for highlightning selected links in the navigation sidebar.
+ * Helper function for highlighting selected links in the navigation sidebar.
  * Used in blade files.
- * 
- * @param $route string
- * @param $output default 'active'
+ *
+ * @param  string $route
+ * @param  string $output default 'active'
+ * @return default|string
  */
 function isActiveRoute($route, $output = 'active')
 {

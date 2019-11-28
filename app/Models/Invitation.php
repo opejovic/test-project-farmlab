@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Mail\InvitationEmail;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Model;
 
 class Invitation extends Model
-{   
+{
 
     /**
      * The attributes that are not mass assignable.
@@ -19,6 +19,7 @@ class Invitation extends Model
     /**
      * Finds the invitation by its code.
      *
+     * @param  $code
      * @return Illuminate\Database\Eloquent\Model
      */
     public static function findByCode($code)

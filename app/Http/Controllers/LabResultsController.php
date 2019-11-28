@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProcessLabResultRequest;
 use App\Models\LabResult;
-use App\Models\Practice;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LabResultsController extends Controller
@@ -14,14 +11,14 @@ class LabResultsController extends Controller
     /**
      * Displays the results. If there are no unprocessed results, displays processed.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
         $practice = Auth::user()->practice;
 
         return view('labresults.index', [
-            'labResults' => $practice->results, 
+            'labResults' => $practice->results,
             'practice'   => $practice
         ]);
     }
@@ -31,7 +28,7 @@ class LabResultsController extends Controller
      *
      * @param  \App\Models\LabResult $result
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($hashid)
     {
@@ -46,10 +43,9 @@ class LabResultsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\LabResult           $labresult
-     *
-     * @return \Illuminate\Http\Response
+     * @param  ProcessLabResultRequest $request
+     * @param                          $hashid
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProcessLabResultRequest $request, $hashid)
     {
@@ -65,9 +61,9 @@ class LabResultsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\LabResult $labresult
+     * @param  LabResult $labresult
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy(LabResult $labresult)
     {

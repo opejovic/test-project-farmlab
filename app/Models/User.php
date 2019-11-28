@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Hash;
 class User extends Authenticatable
 {
     use Notifiable, HandlesLabResults;
-   
+
     /**
      * User types.
      *
      * @var string
-     */ 
+     */
     const ADMIN             = 'ADMIN';
     const FARM_LAB_MEMBER   = 'FARM_LAB_TEAM_MEMBER';
     const PRACTICE_ADMIN    = 'PRACTICE_ADMIN';
@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that fire off the events.
-     * 
+     *
      */
     protected $dispatchesEvents = [
         'created' => UserCreated::class
@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     /**
      * Vet has many lab results.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function results()
@@ -85,7 +85,7 @@ class User extends Authenticatable
     public function practices()
     {
         return $this->hasMany(Practice::class, 'created_by');
-    }    
+    }
 
     /**
      * User can upload many files.
@@ -100,8 +100,8 @@ class User extends Authenticatable
     /**
      * Finds the user by its hashid.
      *
+     * @param $hashid
      * @return void
-     * @author 
      */
     public static function findByHashid($hashid)
     {
@@ -124,8 +124,8 @@ class User extends Authenticatable
     }
 
     /**
-     * Farm lab team member can add a new practice, 
-     * and practice admin is created in that process. 
+     * Farm lab team member can add a new practice,
+     * and practice admin is created in that process.
      * One can't be created without the other.
      *
      */
@@ -152,8 +152,8 @@ class User extends Authenticatable
 
     /**
      * If the authenticated user is of provided type return true.
-     * 
-     * Using this helper function for middleware MustBeFarmlabMember, 
+     *
+     * Using this helper function for middleware MustBeFarmlabMember,
      * MustBePracticeMember, MustBePracticeAdmin classes.
      *
      * @param      $typeA (Constant - User type)
@@ -198,7 +198,7 @@ class User extends Authenticatable
         return $this->labMembers()
                     ->where('created_at', '>=', now()->startOfMonth())
                     ->count();
-    }    
+    }
 
     /**
      * Returns the total number of farm lab team members.

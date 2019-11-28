@@ -20,7 +20,7 @@ class File extends Model
     /**
      * A File has an uploader.
      *
-     * @return App\Models\User::class
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo ::class
      */
     public function uploader()
     {
@@ -31,7 +31,6 @@ class File extends Model
      * Check if the file exists in the storage.
      *
      * @param $fileName
-     *
      * @return bool
      */
     private function existsInStorage($fileName)
@@ -43,14 +42,13 @@ class File extends Model
      * Check if the file exists in the database.
      *
      * @param $fileName
-     *
      * @return bool
      */
     private function existsInDb($fileName)
     {
         return $this->whereName($fileName)->first() !== null;
     }
-    
+
     /**
      * Check if the file exists in the storage or database.
      *
@@ -60,7 +58,7 @@ class File extends Model
      */
     private function fileExists($fileName)
     {
-        return $this->existsInStorage($fileName) || $this->existsInDb($fileName) ? true : false;
+        return $this->existsInStorage($fileName) || $this->existsInDb($fileName);
     }
 
     /**
@@ -72,8 +70,8 @@ class File extends Model
     private function saveFile($fileName, $filePath)
     {
         $this->create([
-            'name'        => $fileName,
-            'file_path'   => storage_path($filePath),
+            'name' => $fileName,
+            'file_path' => storage_path($filePath),
             'uploaded_by' => auth()->id()
         ]);
     }
@@ -124,8 +122,8 @@ class File extends Model
     public function getUploadedThisMonthAttribute()
     {
         return $this->where('created_at', '>=', now()->startOfMonth())->count();
-                         
-    }    
+
+    }
 
     /**
      * Returns the number of the all uploaded files.

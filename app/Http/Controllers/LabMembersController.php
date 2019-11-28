@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\InvitationCode;
 use App\Http\Requests\LabMemberRequest;
-use App\Models\File;
-use App\Models\Invitation;
-use App\Models\Practice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -35,8 +31,8 @@ class LabMembersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\LabMemberRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  LabMemberRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(LabMemberRequest $request)
     {
@@ -50,15 +46,15 @@ class LabMembersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $hashid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($hashid)
     {
         $member = User::findByHashid($hashid);
 
         return view('labmember.show', [
-            'member' =>  $member, 
+            'member' =>  $member,
             'practicesCreated' => $member->practices->count(),
         ]);
     }
@@ -90,7 +86,7 @@ class LabMembersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {

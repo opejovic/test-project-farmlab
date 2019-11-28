@@ -19,8 +19,6 @@ class InvitationsController extends Controller
 
    		abort_if($invitation->hasBeenUsed(), 404);
 
-    	return view('invitations.show', [
-    		'invitation' => $invitation,
-    	]);
+    	return view('invitations.show', ['invitation' => $invitation]);
     }
 }

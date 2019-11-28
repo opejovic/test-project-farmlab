@@ -12,6 +12,9 @@ class HomeController extends Controller
     /**
      * Return a home view, depending on the users type.
      *
+     * @param  LabResult $labresult
+     * @param  Practice  $practice
+     * @param  File      $file
      * @return \Illuminate\Http\Response
      */
     public function index(LabResult $labresult, Practice $practice, File $file)
@@ -31,7 +34,7 @@ class HomeController extends Controller
             return view('home.practice', compact('user'));
 
         } elseif ($user->type === User::VET) {
-            $results = \Auth::user()->results;
+            $results = auth()->user()->results;
             return view('home.vet', compact('results', 'user'));
         }
     }

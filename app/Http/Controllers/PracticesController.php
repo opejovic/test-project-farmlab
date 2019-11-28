@@ -12,7 +12,7 @@ class PracticesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class PracticesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -36,12 +36,12 @@ class PracticesController extends Controller
      *
      * @param PracticeRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(PracticeRequest $request)
     {
         Auth::user()->addPractice();
-        
+
         flash('New Practice team added successfully.');
 
         return redirect(route('practices.index'));
@@ -52,12 +52,12 @@ class PracticesController extends Controller
      *
      * @param  \App\Models\Practice $practice
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Practice $practice)
     {
         return view('practice.show', [
-            'practice' => $practice, 
+            'practice' => $practice,
             'vets' => $practice->vets,
         ]);
     }

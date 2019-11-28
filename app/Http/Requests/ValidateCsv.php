@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\File;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ValidateCsv extends FormRequest

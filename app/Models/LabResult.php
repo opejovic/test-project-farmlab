@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Helpers\CsvParser;
 use App\Events\LabResultCreated;
 use App\Facades\LabResultHashid;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class LabResult extends Model
@@ -26,12 +26,12 @@ class LabResult extends Model
 
     /**
      * The attributes that fire off the events.
-     * 
+     *
      */
     protected $dispatchesEvents = [
         'created' => LabResultCreated::class
     ];
-    
+
     /**
      * Lab result belongs to a vet.
      *
@@ -55,14 +55,17 @@ class LabResult extends Model
     /**
      *  Create lab result using the results from the parsed csv file.
      *
-     *  @param CsvParser $parsedResults
+     * @param CsvParser $parsedResults
      */
     public static function createFrom($parsedResults)
     {
         $parsedResults->chunk(5)->each(function ($chunk) {
             $chunk->each(function ($result) {
                 $labresult = self::create($result);
-                $labresult->update(['hash_id' => LabResultHashid::generateFor($labresult)]);
+
+                $labresult->update([
+                    'hash_id' => LabResultHashid::generateFor($labresult)
+                ]);
             });
         });
     }
@@ -70,6 +73,8 @@ class LabResult extends Model
     /**
      * Vets processes the result via form/modal.
      *
+     * @param $comment
+     * @param $indicator
      */
     public function process($comment, $indicator)
     {
@@ -108,7 +113,7 @@ class LabResult extends Model
     }
 
     /**
-     * Check it the Lab result is proccessed.
+     * Check it the Lab result is processed.
      *
      * @return boolean
      */
