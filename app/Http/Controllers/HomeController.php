@@ -23,19 +23,15 @@ class HomeController extends Controller
 
         if (auth()->guest()) {
             return view('auth.login');
-
-        } elseif ($user->type === User::ADMIN) {
-            return view('home.admin', compact('user', 'practice', 'file'));
-
-        } elseif ($user->type === User::FARM_LAB_MEMBER) {
-            return view('home.labmember', compact('user'));
-
-        } elseif ($user->type === User::PRACTICE_ADMIN) {
-            return view('home.practice', compact('user'));
-
-        } elseif ($user->type === User::VET) {
-            $results = auth()->user()->results;
-            return view('home.vet', compact('results', 'user'));
         }
+
+        $destinations = [
+            User::ADMIN => 'home.admin', compact('user', 'practice', 'file'),
+            User::FARM_LAB_MEMBER => 'home.labmember', compact('user'),
+            User::PRACTICE_ADMIN => 'home.practice', compact('user'),
+            User::VET => 'home.vet', ['results' => $user->results, 'user' => $user]
+        ];
+
+        return view($destinations[$user->type]);
     }
 }
